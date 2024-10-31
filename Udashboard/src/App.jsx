@@ -1,10 +1,11 @@
-import Login from "./pages/Login"
+
+import { Play } from "./pages/Play"
 
 function App() {
 
 
   return (
-  <Login/>
+<Play/>
   )
 }
 
