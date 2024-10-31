@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-darkColor font-poppins p-4">
+    <div className="min-h-screen flex items-center justify-center bg-darkColor font-poppins p-4 ">
       <div className="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
      <div>
     
@@ -47,16 +48,20 @@ const Login = () => {
             />
           </div>
 
-          <button
+        <Link to="/play">
+        <button
             type="submit"
             className="w-full bg-main text-white py-2 rounded-md font-semibold hover:bg-green-700 focus:outline-none transition-colors duration-100"
           >
             Login
           </button>
+        </Link>
 
+          <Link to="/play">
           <div className="text-center mt-4">
             <a href="/verify-email" className="text-main hover:underline">Login by Verify your email</a>
           </div>
+          </Link>
         </form>
       </div>
     </div>

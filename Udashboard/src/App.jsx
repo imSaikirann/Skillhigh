@@ -1,11 +1,19 @@
-
-import { Play } from "./pages/Play"
-
+import Login from './pages/Login'
+import Navbar from './pages/Navbar'
+import {Play }from "./pages/Play"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 function App() {
 
 
   return (
-<Play/>
+    <BrowserRouter>
+     <Navbar></Navbar>
+     <Routes>
+        <Route path='/' element={<Login />}></Route>
+        <Route path='/play' element={<Play />}></Route>
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 

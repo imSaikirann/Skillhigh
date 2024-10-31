@@ -3,7 +3,7 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 
 export const Play = () => {
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-white text-black font-poppins">
+    <div className="flex flex-col md:flex-row h-screen bg-white text-black font-poppins ">
       {/* Sidebar */}
       <aside className="w-full md:w-1/4 bg-main bg-opacity-10 p-6 flex flex-col gap-4 shadow-lg border-b md:border-b-0 md:border-r-2">
         <h2 className="text-xl font-bold mb-6 border-b border-gray-700 pb-2">Course Content</h2>
