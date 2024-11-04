@@ -7,7 +7,7 @@ export const Play = () => {
       {/* Sidebar */}
       <aside className="w-full md:w-1/4 bg-main bg-opacity-10 p-6 flex flex-col gap-4 shadow-lg border-b md:border-b-0 md:border-r-2">
         <h2 className="text-xl font-bold mb-6 border-b border-gray-700 pb-2">Course Content</h2>
-
+     
         {Array.from({ length: 10 }, (_, i) => (
           <button
             key={i}
@@ -25,7 +25,7 @@ export const Play = () => {
           {/* Video Player */}
           <div className="aspect-w-16 aspect-h-9 bg-black rounded-t-xl overflow-hidden">
             <video
-              src="https://www.w3schools.com/html/mov_bbb.mp4" // Replace with your actual video URL
+              src="https://skillhighboxs.s3.ap-south-1.amazonaws.com/videos/1730631834826-t1.mp4" // Replace with your actual video URL
               controls
               controlsList="nodownload" // Disables download option
               className="w-full h-full"
