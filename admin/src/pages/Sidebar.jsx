@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.jpg';
-import Button from '../components/Button';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   const [isDropdownOpenCourses, setIsDropdownOpenCourses] = React.useState(false);
   const [isDropdownOpenDashboard, setIsDropdownOpenDashboard] = React.useState(false);
+  const [isDropdownOpenUser, setIsDropdownOpenUser] = React.useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   const toggleDropdownCourses = () => setIsDropdownOpenCourses(!isDropdownOpenCourses);
   const toggleDropdownDashboard = () => setIsDropdownOpenDashboard(!isDropdownOpenDashboard);
+  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser); // Corrected this line
+
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <div>
+    <div className=''>
       <div className="md:hidden flex items-center p-4 h-16 bg-main text-white">
         <button onClick={() => setIsSidebarOpen(true)}>
           <Bars3Icon className="h-6 w-6" />
@@ -33,14 +35,15 @@ export default function Sidebar() {
         </div>
 
         <div className="p-4">
-          <img src={Logo} className='h-auto w-[200px]' alt="Logo" />
+          <img src={Logo} className="h-auto w-[200px]" alt="Logo" />
         </div>
 
         <nav className="flex flex-col gap-4 px-4">
           <Link to="/" className="rounded-md p-2" onClick={closeSidebar}>
-            User Dashboard
+            Admin Dashboard
           </Link>
 
+          {/* Courses Dropdown */}
           <div className="relative">
             <button
               onClick={toggleDropdownCourses}
@@ -54,17 +57,15 @@ export default function Sidebar() {
                 <Link to="/courses/add" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   Add Course
                 </Link>
-                <Link to="/courses/add-topic" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  Add Topics to Course
-                </Link>
+               
                 <Link to="/courses/manage" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   Manage Courses
                 </Link>
-              
               </div>
             )}
           </div>
 
+          {/* Dashboard Dropdown */}
           <div className="relative">
             <button
               onClick={toggleDropdownDashboard}
@@ -80,6 +81,27 @@ export default function Sidebar() {
                 </Link>
                 <Link to="/dashboard/user-reports" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   User Reports
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Users Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleDropdownUsers}
+              className="rounded-md p-2 w-full text-left flex justify-between items-center"
+            >
+              Users 
+              <span>{isDropdownOpenUser ? '-' : '+'}</span>
+            </button>
+            {isDropdownOpenUser && (
+              <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
+                <Link to="/dashboard/users/add" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                  Add New User
+                </Link>
+                <Link to="/dashboard/users" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                  View Users
                 </Link>
               </div>
             )}

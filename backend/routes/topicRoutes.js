@@ -114,7 +114,7 @@ router.get('/getAllTopics', async (req, res) => {
                     include: {
                         Question: {
                             include: {
-                                answers: true // Include answers for each question
+                                answers: true 
                             }
                         }
                     }

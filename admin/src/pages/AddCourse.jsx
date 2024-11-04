@@ -1,45 +1,99 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from '../auth/axiosConfig';
+import { AppContext } from '../store/StoreContext';
+import Alert from '../components/Alert';
+import Spinner from '../components/Spinner';
 
 export default function AddCourse() {
+    const { fetchCourses, loading, setLoading } = useContext(AppContext);
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
+        courseName: '',
+        courseDescription: '',
+        courseCount: '',
         price: '',
-        lessons: '',
-        image: null, // Changed from video to image
+        image: null,
     });
-    const [imageName, setImageName] = useState(''); // Changed from videoName to imageName
+    const [imageName, setImageName] = useState('');
+    
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (files) {
             setFormData({ ...formData, [name]: files[0] });
-            setImageName(files[0].name); // Changed from videoName to imageName
+            setImageName(files[0].name);
         } else {
             setFormData({ ...formData, [name]: value });
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        // You can add more logic here for submission, such as API calls.
+
+        const formDataToSend = new FormData();
+        formDataToSend.append('courseName', formData.courseName);
+        formDataToSend.append('courseDescription', formData.courseDescription);
+        formDataToSend.append('courseCount', formData.courseCount);
+        formDataToSend.append('price', formData.price);
+        if (formData.image) {
+            formDataToSend.append('courseThumbnail', formData.image);
+        }
+
+        setLoading(true); 
+
+        try {
+            const response = await axios.post('/api/v1/course/createCourse', formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            setAlertMessage(response.data.message);
+            setAlertVisible(true);
+            
+            // Reset the form data
+            setFormData({
+                courseName: '',
+                courseDescription: '',
+                courseCount: '',
+                price: '',
+                image: null,
+            });
+            setImageName(''); // Clear the image name
+
+            fetchCourses();
+        } catch (error) {
+            setAlertMessage(error.response?.data?.message || "Error while adding course.");
+            setAlertVisible(true);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Function to close alert
+    const handleAlertClose = () => {
+        setAlertVisible(false);
     };
 
     return (
         <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg font-poppins">
+            <Alert 
+                message={alertMessage} 
+                isVisible={alertVisible} 
+                onClose={handleAlertClose} 
+            />
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">Add New Course</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Course Title */}
                 <div>
-                    <label className="block text-gray-600 font-medium mb-1" htmlFor="title">
+                    <label className="block text-gray-600 font-medium mb-1" htmlFor="courseName">
                         Course Title
                     </label>
                     <input
                         type="text"
-                        id="title"
-                        name="title"
-                        value={formData.title}
+                        id="courseName"
+                        name="courseName"
+                        value={formData.courseName}
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-600"
@@ -48,13 +102,13 @@ export default function AddCourse() {
 
                 {/* Course Description */}
                 <div>
-                    <label className="block text-gray-600 font-medium mb-1" htmlFor="description">
+                    <label className="block text-gray-600 font-medium mb-1" htmlFor="courseDescription">
                         Course Description
                     </label>
                     <textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
+                        id="courseDescription"
+                        name="courseDescription"
+                        value={formData.courseDescription}
                         onChange={handleChange}
                         required
                         rows="4"
@@ -80,14 +134,14 @@ export default function AddCourse() {
 
                 {/* Number of Lessons */}
                 <div>
-                    <label className="block text-gray-600 font-medium mb-1" htmlFor="lessons">
+                    <label className="block text-gray-600 font-medium mb-1" htmlFor="courseCount">
                         Number of Lessons
                     </label>
                     <input
                         type="number"
-                        id="lessons"
-                        name="lessons"
-                        value={formData.lessons}
+                        id="courseCount"
+                        name="courseCount"
+                        value={formData.courseCount}
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-600"
@@ -103,10 +157,6 @@ export default function AddCourse() {
                             className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer bg-green-100 border-gray-300 hover:bg-green-200 transition duration-200"
                         >
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                </svg>
-
                                 <p className="mb-2 text-sm text-black">
                                     <span className="font-semibold">Click to upload</span> or drag and drop
                                 </p>
@@ -138,7 +188,7 @@ export default function AddCourse() {
                         type="submit"
                         className="w-full bg-main text-white font-semibold py-2 rounded-md transition duration-200 hover:bg-green-600"
                     >
-                        Add Course
+                     {!loading ? "Add Course":<Spinner/>}
                     </button>
                 </div>
             </form>
