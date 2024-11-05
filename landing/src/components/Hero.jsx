@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-l from-white via-transparent to-transparent opacity-90 pointer-events-none" />
 
       {/* Content wrapper to keep text and image above the gradients */}
-      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:text-left z-10 ">
+      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:text-left z-10 px-4">
         <div className="flex flex-col mb-6 md:mb-0 ">
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
             Empower Your Future with
