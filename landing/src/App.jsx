@@ -3,7 +3,7 @@ function App() {
 
 
   return (
-   <div className="px-4 sm:px-[5vw] md:px-[4vw] lg:px-[6vw]">
+   <div className="px-2 sm:px-[2vw] md:px-[4vw] lg:px-[6vw]">
     <Navbar/>
    </div>
   )
