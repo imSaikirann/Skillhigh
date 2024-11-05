@@ -1,8 +1,13 @@
 import React from 'react'
+import Hero from '../components/Hero'
+import ContactUs from '../components/ContactUs'
 
 function Home() {
   return (
-    <div>Home</div>
+    <>
+    <Hero/>
+    <ContactUs/>
+    </>
   )
 }
 
