@@ -47,7 +47,7 @@ export const Navbar = () => {
 
       {/* Mobile Menu - Shows links and button on smaller screens */}
       {isMobileMenuOpen && (
-        <div className="md:hidden flex flex-col items-center absolute top-[80px] left-0 right-0 bg-nav p-4 space-y-4 rounded-lg shadow-lg">
+        <div className="md:hidden flex flex-col items-center absolute top-[80px] left-0 right-0 bg-nav p-4 space-y-4 rounded-lg shadow-lg z-50">
           <div className="text-md font-normal cursor-pointer hover:text-gray-700">
             About
           </div>
