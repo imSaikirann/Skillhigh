@@ -4,6 +4,8 @@ import Footer from "./components/Footer"
 import { Navbar } from "./components/Navbar"
 import Home from "./pages/Home"
 import Aboutus from "./pages/Aboutus"
+import Signin from "./pages/Signin"
+import Signup from "./pages/Signup"
 function App() {
 
 
@@ -13,7 +15,11 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/aboutus" element={<Aboutus/>}>
+      <Route path="/aboutus" element={<Aboutus/>}/>
+      <Route path="/signin" element={<Signin/>}/>
+      <Route path="/signup" element={<Signup/>}>
+
+
 
 
 

@@ -37,9 +37,11 @@ export const Navbar = () => {
           </Link>
         </div>
 
-        <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+      <Link to="/signin">
+      <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
           Sign In
         </button>
+      </Link>
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
