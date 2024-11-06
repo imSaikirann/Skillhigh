@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../assets/logo.jpg';
-
+import { Link } from 'react-router-dom';
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -17,9 +17,11 @@ export const Navbar = () => {
 
         {/* Centered Links - Hidden on small screens */}
         <div className="hidden md:flex space-x-6">
-          <div className="text-md font-normal cursor-pointer hover:text-gray-700">
+         <Link to ="/aboutus">
+         <div className="text-md font-normal cursor-pointer hover:text-gray-700">
             About
           </div>
+         </Link>
           <div className="text-md font-normal cursor-pointer hover:text-gray-700">
             Blogs
           </div>
