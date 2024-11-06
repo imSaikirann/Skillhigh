@@ -42,12 +42,14 @@ export default function Signin() {
             </a>
           </div>
 
-          <button
+        <Link to="/profile">
+        <button
             type="submit"
             className="w-full py-2 text-white bg-main rounded-lg focus:outline-none focus:ring-2 focus:ring-border"
           >
             Sign In
           </button>
+        </Link>
         </form>
 
         <div className="text-center">

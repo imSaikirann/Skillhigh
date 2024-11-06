@@ -9,7 +9,7 @@ export const Navbar = () => {
   const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <div className="bg-white p-3 relative font-inter">
+    <div className="bg-white p-3 relative font-inter z-50">
       <div className="bg-nav h-[65px] sm:h-[70px] rounded-full border-2 border-border flex items-center justify-between px-6 md:px-12 lg:px-16">
 
         {/* Logo and Title on the left */}
