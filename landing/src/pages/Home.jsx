@@ -4,6 +4,8 @@ import ContactUs from '../components/ContactUs'
 import FQA from '../components/FQA'
 import Hero2 from '../components/Hero2'
 import Choose from '../components/Choose'
+import Needhelp from '../components/Needhelp'
+
 
 function Home() {
   return (
@@ -11,6 +13,8 @@ function Home() {
     <Hero/>
     <Hero2/>
     <Choose/>
+    {/* <VerticalCarousel/> */}
+    <Needhelp/>
     <FQA/>
     <ContactUs/>
 
