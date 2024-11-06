@@ -78,9 +78,11 @@ export const Navbar = () => {
               Courses
             </div>
           </Link>
-          <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
+         <Link to="/signin">
+         <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
             Sign In
           </button>
+         </Link>
         </div>
       )}
     </div>
