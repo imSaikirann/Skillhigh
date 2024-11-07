@@ -23,7 +23,7 @@ export default function ContactUs() {
               <label className="block text-gray-700">Name</label>
               <input
                 type="text"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
                 placeholder="Your Name"
               />
             </div>
@@ -32,7 +32,7 @@ export default function ContactUs() {
               <label className="block text-gray-700">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
                 placeholder="Your Email"
               />
             </div>
@@ -42,7 +42,7 @@ export default function ContactUs() {
             <label className="block text-gray-700">Phone Number</label>
             <input
               type="tel"
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
               placeholder="Phone Number"
             />
           </div>
@@ -50,7 +50,7 @@ export default function ContactUs() {
           <div>
             <label className="block text-gray-700">Message</label>
             <textarea
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
               placeholder="Your Message"
               rows="4"
             ></textarea>
@@ -58,7 +58,7 @@ export default function ContactUs() {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+            className="w-full px-4 py-2 text-white bg-main rounded-md focus:outline-none focus:ring focus:ring-border"
           >
             Send Message
           </button>
