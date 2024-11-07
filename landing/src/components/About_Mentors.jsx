@@ -4,7 +4,7 @@ import Cofounder from '../assets/Cofounder.jpg';
 import Founder from '../assets/founder.jpg';
 import Linkedin from '../assets/Linkedin.png';
 
-function Card({ image, title, role, description }) {
+function Card({ image, title, role, description ,link}) {
   return (
     <div className="bg-white border-2 border-gray-300 rounded-xl p-6 flex flex-col items-center gap-4 shadow-lg transition-transform transform hover:scale-105 font-inter max-w-xs">
       <img
@@ -14,7 +14,7 @@ function Card({ image, title, role, description }) {
       />
       <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
       <h3 className="text-md font-medium text-gray-600">{role}</h3>
-      <img src={Linkedin} alt="LinkedIn Icon" className="w-6 h-6" />
+     <a href={link}> <img src={Linkedin} alt="LinkedIn Icon" className="w-6 h-6" /></a>
       <p className="text-sm text-gray-600 text-center">{description}</p>
     </div>
   );
@@ -45,12 +45,15 @@ export default function AboutMentors() {
             title="Sai Charan"
             role="CEO & Founder"
             description="With a vision to lead, John has transformed the company into an industry leader."
+            link="https://www.linkedin.com/in/sai-charan-996648202/"
           />
           <Card
             image={Cofounder}
             title="Karthikeya"
             role="COO & Cofounder"
             description="Jane brings operational expertise, driving the company's success with strategic planning."
+            link="https://www.linkedin.com/in/k8703/"
+
           />
         </div>
       </div>
