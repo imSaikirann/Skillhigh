@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from '../assets/logo.jpg';
+import Logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
@@ -14,8 +14,10 @@ export const Navbar = () => {
 
         {/* Logo and Title on the left */}
         <div className="flex items-center space-x-3">
-          {/* <img src={Logo} alt="Logo" className="h-auto w-[40px] md:w-[50px]" /> */}
-          <Link to="/"><div className="text-xl md:text-2xl font-semibold">Skill High</div></Link>
+         <Link to="/">
+         <img src={Logo} alt="Logo" className="h-auto w-[120px] md:w-[160px] md:h-auto" /> 
+         </Link>
+          
         </div>
 
     
