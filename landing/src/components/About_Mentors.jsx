@@ -1,14 +1,16 @@
 import React from 'react';
 import Stars from '../assets/stars.png';
-import MentorImage from '../assets/Avatar.png'; 
+import Cofounder from '../assets/Cofounder.jpg'; 
+import founder from '../assets/founder.jpg'; 
 
-function Card({ image, title, description }) {
+
+function Card({ image, title, description }) { 
   return (
-    <div className="bg-border border-2 border-main rounded-t-lg  p-5 flex flex-col items-center gap-6 shadow-lg">
+    <div className="bg-border border-2 border-main rounded-lg  p-5 flex flex-col items-center gap-6 shadow-lg font-inter">
       <img
         src={image}
         alt={title}
-        className="w-32 h-32 rounded-full object-fit"
+        className="w-32 h-32 rounded-full object-cover"
       />
       <h2 className="text-lg font-semibold text-black">{title}</h2>
       <p className="text-sm text-gray-700 text-center">{description}</p>
@@ -36,13 +38,13 @@ export default function About_Mentors() {
         {/* Cards Section */}
         <div className="mt-10 flex flex-wrap justify-center gap-6">
           <Card
-            image={MentorImage}
-            title="Mentor Name"
+            image={founder}
+            title="Founder"
             description="Short bio of the mentor goes here. Providing expertise in specific field."
           />
           <Card
-            image={MentorImage}
-            title="Mentor Name"
+            image={Cofounder}
+            title="Cofounder"
             description="Short bio of the mentor goes here. Providing expertise in specific field."
           />
        
