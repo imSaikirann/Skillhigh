@@ -42,13 +42,13 @@ export default function AboutMentors() {
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
           <Card
             image={Founder}
-            title="John Doe"
+            title="Sai Charan"
             role="CEO & Founder"
             description="With a vision to lead, John has transformed the company into an industry leader."
           />
           <Card
             image={Cofounder}
-            title="Jane Smith"
+            title="Karthikeya"
             role="COO & Cofounder"
             description="Jane brings operational expertise, driving the company's success with strategic planning."
           />
