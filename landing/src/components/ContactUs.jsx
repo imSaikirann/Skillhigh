@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ContactUs() {
   return (
-    <div className="flex flex-col lg:flex-row justify-around items-center  p-6 font-inter">
+    <div className="flex flex-col lg:flex-row justify-around items-center p-6 font-inter">
       
       {/* Flex 1: Intro Text */}
       <div className="lg:w-1/3 mb-8 lg:mb-0 lg:text-left">
@@ -13,7 +13,7 @@ export default function ContactUs() {
       </div>
       
       {/* Flex 2: Contact Form */}
-      <div className="w-full max-w-lg bg-white rounded-lg border border-gray-300 p-8 space-y-6 ">
+      <div className="w-full max-w-lg bg-white rounded-lg border border-gray-300 p-8 space-y-6">
         <h2 className="text-2xl font-bold text-left text-gray-800">Contact Us</h2>
         <p className="text-gray-600 text-left">We'd love to hear from you! Please fill out the form below.</p>
         
@@ -39,6 +39,15 @@ export default function ContactUs() {
           </div>
 
           <div>
+            <label className="block text-gray-700">Phone Number</label>
+            <input
+              type="tel"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="Phone Number"
+            />
+          </div>
+
+          <div>
             <label className="block text-gray-700">Message</label>
             <textarea
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
@@ -49,7 +58,7 @@ export default function ContactUs() {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-main rounded-md  focus:outline-none focus:ring focus:ring-indigo-200"
+            className="w-full px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
           >
             Send Message
           </button>
