@@ -7,6 +7,7 @@ import Aboutus from "./pages/Aboutus"
 import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
 import UserProfile from "./pages/UserProfile"
+import Course from "./pages/Course"
 function App() {
 
 
@@ -19,7 +20,9 @@ function App() {
       <Route path="/aboutus" element={<Aboutus/>}/>
       <Route path="/signin" element={<Signin/>}/>
       <Route path="/signup" element={<Signup/>}/>
-      <Route path="/profile" element={<UserProfile/>}>
+      <Route path="/profile" element={<UserProfile/>}/>
+      <Route path="/courses" element={<Course/>}>
+
 
 
 
