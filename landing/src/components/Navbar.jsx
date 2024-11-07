@@ -27,11 +27,7 @@ export const Navbar = () => {
               About
             </div>
           </Link>
-          <Link to="/blogs">
-            <div className="text-md font-normal cursor-pointer hover:text-gray-700">
-              Blogs
-            </div>
-          </Link>
+         
           <Link to="/courses">
             <div className="text-md font-normal cursor-pointer hover:text-gray-700">
               Courses
@@ -70,11 +66,7 @@ export const Navbar = () => {
               About
             </div>
           </Link>
-          <Link to='/blogs' onClick={closeMenu}>
-            <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
-              Blogs
-            </div>
-          </Link>
+         
           <Link to='/courses' onClick={closeMenu}>
             <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
               Courses
