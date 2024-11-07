@@ -102,7 +102,7 @@ export const Navbar = () => {
 
       {/* Full-Screen Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-nav flex flex-col items-center justify-center space-y-6 text-center z-50">
+        <div className="md:hidden fixed inset-0 bg-nav flex flex-col items-center justify-center space-y-6  z-50">
           <button onClick={closeMenu} className="absolute top-4 right-4 p-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-black">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

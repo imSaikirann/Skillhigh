@@ -1,5 +1,11 @@
 import React from 'react';
 
+const gradientStyle = {
+  backgroundImage: 'linear-gradient(to right, #0D8267, #044233)', 
+  color: 'white',
+  textAlign: 'center',
+};
+
 export default function ContactUs() {
   return (
     <div className="flex flex-col lg:flex-row justify-around items-center p-6 font-inter">
@@ -58,7 +64,8 @@ export default function ContactUs() {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-main rounded-md focus:outline-none focus:ring focus:ring-border"
+            style={gradientStyle}
+            className="w-full px-4 py-2 text-white  rounded-md focus:outline-none focus:ring focus:ring-border"
           >
             Send Message
           </button>
