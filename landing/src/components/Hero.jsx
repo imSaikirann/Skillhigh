@@ -1,6 +1,7 @@
 import React from 'react';
 import Content from '../assets/Content.png';
 import HeroIM from '../assets/hero.png';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -29,12 +30,12 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-row gap-4 md:gap-6">
-            <button className="bg-main px-4 py-2 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+           <Link to="/courses">
+           <button className="bg-main px-4 py-2 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
               Get Started
             </button>
-            <button className="border-2 border-border px-4 py-2 md:px-6 md:py-3 rounded-md font-medium text-sm md:text-base">
-              Learn more
-            </button>
+           </Link>
+           
           </div>
         </div>
 

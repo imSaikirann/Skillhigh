@@ -22,6 +22,11 @@ export const Navbar = () => {
 
     
         <div className="hidden md:flex space-x-6">
+        <Link to="/">
+            <div className="text-md font-normal cursor-pointer hover:text-gray-700">
+              Home
+            </div>
+          </Link>
           <Link to="/aboutus">
             <div className="text-md font-normal cursor-pointer hover:text-gray-700">
               About
@@ -60,6 +65,12 @@ export const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+
+          <Link to='/' onClick={closeMenu}>
+            <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
+              Home
+            </div>
+          </Link>
 
           <Link to='/aboutus' onClick={closeMenu}>
             <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
