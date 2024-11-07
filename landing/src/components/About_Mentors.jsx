@@ -44,14 +44,14 @@ export default function AboutMentors() {
             image={Founder}
             title="Sai Charan"
             role="CEO & Founder"
-            description="With a vision to lead, John has transformed the company into an industry leader."
+            description="At SkillHigh, we're committed to bridging the gap between education and industry, empowering students with in-demand skills for successful careers"
             link="https://www.linkedin.com/in/sai-charan-996648202/"
           />
           <Card
             image={Cofounder}
             title="Karthikeya"
             role="COO & Cofounder"
-            description="Jane brings operational expertise, driving the company's success with strategic planning."
+            description="Our mission is to create a transformative learning experience, equipping students with the tools to excel in their professional journeys."
             link="https://www.linkedin.com/in/k8703/"
 
           />

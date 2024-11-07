@@ -56,8 +56,8 @@ export default function Footer() {
           <div>
             <h2 className="text-lg font-semibold mb-4">Contact</h2>
             <ul className="text-gray-400 space-y-2">
-              <li>Email: <a href="mailto:support@skillhigh.com" className="hover:text-blue-600">support@skillhigh.com</a></li>
-              <li>Phone: +1 (123) 456-7890</li>
+              <li>Email: <a href="mailto:skillhighedutech@gmail.com" className="hover:text-main">skillhighedutech@gmail.com</a></li>
+              <li>Phone: 9182661204</li>
               <li>Address: 123 Skill High St, City, Country</li>
             </ul>
           </div>
