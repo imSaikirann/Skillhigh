@@ -3,12 +3,12 @@ import Wave from '../assets/wave.png';
 
 export default function CoursePricing() {
   return (
-    <div className="relative bg-white overflow-hidden h-auto mt-5">
+    <div className="relative bg-white overflow-hidden  mt-5">
       {/* Background Image */}
       <img
         src={Wave}
         alt="Background Wave"
-        className="w-full h-[900px] md:h-[500px] lg:h-[600px] object-cover"
+        className="w-full h-[1000px] md:h-[500px] lg:h-[600px] object-cover"
       />
 
       {/* Overlay Content */}
