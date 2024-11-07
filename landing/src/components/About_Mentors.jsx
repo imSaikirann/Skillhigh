@@ -25,7 +25,7 @@ function Card({ image, title, role, description }) {
 export default function AboutMentors() {
   return (
     <div
-      className="relative min-h-screen bg-cover bg-center font-inter"
+      className="relative  bg-cover bg-center font-inter"
       style={{
         backgroundImage: `url(${Stars})`,
         backgroundRepeat: "repeat-x",
@@ -36,7 +36,7 @@ export default function AboutMentors() {
       <div className="absolute inset-0 "></div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen  text-center px-6 ">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 ">
         <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">Meet Our Team</h1>
         <p className="mt-4 text-lg md:text-xl text-black w-full md:w-2/3 lg:w-1/2">
           Our team is driven by passion and expertise, delivering excellence in every endeavor.
