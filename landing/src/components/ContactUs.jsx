@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ContactUs() {
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-center min-h-screen p-6 font-inter">
+    <div className="flex flex-col lg:flex-row justify-around items-center min-h-screen p-6 font-inter">
       
       {/* Flex 1: Intro Text */}
       <div className="lg:w-1/3 mb-8 lg:mb-0 lg:text-left">
