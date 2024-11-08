@@ -13,7 +13,7 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="bg-white p-6 md:p-12 lg:p-16 rounded-lg shadow-xl max-w-4xl mx-auto text-black">
+    <div className="bg-white p-6 md:p-12 lg:p-16 rounded-lg  max-w-4xl mx-auto text-black">
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-8">
         {/* User Image Placeholder */}

@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Signin() {
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
   return (
     <div className="flex items-center justify-center min-h-screen font-inter ">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg ">
@@ -44,8 +49,9 @@ export default function Signin() {
 
         <Link to="/profile">
         <button
+        style={gradientStyle}
             type="submit"
-            className="w-full py-2 text-white bg-main rounded-lg focus:outline-none focus:ring-2 focus:ring-border"
+            className="w-full py-2 text-white bg-main rounded-lg focus:outline-none focus:ring-2 focus:ring-border mt-2"
           >
             Sign In
           </button>

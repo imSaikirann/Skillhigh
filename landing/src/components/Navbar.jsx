@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
-  
+  const [isCSSubmenuOpen, setIsCSSubmenuOpen] = useState(false); // Secondary state for Computer Science submenu
+
   const coursesDropdownRef = useRef(null);
 
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsCoursesDropdownOpen(false);
+    setIsCSSubmenuOpen(false); // Close submenu when the main menu is closed
   };
 
   // Close dropdown when clicking outside
@@ -78,6 +80,8 @@ export const Navbar = () => {
                 </Link>
               </div>
             )}
+
+
           </div>
         </div>
 
@@ -102,7 +106,7 @@ export const Navbar = () => {
 
       {/* Full-Screen Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-nav flex flex-col items-center justify-center space-y-6  z-50">
+        <div className="md:hidden fixed inset-0 bg-nav flex flex-col items-center justify-center space-y-6 z-50">
           <button onClick={closeMenu} className="absolute top-4 right-4 p-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-black">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -122,14 +126,29 @@ export const Navbar = () => {
           </Link>
          
           {/* Mobile Courses Dropdown */}
-          <Link to='/courses' onClick={closeMenu}>
-            <div className="text-lg font-semibold flex flex-row cursor-pointer hover:text-gray-700">
-              <h1>Courses</h1>
+          <div onClick={() => setIsCSSubmenuOpen(!isCSSubmenuOpen)} className="text-lg font-semibold cursor-pointer hover:text-gray-700">
+            <div className="flex items-center">
+              <h1>Computer Science</h1>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             </div>
-          </Link>
+
+            {/* Secondary Submenu */}
+            {isCSSubmenuOpen && (
+              <div className="flex flex-col items-start mt-2 space-y-3 pl-4">
+                <Link to="/courses/ui-ux-design" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
+                  UI/UX
+                </Link>
+                <Link to="/courses/web-development" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
+                  Web Development
+                </Link>
+                <Link to="/courses/ai" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
+                  AI
+                </Link>
+              </div>
+            )}
+          </div>
 
           <Link to="/signin">
             <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">

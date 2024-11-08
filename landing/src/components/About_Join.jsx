@@ -1,10 +1,48 @@
 import React from 'react';
 import pattern from '../assets/pm.png';
-import Cost from '../assets/reducedcost.png';
-
+import Reduced from '../assets/reduced_cost-removebg-preview.png'; 
+import standardization from '../assets/standardization-removebg-preview.png'; 
+import satisfaction from '../assets/satisfaction-removebg-preview.png'; 
+import multimedia from '../assets/multimedia_materils-removebg-preview.png'; 
+import customization from '../assets/customization-removebg-preview.png'; 
+import Cost from '../assets/affordable_prices-removebg-preview.png'; 
 
 
 export default function AboutJoin() {
+  // Array of grid items, each with title, content, and image source
+  const gridItems = [
+    { 
+      title: "Standardization", 
+      content: "When working in a global workplace, it’s often difficult to gauge learners’ training.",
+      src:  standardization 
+    },
+    { 
+      title: "Reduced Costs", 
+      content: "With Weekend UX, there’s no cost to reproduce materials, thanks to mobile accessibility.",
+      src: Reduced
+    },
+    { 
+      title: "More Customization", 
+      content: "Learning isn’t a one-size-fits-all experience, and customization is key.",
+      src: customization
+    },
+    { 
+      title: "Affordable Pricing", 
+      content: "Weekend UX reduces material costs, utilizing mobile learning and microlearning.",
+      src: Cost
+    },
+    { 
+      title: "Learner Satisfaction", 
+      content: "High learner satisfaction is crucial for better knowledge retention.",
+      src: satisfaction 
+    },
+    { 
+      title: "Multimedia Materials", 
+      content: "Custom eLearning is effective as it uses diverse delivery methods.",
+      src: multimedia
+    },
+  ];
+
   return (
     <div className="relative overflow-hidden font-inter">
       {/* Background Image */}
@@ -29,19 +67,12 @@ export default function AboutJoin() {
         {/* Grid Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 w-full max-w-5xl">
           {/* Grid Items */}
-          {[
-            { title: "Standardization", content: "When working in a global workplace, it’s often difficult to gauge learners’ training." },
-            { title: "Reduced Costs", content: "With Weekend UX, there’s no cost to reproduce materials, thanks to mobile accessibility." },
-            { title: "More Customization", content: "Learning isn’t a one-size-fits-all experience, and customization is key." },
-            { title: "Affordable Pricing", content: "Weekend UX reduces material costs, utilizing mobile learning and microlearning." },
-            { title: "Learner Satisfaction", content: "High learner satisfaction is crucial for better knowledge retention." },
-            { title: "Multimedia Materials", content: "Custom eLearning is effective as it uses diverse delivery methods." },
-          ].map((item, index) => (
+          {gridItems.map((item, index) => (
             <div
               key={index}
               className="p-6 bg-border rounded-lg shadow-md flex flex-col items-center justify-center text-center"
             >
-              <img src={Cost}></img>
+              <img src={item.src} alt={item.title} className="mb-4 h-24 w-auto object-contain" />
               <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
               <p className="text-md">{item.content}</p>
             </div>

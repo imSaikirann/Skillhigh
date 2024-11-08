@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for confirm password
-
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
   // Toggle function for password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -95,7 +99,8 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="w-full py-2 text-white bg-main rounded-lg focus:outline-none focus:ring-2 focus:ring-border"
+            style={gradientStyle}
+            className="w-full py-2 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-border"
           >
             Sign Up
           </button>
