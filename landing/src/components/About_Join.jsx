@@ -1,5 +1,8 @@
 import React from 'react';
 import pattern from '../assets/pm.png';
+import Cost from '../assets/reducedcost.png';
+
+
 
 export default function AboutJoin() {
   return (
@@ -38,6 +41,7 @@ export default function AboutJoin() {
               key={index}
               className="p-6 bg-border rounded-lg shadow-md flex flex-col items-center justify-center text-center"
             >
+              <img src={Cost}></img>
               <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
               <p className="text-md">{item.content}</p>
             </div>

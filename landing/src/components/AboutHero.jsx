@@ -9,9 +9,20 @@ export const AboutHero = () => {
         <h1 className="text-4xl md:text-5xl font-semibold text-black">
           Empowering the
         </h1>
-        <h1 className="mt-4 text-4xl md:text-5xl font-bold text-main">
-          Next Generation of Innovators
-        </h1>
+        {/* <h1 className="">
+        
+        </h1> */}
+
+        <h1
+            className="mt-4 text-4xl md:text-5xl font-bold  text-transparent bg-clip-text"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+              backgroundSize: '100%',
+              backgroundRepeat: 'repeat',
+            }}
+          >
+             Next Generation of Innovators
+          </h1>
         <p className="mt-4 text-xl md:text-2xl text-black w-full md:w-3/4">
           At SkillHigh, we believe in breaking down barriers to education. Join us in our mission to provide cutting-edge learning experiences that equip students with the skills they need to thrive in the modern world.
         </p>

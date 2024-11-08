@@ -2,6 +2,11 @@ import React from 'react';
 import Wave from '../assets/wave.png';
 
 export default function CoursePricing() {
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)', 
+    color: 'white',
+    textAlign: 'center',
+  };
   return (
     <div className="relative bg-white overflow-hidden  mt-5">
       {/* Background Image */}
@@ -59,7 +64,7 @@ export default function CoursePricing() {
               3499 <span className="text-2xl font-medium">INR</span>
             </p>
             <p className="text-sm text-gray-600">Learn about our membership policy</p>
-            <button className="bg-main text-white px-6 py-3 rounded-md font-medium mt-4">
+            <button style={gradientStyle} className="bg-main text-white px-6 py-3 rounded-md font-medium mt-4">
               Enroll now
             </button>
           </div>

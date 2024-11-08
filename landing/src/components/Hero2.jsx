@@ -3,6 +3,11 @@ import Wave from '../assets/wave.png';
 import Person from '../assets/person.png';
 
 export default function Hero2() {
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
   return (
     <div className="relative bg-white overflow-hidden">
       {/* Background Image */}
@@ -17,10 +22,10 @@ export default function Hero2() {
       <div className="absolute inset-0 bg-gradient-to-l from-white via-transparent to-transparent opacity-90 pointer-events-none" />
 
       {/* Hero Content */}
-      <div className="absolute inset-0 flex flex-col-reverse md:flex-row-reverse items-center justify-between  z-10  space-y-4 md:gap-4">
+      <div className="absolute inset-0 flex flex-col md:flex-row-reverse items-center justify-between  z-10  space-y-4 md:gap-4">
         
         {/* Text Content */}
-        <div className="flex flex-col mb-6 text-center md:text-left">
+        <div className="flex flex-col mb-6 p-2 text-left md:text-left">
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
             SkillHigh is an E-Learning Platform
           </h1>
@@ -29,8 +34,8 @@ export default function Hero2() {
           </p>
           
           {/* Buttons */}
-          <div className="flex justify-center md:justify-start gap-4 md:gap-6">
-            <button className="bg-main px-10 py-2 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+          <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
+            <button style={gradientStyle} className=" px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
             Learn more
             </button>
            

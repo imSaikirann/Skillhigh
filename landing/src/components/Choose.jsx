@@ -4,6 +4,8 @@ import Person from '../assets/personsvg.png';
 import LockKeyOpen from '../assets/LockKeyOpen.png';
 
 export default function Choose() {
+
+    
     return (
         <div className='w-full h-auto py-8 px-4 font-inter'>
             <h1 className='text-center font-bold font-inter text-black text-2xl sm:text-3xl lg:text-4xl mb-6'>

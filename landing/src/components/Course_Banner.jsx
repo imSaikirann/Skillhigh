@@ -3,6 +3,11 @@ import Wave from '../assets/wave.png';
 import AI from '../assets/AI.png';
 
 export default function Course_Banner() {
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)', 
+    color: 'white',
+    textAlign: 'center',
+  };
   return (
     <div className="relative bg-white overflow-hidden">
       {/* Background Image */}
@@ -62,11 +67,12 @@ export default function Course_Banner() {
             </div>
           </div>
 
-          {/* Enroll Button */}
-          <div className="flex justify-center md:justify-start gap-4 mt-6">
-            <button className="bg-main px-8 py-2 md:px-6 md:py-4 rounded-md text-white font-medium text-sm md:text-base">
-              Enroll now
+      
+          <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
+            <button style={gradientStyle} className=" px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+            Enroll now
             </button>
+           
           </div>
         </div>
 

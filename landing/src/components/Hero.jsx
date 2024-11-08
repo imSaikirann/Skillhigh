@@ -4,6 +4,12 @@ import HeroIM from '../assets/hero.png';
 import { Link } from 'react-router-dom';
 
 export default function Hero() {
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
+
   return (
     <div className="relative bg-white overflow-hidden  font-inter">
       <img
@@ -22,20 +28,28 @@ export default function Hero() {
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
             Empower Your Future with
           </h1>
-          <h1 className="text-main text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
+          <h1
+            className="text-4xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 text-transparent bg-clip-text"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+              backgroundSize: '100%',
+              backgroundRepeat: 'repeat',
+            }}
+          >
             Quality Education
           </h1>
-          <p className="text-black text-md md:text-lg lg:text-xl mt-3 mb-4 max-w-md">
+
+          <p className="text-black text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 max-w-md">
             Join our community of learners and take the first step towards achieving your academic goals.
           </p>
 
           <div className="flex flex-row gap-4 md:gap-6">
-           <Link to="/courses">
-           <button className="bg-main px-4 py-2 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
-              Get Started
-            </button>
-           </Link>
-           
+            <Link to="/courses">
+              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+                Get Started
+              </button>
+            </Link>
+
           </div>
         </div>
 

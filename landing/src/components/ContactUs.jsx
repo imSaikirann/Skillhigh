@@ -12,7 +12,18 @@ export default function ContactUs() {
       
       {/* Flex 1: Intro Text */}
       <div className="lg:w-1/3 mb-8 lg:mb-0 lg:text-left">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Get in touch</h1>
+     
+
+        <h1
+            className="text-5xl font-bold text-gray-800 mb-4  text-transparent bg-clip-text"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+              backgroundSize: '100%',
+              backgroundRepeat: 'repeat',
+            }}
+          >
+            Get in touch
+          </h1>
         <p className="text-gray-600">
           Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.
         </p>
@@ -65,7 +76,7 @@ export default function ContactUs() {
           <button
             type="submit"
             style={gradientStyle}
-            className="w-full px-4 py-2 text-white  rounded-md focus:outline-none focus:ring focus:ring-border"
+            className="w-full px-4 py-3 text-white  rounded-md focus:outline-none focus:ring focus:ring-border"
           >
             Send Message
           </button>
