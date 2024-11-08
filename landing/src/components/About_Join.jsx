@@ -44,16 +44,16 @@ export default function AboutJoin() {
   ];
 
   return (
-    <div className="relative overflow-hidden font-inter">
+    <div className="relative overflow-hidden font-inter ">
       {/* Background Image */}
       <img
         src={pattern}
         alt="Background"
-        className="h-[1200px] md:h-[900px] lg:h-[1000px] object-cover w-full"
+        className="h-[2000px] md:h-[1200px] lg:h-[1000px] object-cover w-full"
       />
 
       {/* Content wrapper */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4">
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 ">
         {/* Text content */}
         <div className="flex flex-col items-center text-center mb-8">
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
