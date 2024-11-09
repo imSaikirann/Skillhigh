@@ -1,8 +1,4 @@
-import React from "react";
-import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
+import React, { useState, useEffect } from "react";
 
 const testimonials = [
   {
@@ -44,34 +40,60 @@ const testimonials = [
 ];
 
 const TestimonialSlider = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Automatically change testimonial every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000); // 3000ms = 3 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
+  // Handle next and previous testimonial navigation
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
   };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-4 h-[400px]">
-      <Slider {...settings}>
-        {testimonials.map((testimonial) => (
-          <div
-            key={testimonial.id}
-            className="p-8 bg-white rounded-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              {testimonial.name}
-            </h3>
-            <p className="text-base text-gray-600 leading-relaxed italic">
-              "{testimonial.feedback}"
-            </p>
-          </div>
-        ))}
-      </Slider>
+      <div className="relative">
+        <div
+          className="testimonial-container p-8 bg-white rounded-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center"
+        >
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            {testimonials[currentIndex].name}
+          </h3>
+          <p className="text-base text-gray-600 leading-relaxed italic">
+            "{testimonials[currentIndex].feedback}"
+          </p>
+        </div>
+
+        {/* Navigation Buttons */}
+        <button
+          onClick={goToPrevious}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &lt;
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   );
 };
