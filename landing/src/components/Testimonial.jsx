@@ -67,13 +67,13 @@ const TestimonialSlider = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-2 p-4 h-auto font-inter">
-      <div className="max-w-xl mx-auto mt-4 p-6">
+    <div className="max-w-2xl mx-auto mt-2  h-auto font-inter">
+      <div className="max-w-xl mx-auto mt-4 ">
         <h2 className="text-4xl font-bold text-center text-black mb-6">
           Hear from Our Achievers
         </h2>
         <div className="relative bg-white shadow-lg rounded-lg p-6 md:p-8 text-center">
-          <div className="border-l-4 border-border pl-4 pr-4 py-6">
+          <div className="border-l-4 border-border pl-8 pr-8 py-6">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">
               {testimonials[currentIndex].name}
             </h3>
