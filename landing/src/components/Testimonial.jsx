@@ -111,19 +111,22 @@ const TestimonialSlider = () => {
 
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-4">
-        <button
-          onClick={goToPrevious}
-          className="bg-main text-white px-4 py-2 rounded-lg focus:outline-none"
-        >
-          Previous
-        </button>
-        <button
-          onClick={goToNext}
-          className="bg-main text-white px-4 py-2 rounded-lg focus:outline-none"
-        >
-          Next
-        </button>
-      </div>
+  <button
+    onClick={goToPrevious}
+    className="bg-main text-white px-4 py-2 rounded-full focus:outline-none flex items-center space-x-2"
+  >
+    <span className="text-2xl">←</span>
+   
+  </button>
+  <button
+    onClick={goToNext}
+    className="bg-main text-white px-4 py-2 rounded-full focus:outline-none flex items-center space-x-2"
+  >
+   
+    <span className="text-2xl">→</span>
+  </button>
+</div>
+
     </div>
   );
 };
