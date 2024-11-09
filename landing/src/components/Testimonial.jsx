@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const testimonials = [
   {
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     id: 4,
-    name: "Harini - Malla Reddy College of Engineering",
+    name: "Harini kurella - Mallareddy Engineering college",
     feedback:
       "My experience at SkillHigh was growth-oriented and leaning. The talent around me guided me through all the projects. It was difficult yet fulfilling because the journey was made memorable by a dedicated team.",
   },
@@ -37,65 +37,92 @@ const testimonials = [
     feedback:
       "Working with SkillHigh was not just a work experience; it was a journey of professional and personal growth. What I took away during my internship—the mentorship of the team and the projects I engaged with—teaches me some invaluable lessons, which will guide me throughout my career.",
   },
+  {
+    id: 7,
+    name: "Ankita Yadav - Amity University Raipur",
+    feedback:
+      "Interning at SkillHigh allowed me to work on real-world projects with the mentorship of skilled professionals. I will always thank the team's dedication to growth that not only made it an inspiring experience but also rewarding.",
+  },
+  {
+    id: 8,
+    name: "Varun Tankala - Sathyabama Institute of Science and Technology",
+    feedback:
+      "I am really thankful to the internship experience of SkillHigh where I deal with challenging projects and got great guidance by industry experts. It has been helpful because the teamwork supports and encourages each day with valuable steps in my career journey.",
+  },
+  {
+    id: 9,
+    name: "Kanchanapally Uday - Kakatiya University College of Engineering and Technology",
+    feedback:
+      "My internship experience with SkillHigh was highly formative, allowing me to contribute to impactful projects as part of a talented team. Truly invaluable mentorship accompanied me through it all, and I am thankful for the skills and insight I garnered.",
+  },
+  {
+    id: 10,
+    name: "Matcha Naveen - Aurora's Scientific and Technological Institute",
+    feedback:
+      "My internship experience at SkillHigh was incredibly enriching. Working on real-world projects and receiving guidance from knowledgeable mentors allowed me to develop my skills and confidence. I’m grateful to the entire team for making my journey so impactful.",
+  },
 ];
 
 const TestimonialSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatically change testimonial every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000); // 3000ms = 3 seconds
+  // Calculate number of cards based on window width
+  const isLargeScreen = window.innerWidth >= 768;
+  const cardsToShow = isLargeScreen ? 2 : 1;
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, []);
-
-  // Handle next and previous testimonial navigation
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+      (prevIndex + cardsToShow) % testimonials.length
     );
   };
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+      (prevIndex - cardsToShow + testimonials.length) % testimonials.length
     );
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-2  h-auto font-inter">
-      <div className="max-w-xl mx-auto mt-4 ">
-        <h2 className="text-4xl font-bold text-center text-black mb-6">
-          Hear from Our Achievers
-        </h2>
-        <div className="relative bg-white shadow-lg rounded-lg p-6 md:p-8 text-center">
-          <div className="border-l-4 border-border pl-8 pr-8 py-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              {testimonials[currentIndex].name}
-            </h3>
-            <p className="text-gray-600 italic">
-              "{testimonials[currentIndex].feedback}"
-            </p>
-          </div>
+    <div className="max-w-4xl mx-auto mt-2 h-auto font-inter">
+      <h2 className="text-4xl font-bold text-center text-black mb-6">
+        Hear from Our Achievers
+      </h2>
 
-          {/* Navigation Buttons with spacing adjustments */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-main text-white p-3 rounded-full focus:outline-none"
-          >
-            &lt;
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-main text-white p-3 rounded-full focus:outline-none"
-          >
-            &gt;
-          </button>
-        </div>
+      <div className={`grid gap-6 ${isLargeScreen ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {/* Render testimonials based on screen size */}
+        {testimonials
+          .slice(currentIndex, currentIndex + cardsToShow)
+          .map((testimonial) => (
+            <div
+              key={testimonial.id}
+              className="relative bg-white shadow-lg rounded-lg p-6 text-center"
+            >
+              <div className="border-l-4 border-border pl-8 pr-8 py-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  {testimonial.name}
+                </h3>
+                <p className="text-gray-600 italic">
+                  "{testimonial.feedback}"
+                </p>
+              </div>
+            </div>
+          ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={goToPrevious}
+          className="bg-main text-white px-4 py-2 rounded-lg focus:outline-none"
+        >
+          Previous
+        </button>
+        <button
+          onClick={goToNext}
+          className="bg-main text-white px-4 py-2 rounded-lg focus:outline-none"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
