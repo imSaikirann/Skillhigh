@@ -15,27 +15,29 @@ export default function Choose() {
                 {/* Box 1 */}
                 <div className='bg-border w-full sm:w-[45%] md:w-[30%] lg:w-[25%] h-[300px] rounded-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 hover:shadow-lg transition-transform duration-300'>
                     <img src={Person} className='w-[80px] h-[80px] mb-4' alt="Explore Courses" />
-                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Explore Courses</h2>
+                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Real-World Learning</h2>
                     <p className='text-sm lg:text-base'>
-                        Discover a variety of subjects designed to engage and inspire your learning journey.
+                    SkillHigh provides practical, hands-on training with projects that align with current industry standards..
                     </p>
                 </div>
 
                 {/* Box 2 */}
                 <div className='bg-border w-full sm:w-[45%] md:w-[30%] lg:w-[25%] h-[300px] rounded-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 hover:shadow-lg transition-transform duration-300'>
                     <img src={Monitor} className='w-[80px] h-[80px] mb-4' alt="Enroll & Learn" />
-                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Enroll & Learn</h2>
+                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Industry-Aligned Curriculum
+                    </h2>
                     <p className='text-sm lg:text-base'>
-                        Engage in a collaborative and enriching learning environment tailored to your needs.
+                    Our programs collaborate with leading companies to help you gain the skills employers want.
                     </p>
                 </div>
 
                 {/* Box 3 */}
                 <div className='bg-border w-full sm:w-[45%] md:w-[30%] lg:w-[25%] h-[300px] rounded-md flex flex-col items-center justify-center text-center p-4 hover:scale-105 hover:shadow-lg transition-transform duration-300'>
                     <img src={LockKeyOpen} className='w-[80px] h-[80px] mb-4' alt="Achieve & Grow" />
-                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Achieve & Grow</h2>
+                    <h2 className='font-bold font-inter text-lg lg:text-xl mb-2'>Expert Mentorship</h2>
                     <p className='text-sm lg:text-base'>
-                        Unlock your potential and progress toward your goals with our structured approach.
+                    Learn from experienced professionals in the field by gaining valuable insights and mentorship.
+
                     </p>
                 </div>
             </div>

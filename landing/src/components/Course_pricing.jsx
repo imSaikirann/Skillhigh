@@ -7,13 +7,14 @@ export default function CoursePricing() {
     color: 'white',
     textAlign: 'center',
   };
+
   return (
-    <div className="relative bg-white overflow-hidden  mt-5">
+    <div className="relative bg-white overflow-hidden mt-5">
       {/* Background Image */}
       <img
         src={Wave}
         alt="Background Wave"
-        className="w-full h-[1000px] md:h-[500px] lg:h-[600px] object-cover"
+        className="w-full h-[1500px] md:h-[1300px] lg:h-[600px] object-cover"
       />
 
       {/* Overlay Content */}
@@ -28,7 +29,7 @@ export default function CoursePricing() {
         </div>
 
         {/* Pricing Section */}
-        <div className="flex flex-col sm:flex-row gap-6 mt-12 items-center justify-center">
+        <div className="flex flex-col lg:flex-row gap-6 mt-12 items-center justify-center">
           {/* Pricing Details */}
           <div className="px-8 md:px-16 lg:px-24 space-y-6 text-center sm:text-left">
             <h2 className="text-2xl font-semibold">Lifetime Access</h2>
@@ -39,7 +40,6 @@ export default function CoursePricing() {
             {/* What's Included */}
             <div className="flex items-center gap-2 mb-4">
               <h3 className="text-xl font-semibold">What's included</h3>
-             
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
@@ -49,7 +49,7 @@ export default function CoursePricing() {
                 "Doubt-solving sessions with mentors",
                 "Course Completion Certificate"
               ].map((item, index) => (
-                <div key={index} className="flex items-center space-x-2 ">
+                <div key={index} className="flex items-center space-x-2">
                   <span className="text-green-500">✓</span>
                   <span>{item}</span>
                 </div>
@@ -57,16 +57,31 @@ export default function CoursePricing() {
             </div>
           </div>
 
-          {/* Payment Box */}
-          <div className="w-[300px] h-[300px] bg-white p-6 rounded-md shadow-md flex flex-col items-center justify-between text-center">
-            <p className="text-lg font-semibold">Pay once, own it forever</p>
-            <p className="text-5xl font-bold">
-              3499 <span className="text-2xl font-medium">INR</span>
-            </p>
-            <p className="text-sm text-gray-600">Learn about our membership policy</p>
-            <button style={gradientStyle} className="bg-main text-white px-6 py-3 rounded-md font-medium mt-4">
-              Enroll now
-            </button>
+          {/* Pricing Boxes */}
+          <div className="flex flex-col sm:flex-row gap-6">
+            {/* 3000 INR Box */}
+            <div className="w-[300px] h-[300px] bg-white p-6 rounded-md shadow-md flex flex-col items-center justify-between text-center">
+              <p className="text-lg font-semibold">Basic Package</p>
+              <p className="text-5xl font-bold">
+                3000 <span className="text-2xl font-medium">INR</span>
+              </p>
+              <p className="text-sm text-gray-600">One-time payment for basic access</p>
+              <button style={gradientStyle} className="px-6 py-3 rounded-md font-medium mt-4  w-52">
+                Enroll now
+              </button>
+            </div>
+
+            {/* 5000 INR Box */}
+            <div className="w-[300px] h-[300px] bg-white p-6 rounded-md shadow-md flex flex-col items-center justify-between text-center">
+              <p className="text-lg font-semibold">Premium Package</p>
+              <p className="text-5xl font-bold">
+                5000 <span className="text-2xl font-medium">INR</span>
+              </p>
+              <p className="text-sm text-gray-600">Lifetime access with all features</p>
+              <button style={gradientStyle} className="px-6 py-3 rounded-md font-medium mt-4 w-52">
+                Enroll now
+              </button>
+            </div>
           </div>
         </div>
       </div>

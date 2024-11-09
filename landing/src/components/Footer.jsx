@@ -36,7 +36,7 @@ export default function Footer() {
           {/* About Us Section */}
           <div>
             <h2 className="text-lg font-semibold mb-4">About Us</h2>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-700 text-sm">
               We are dedicated to providing high-quality content and services. Join us to enhance your skills and explore new opportunities.
             </p>
           </div>
@@ -44,18 +44,18 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
-            <ul className="text-gray-400 space-y-2">
-              <li><a href="#about" className="hover:text-blue-600">About</a></li>
-              <li><a href="#services" className="hover:text-blue-600">Services</a></li>
-              <li><a href="#courses" className="hover:text-blue-600">Courses</a></li>
-              <li><a href="#contact" className="hover:text-blue-600">Contact Us</a></li>
+            <ul className="text-gray-700 space-y-2">
+              <li><a href="#about" className="hover:text-main">About</a></li>
+              <li><a href="#services" className="hover:text-main">Carrers</a></li>
+              <li><a href="#courses" className="hover:text-main">Courses</a></li>
+              <li><a href="#contact" className="hover:text-main">Contact Us</a></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
             <h2 className="text-lg font-semibold mb-4">Contact</h2>
-            <ul className="text-gray-400 space-y-2">
+            <ul className="text-gray-700 space-y-2">
               <li>Email: <a href="mailto:skillhighedutech@gmail.com" className="hover:text-main">skillhighedutech@gmail.com</a></li>
               <li>Phone: 9182661204</li>
               <li>Address: 123 Skill High St, City, Country</li>

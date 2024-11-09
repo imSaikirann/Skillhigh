@@ -7,7 +7,6 @@ import multimedia from '../assets/multimedia_materils-removebg-preview.png';
 import customization from '../assets/customization-removebg-preview.png'; 
 import Cost from '../assets/affordable_prices-removebg-preview.png'; 
 
-
 export default function AboutJoin() {
   // Array of grid items, each with title, content, and image source
   const gridItems = [
@@ -70,11 +69,12 @@ export default function AboutJoin() {
           {gridItems.map((item, index) => (
             <div
               key={index}
-              className="p-6 bg-border rounded-lg shadow-md flex flex-col items-center justify-center text-center"
+              className="p-6 bg-white border border-gray-200 rounded-lg shadow-md flex flex-col items-center justify-center text-center
+                         transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:bg-gray-50"
             >
               <img src={item.src} alt={item.title} className="mb-4 h-24 w-auto object-contain" />
               <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
-              <p className="text-md">{item.content}</p>
+              <p className="text-md text-gray-600">{item.content}</p>
             </div>
           ))}
         </div>

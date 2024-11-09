@@ -15,7 +15,7 @@ export default function VisionMission() {
         <div style={gradientStyle} className="flex flex-col w-full md:w-1/2 h-auto items-center md:items-start justify-center text-left rounded-l-lg font-semibold text-gray-700 p-6 space-y-4">
           <h2 className="font-bold text-2xl sm:text-3xl lg:text-4xl">Our Vision</h2>
           <p className="text-sm sm:text-base lg:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat quisque ut interdum tincidunt duis.
+          Our vision is to bridge the gap between academia and industry by promoting a community of skilled professionals who are job-ready and empowered to succeed. We believe that with the right tools, resources, and mentorship, everyone has the potential to succeed in their chosen fields.
           </p>
         </div>
         <div className="w-full md:w-1/2">
@@ -39,7 +39,8 @@ export default function VisionMission() {
         <div style={gradientStyle} className="flex flex-col w-full md:w-1/2 h-auto items-center md:items-start justify-center rounded-r-lg text-left font-semibold text-gray-700 p-6 space-y-4">
           <h2 className="font-bold text-2xl sm:text-3xl lg:text-4xl">Our Mission</h2>
           <p className="text-sm sm:text-base lg:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat quisque ut interdum tincidunt duis.
+          At SkillHigh, we are committed to being your affordable and trusted learning partner worldwide. We equip you with essential practical skills and hands-on experience that prepare you to confidently step into the professional world, ready to make an impact and excel in your career.
+
           </p>
         </div>
       </div>

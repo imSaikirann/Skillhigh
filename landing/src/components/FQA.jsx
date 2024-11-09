@@ -4,16 +4,32 @@ import Pattern from '../assets/patternMask.png';
 export default function FQA() {
   const faqs = [
     {
-      question: "What is your return policy?",
-      answer: "Our return policy allows returns within 30 days of purchase. Please make sure the item is unused and in its original condition.",
+      question: "What makes SkillHigh different from other online learning platforms?",
+      answer: "SkillHigh focuses on real-world projects and hands-on training designed to make you job-ready and prepared for real industry challenges.",
     },
     {
-      question: "How do I track my order?",
-      answer: "Once your order ships, you will receive a tracking number via email. You can use this number on our website to track your order status.",
+      question: "Are there any prerequisites for enrolling in the programs?",
+      answer: "Most of our programs are beginner-friendly, but we also offer advanced courses for experienced learners. Specific requirements, if any, are listed in each course description.",
     },
     {
-      question: "Do you offer international shipping?",
-      answer: "Yes, we offer international shipping. Shipping costs vary by destination and will be calculated at checkout.",
+      question: "How are the courses structured?",
+      answer: "Courses combine video lessons, interactive assignments, and project-based assessments. You'll have access to expert mentors and a community of learners.",
+    },
+    {
+      question: "What kind of certification will I receive?",
+      answer: "Upon completing a program, you'll earn a certificate that can be shared on LinkedIn and included in your resume.",
+    },
+    {
+      question: "Can I learn at my own pace?",
+      answer: "Absolutely! Our programs are designed to be flexible, allowing you to learn at your own pace. You can access course materials anytime and anywhere, tailoring your learning schedule to fit your life.",
+    },
+    {
+      question: "How do I access my courses after enrolling?",
+      answer: "After enrolling, you'll receive immediate access to your course materials through your account. Log in and start learning!",
+    },
+    {
+      question: "Can I take multiple courses at the same time?",
+      answer: "Yes, you can enrol in multiple courses at the same time. Feel free to explore various topics and develop a diverse skill set that aligns with your career goals.",
     },
   ];
 
@@ -25,7 +41,7 @@ export default function FQA() {
 
   return (
     <div className="relative bg-white overflow-hidden">
-      <img src={Pattern} alt="Background" className="h-[400px] md:h-[600px] lg:h-[700px] w-full object-cover" />
+      <img src={Pattern} alt="Background" className="h-[700px] md:h-[900px] lg:h-[900px] w-full object-cover" />
 
       {/* Pseudo-elements for the gradient effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent opacity-90 pointer-events-none" />

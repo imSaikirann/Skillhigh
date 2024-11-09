@@ -26,7 +26,7 @@ export default function Hero() {
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:text-left z-10 px-4">
         <div className="flex flex-col mb-6 md:mb-0 ">
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
-            Empower Your Future with
+         
           </h1>
           <h1
             className="text-4xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 text-transparent bg-clip-text"
@@ -36,17 +36,17 @@ export default function Hero() {
               backgroundRepeat: 'repeat',
             }}
           >
-            Quality Education
+             Gain Skills. Get Certified. Reach Higher
           </h1>
 
-          <p className="text-black text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 max-w-md">
-            Join our community of learners and take the first step towards achieving your academic goals.
+          <p className="text-black text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 ">
+          Where Ambition Meets Opportunity – Learn from Industry Leaders, Build Practical Skills, and Step Confidently into Your Future
           </p>
 
           <div className="flex flex-row gap-4 md:gap-6">
             <Link to="/courses">
               <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
-                Get Started
+              Get Started Now
               </button>
             </Link>
 

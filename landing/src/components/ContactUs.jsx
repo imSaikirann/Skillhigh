@@ -25,7 +25,7 @@ export default function ContactUs() {
             Get in touch
           </h1>
         <p className="text-gray-600">
-          Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.
+        Have questions or need assistance? Our team is here to help you make the right choice for your career.
         </p>
       </div>
       

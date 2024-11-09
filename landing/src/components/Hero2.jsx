@@ -26,11 +26,12 @@ export default function Hero2() {
         
         {/* Text Content */}
         <div className="flex flex-col mb-6 p-2 text-left md:text-left">
-          <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
-            SkillHigh is an E-Learning Platform
+          <h1 className="text-black text-3xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
+          Innovative & Effective E-learning Platform
           </h1>
           <p className="text-black text-md md:text-lg lg:text-xl mt-3 mb-4 w-full">
-          Empower yourself with the knowledge and skills gained through online education! The key to your future! Empower yourself with the knowledge and skills gained through online education! The key to your future!
+          SkillHigh is the go-to platform for aspiring professionals. Our affordable virtual programs provide expert guidance and project-based training to make you job-ready and accelerate your career. Don't just prepare for your job-launch it with SkillHigh.
+
           </p>
           
           {/* Buttons */}

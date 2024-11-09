@@ -1,42 +1,27 @@
 import React from 'react';
 
 export default function NeedHelp() {
-    return (
-        <div className='font-inter py-8'>
-            <div className='flex flex-col sm:flex-col items-center gap-6'>
-                <div className='flex flex-col sm:w-full sm:text-center'>
-                    <h1 className='font-bold text-1xl lg:text-4xl mb-4'>
-                        Need Help? Not sure which course to choose?
-                    </h1>
-                    <p className='text-sm text-gray-600'>
-                        Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.
-                    </p>
-                </div>
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
 
-                <div className='flex flex-col sm:flex-row gap-6 w-full'>
-                    {/* Box 1 */}
-                    <div className='w-full sm:w-[48%] lg:w-[48%] h-[172px] bg-border rounded-lg p-4'>
-                        <h2 className='font-bold text-xl mb-2'>Skill Development</h2>
-                        <p className='text-sm mb-4'>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                        </p>
-                        <button className='w-full border-2 border-main py-2 rounded-md'>
-                            Explore Courses
-                        </button>
-                    </div>
+  return (
+    <div style={gradientStyle} className="font-inter py-12 h-auto flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 space-y-4">
+      {/* EdTech Line */}
+      <h2 className="text-lg md:text-2xl lg:text-3xl font-semibold">
+        Elevate Your Skills with Leading Skillhigh!
+      </h2>
 
-                    {/* Box 2 */}
-                    <div className='w-full sm:w-[48%] lg:w-[48%] h-[172px] bg-border rounded-lg p-4'>
-                        <h2 className='font-bold text-xl mb-2'>Job Guaranteed</h2>
-                        <p className='text-sm mb-4'>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                        </p>
-                        <button className='w-full border-2 border-main py-2 rounded-md'>
-                            Explore Jobs
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+      {/* Call to Action Button */}
+      <p className="text-sm md:text-base lg:text-lg max-w-xl">
+        Join SkillHigh today and start your journey to becoming industry-ready with hands-on projects and expert-led courses.
+      </p>
+      
+      <button className="mt-4 bg-white text-green-700 font-bold py-2 px-6 md:px-8 lg:px-10 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out">
+        Get Started
+      </button>
+    </div>
+  );
 }
