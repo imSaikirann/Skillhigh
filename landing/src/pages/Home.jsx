@@ -5,6 +5,7 @@ import FQA from '../components/FQA'
 import Hero2 from '../components/Hero2'
 import Choose from '../components/Choose'
 import Needhelp from '../components/Needhelp'
+import TestimonialSlider from '../components/Testimonial'
 
 
 function Home() {
@@ -13,7 +14,7 @@ function Home() {
     <Hero/>
     <Hero2/>
     <Choose/>
-    {/* <VerticalCarousel/> */}
+    <TestimonialSlider/>
     <Needhelp/>
     <FQA/>
     <ContactUs/>
