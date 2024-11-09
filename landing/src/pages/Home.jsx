@@ -14,9 +14,10 @@ function Home() {
     <Hero/>
     <Hero2/>
     <Choose/>
-    <TestimonialSlider/>
     <Needhelp/>
     <FQA/>
+    <TestimonialSlider/>
+
     <ContactUs/>
 
     </>

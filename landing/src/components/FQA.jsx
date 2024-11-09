@@ -29,7 +29,7 @@ export default function FQA() {
     },
     {
       question: "Can I take multiple courses at the same time?",
-      answer: "Yes, you can enrol in multiple courses at the same time. Feel free to explore various topics and develop a diverse skill set that aligns with your career goals.",
+      answer: "Yes, you can enroll in multiple courses at the same time. Feel free to explore various topics and develop a diverse skill set that aligns with your career goals.",
     },
   ];
 
@@ -44,8 +44,8 @@ export default function FQA() {
       <img src={Pattern} alt="Background" className="h-[700px] md:h-[900px] lg:h-[900px] w-full object-cover" />
 
       {/* Pseudo-elements for the gradient effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent opacity-90 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-l from-white via-transparent to-transparent opacity-90 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent opacity-90 pointer-events-none transition-opacity duration-700 delay-200" />
+      <div className="absolute inset-0 bg-gradient-to-l from-white via-transparent to-transparent opacity-90 pointer-events-none transition-opacity duration-700 delay-200" />
 
       {/* Content wrapper for the FAQ section */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4 md:p-10 lg:p-20 space-y-6">
@@ -55,19 +55,32 @@ export default function FQA() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border border-gray-300 rounded-lg overflow-hidden"
+              className="border border-gray-300 rounded-lg overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-105"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left px-4 py-3 md:px-6 md:py-4 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                className="w-full text-left px-4 py-3 md:px-6 md:py-4 bg-gray-100 hover:bg-gray-200 focus:outline-none transition-all duration-300 transform hover:scale-105"
               >
                 <div className="flex justify-between items-center">
                   <span className="text-md md:text-lg font-medium text-gray-700">{faq.question}</span>
-                  <span className="text-xl font-bold">{openIndex === index ? '-' : '+'}</span>
+                  <span
+                    className={`text-xl font-bold transform transition-transform duration-500 ${
+                      openIndex === index ? 'rotate-180' : 'rotate-0'
+                    }`}
+                  >
+                    {openIndex === index ? '-' : '+'}
+                  </span>
                 </div>
               </button>
               {openIndex === index && (
-                <div className="px-4 py-3 md:px-6 md:py-4 bg-white text-gray-600">
+                <div
+                  className="px-4 py-3 md:px-6 md:py-4 bg-white text-gray-600 transition-all duration-500 ease-in-out transform origin-top"
+                  style={{
+                    maxHeight: openIndex === index ? '300px' : '0px',
+                    opacity: openIndex === index ? 1 : 0,
+                    transform: openIndex === index ? 'scaleY(1)' : 'scaleY(0)',
+                  }}
+                >
                   {faq.answer}
                 </div>
               )}
@@ -76,9 +89,9 @@ export default function FQA() {
         </div>
       </div>
 
-      {/* Additional gradient overlays if needed */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-90 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-90 pointer-events-none" />
+      {/* Additional gradient overlays with smoother transitions */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-90 pointer-events-none transition-opacity duration-700 delay-200" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-90 pointer-events-none transition-opacity duration-700 delay-200" />
     </div>
   );
 }

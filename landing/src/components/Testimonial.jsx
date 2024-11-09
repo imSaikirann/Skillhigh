@@ -67,32 +67,35 @@ const TestimonialSlider = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-4 h-[400px]">
-      <div className="relative">
-        <div
-          className="testimonial-container p-8 bg-white rounded-lg transition-shadow duration-300 ease-in-out flex flex-col items-center text-center"
-        >
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            {testimonials[currentIndex].name}
-          </h3>
-          <p className="text-base text-gray-600 leading-relaxed italic">
-            "{testimonials[currentIndex].feedback}"
-          </p>
-        </div>
+    <div className="max-w-2xl mx-auto mt-10 p-4 h-auto font-inter">
+      <div className="max-w-xl mx-auto mt-10 p-6">
+        <h2 className="text-4xl font-bold text-center text-black mb-6">
+          Hear from Our Achievers
+        </h2>
+        <div className="relative bg-white shadow-lg rounded-lg p-6 md:p-8 text-center">
+          <div className="border-l-4 border-border pl-4 pr-4 py-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              {testimonials[currentIndex].name}
+            </h3>
+            <p className="text-gray-600 italic">
+              "{testimonials[currentIndex].feedback}"
+            </p>
+          </div>
 
-        {/* Navigation Buttons */}
-        <button
-          onClick={goToPrevious}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={goToNext}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
-        >
-          &gt;
-        </button>
+          {/* Navigation Buttons with spacing adjustments */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-main text-white p-3 rounded-full focus:outline-none"
+          >
+            &lt;
+          </button>
+          <button
+            onClick={goToNext}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-main text-white p-3 rounded-full focus:outline-none"
+          >
+            &gt;
+          </button>
+        </div>
       </div>
     </div>
   );
