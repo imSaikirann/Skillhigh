@@ -40,8 +40,8 @@ export default function FQA() {
   };
 
   return (
-    <div className="relative bg-white overflow-hidden">
-      <img src={Pattern} alt="Background" className="h-[700px] md:h-[900px] lg:h-[900px] w-full object-cover" />
+    <div className="relative bg-white overflow-hidden ">
+      <img src={Pattern} alt="Background" className="h-[760px] md:h-[900px] lg:h-[900px] w-full object-cover" />
 
       {/* Pseudo-elements for the gradient effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent opacity-90 pointer-events-none transition-opacity duration-700 delay-200" />
