@@ -36,7 +36,7 @@ export default function Hero() {
               backgroundRepeat: 'repeat',
             }}
           >
-             Gain Skills. Get Certified. Reach Higherg
+             Gain Skills. Get Certified. Reach Higher
           </h1>
 
           <p className="text-black text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 ">
