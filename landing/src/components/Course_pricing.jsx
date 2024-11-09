@@ -50,7 +50,7 @@ export default function CoursePricing() {
       <img
         src={Wave}
         alt="Background Wave"
-        className="w-full h-[1500px] md:h-[1300px] lg:h-[900px] object-cover"
+        className="w-full h-[1700px] md:h-[1300px] lg:h-[900px] object-cover"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-black p-4">
         <div className="text-center">
