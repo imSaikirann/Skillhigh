@@ -18,6 +18,12 @@ model User {
   email    String @unique
   password String
 }
+model Department {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  departmentName String @unique
+  description String
+ courses        Course[] @relation("DepartmentCourses")
+}
 
 model Course {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
@@ -30,6 +36,9 @@ model Course {
   createdAt         DateTime  @default(now())
 
   topics            Topic[]   @relation("CourseTopics") 
+  projects Projects[]
+   departmentId      String     @db.ObjectId
+  department        Department @relation(fields: [departmentId], references: [id], name: "DepartmentCourses")
 }
 
 model Topic {
@@ -50,18 +59,15 @@ model Topic {
 
   Quiz Quiz[]
 }
-
+ 
 model Quiz {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
-
-  
   topicId           String    @db.ObjectId
   topic             Topic     @relation(fields: [topicId], references: [id])
   createdAt         DateTime  @default(now())
-
-
-  Question Question[]
+  questions         Question[] 
 }
+
 
 model Question {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
@@ -80,4 +86,20 @@ model Answer {
 
   text              String    
   isCorrect         Boolean   
+}
+
+
+model Projects {
+  id            String             @id @default(auto()) @map("_id") @db.ObjectId
+  courseId      String             @db.ObjectId
+  course        Course             @relation(fields: [courseId], references: [id])
+  project       String
+  solutions     ProjectSolutions[] 
+}
+
+model ProjectSolutions {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  projectId  String    @db.ObjectId
+  project    Projects  @relation(fields: [projectId], references: [id])
+  link       String    
 }

@@ -53,18 +53,18 @@ export default function CoursePricing() {
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-black p-4">
         <div className="text-center">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-2 text-main ">
-  Our Course Pricing
-</h1>
-<p className="text-lg md:text-xl text-gray-700 mt-">
-  Choose the perfect plan to kickstart your journey
-</p>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-2 text-main ">
+            Specialized Learning Fee
+          </h1>
+          <p className="text-lg md:text-xl text-gray-700 mt-">
+            Choose the perfect plan to kickstart your journey
+          </p>
 
         </div>
 
         {/* Pricing Section */}
         <div className="flex flex-col lg:flex-row gap-6 mt-12 items-center justify-center">
-          
+
           {/* Self-Led Package */}
           <div className="w-[300px] bg-white p-6 rounded-md shadow-md flex flex-col items-center text-center space-y-4">
             <p className="text-lg font-semibold">Self-Led</p>
@@ -102,7 +102,7 @@ export default function CoursePricing() {
               Enroll now
             </button>
           </div>
-          
+
         </div>
       </div>
     </div>

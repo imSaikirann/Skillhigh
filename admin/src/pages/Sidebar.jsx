@@ -11,7 +11,7 @@ export default function Sidebar() {
 
   const toggleDropdownCourses = () => setIsDropdownOpenCourses(!isDropdownOpenCourses);
   const toggleDropdownDashboard = () => setIsDropdownOpenDashboard(!isDropdownOpenDashboard);
-  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser); // Corrected this line
+  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser); 
 
   const closeSidebar = () => setIsSidebarOpen(false);
 
@@ -54,13 +54,11 @@ export default function Sidebar() {
             </button>
             {isDropdownOpenCourses && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
-                <Link to="/courses/add" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  Add Course
+                <Link to="/dashboard/departments" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                  Departments
                 </Link>
                
-                <Link to="/courses/manage" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  Manage Courses
-                </Link>
+               
               </div>
             )}
           </div>

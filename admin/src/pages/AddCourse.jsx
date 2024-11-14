@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../auth/axiosConfig';
 import { AppContext } from '../store/StoreContext';
 import Alert from '../components/Alert';
@@ -6,15 +7,18 @@ import Spinner from '../components/Spinner';
 
 export default function AddCourse() {
     const { fetchCourses, loading, setLoading } = useContext(AppContext);
+    const { departmentId } = useParams();
+
     const [formData, setFormData] = useState({
         courseName: '',
         courseDescription: '',
         courseCount: '',
         price: '',
         image: null,
+        departmentId: '',
     });
+
     const [imageName, setImageName] = useState('');
-    
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
@@ -36,11 +40,12 @@ export default function AddCourse() {
         formDataToSend.append('courseDescription', formData.courseDescription);
         formDataToSend.append('courseCount', formData.courseCount);
         formDataToSend.append('price', formData.price);
+        formDataToSend.append('departmentId', departmentId);
         if (formData.image) {
             formDataToSend.append('courseThumbnail', formData.image);
         }
 
-        setLoading(true); 
+        setLoading(true);
 
         try {
             const response = await axios.post('/api/v1/course/createCourse', formDataToSend, {
@@ -50,7 +55,7 @@ export default function AddCourse() {
             });
             setAlertMessage(response.data.message);
             setAlertVisible(true);
-            
+
             // Reset the form data
             setFormData({
                 courseName: '',
@@ -58,11 +63,13 @@ export default function AddCourse() {
                 courseCount: '',
                 price: '',
                 image: null,
+                departmentId: '', 
             });
-            setImageName(''); // Clear the image name
+            setImageName('');
 
             fetchCourses();
         } catch (error) {
+            console.log(error)
             setAlertMessage(error.response?.data?.message || "Error while adding course.");
             setAlertVisible(true);
         } finally {
@@ -70,20 +77,22 @@ export default function AddCourse() {
         }
     };
 
-    // Function to close alert
+   
+
     const handleAlertClose = () => {
         setAlertVisible(false);
     };
 
     return (
         <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg font-poppins">
-            <Alert 
-                message={alertMessage} 
-                isVisible={alertVisible} 
-                onClose={handleAlertClose} 
+            <Alert
+                message={alertMessage}
+                isVisible={alertVisible}
+                onClose={handleAlertClose}
             />
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">Add New Course</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
+              
                 {/* Course Title */}
                 <div>
                     <label className="block text-gray-600 font-medium mb-1" htmlFor="courseName">
@@ -188,7 +197,7 @@ export default function AddCourse() {
                         type="submit"
                         className="w-full bg-main text-white font-semibold py-2 rounded-md transition duration-200 hover:bg-green-600"
                     >
-                     {!loading ? "Add Course":<Spinner/>}
+                        {!loading ? "Add Course" : <Spinner />}
                     </button>
                 </div>
             </form>

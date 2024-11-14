@@ -3,6 +3,10 @@ const userRoutes = require('./routes/userRoutes')
 const courseRoutes = require('./routes/courseRoutes')
 const topicRoutes = require('./routes/topicRoutes')
 const quizRoutes = require('./routes/quizRoutes')
+const departmentRoutes = require('./routes/departmentRoutes')
+const projectRoutes = require('./routes/projectsRoutes')
+
+
 
 
 
@@ -11,7 +15,7 @@ const express = require('express');
 require('dotenv').config(); 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; 
 
 const allowedOrigins = [
     'http://localhost:5173', 
@@ -36,8 +40,12 @@ app.use('/api/v1/user',userRoutes)
 app.use('/api/v1/course',courseRoutes)
 app.use('/api/v1/topic',topicRoutes)
 app.use('/api/v1/topicQuiz', quizRoutes)
+app.use('/api/v1/department', departmentRoutes)
+app.use('/api/v1/project', projectRoutes)
 
 
+ 
+ 
 
 
 

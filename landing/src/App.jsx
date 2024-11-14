@@ -8,6 +8,7 @@ import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
 import UserProfile from "./pages/UserProfile"
 import Course from "./pages/Course"
+import Privacy from "./pages/Privacy"
 function App() {
 
 
@@ -22,7 +23,7 @@ function App() {
       <Route path="/signup" element={<Signup/>}/>
       <Route path="/profile" element={<UserProfile/>}/>
       <Route path="/courses" element={<Course/>}>
-
+     
 
 
 
@@ -30,6 +31,7 @@ function App() {
 
 
       </Route>
+      <Route path="/privacy-policy" element={<Privacy/>}></Route>
     </Routes>
     <Footer/>
    </div>

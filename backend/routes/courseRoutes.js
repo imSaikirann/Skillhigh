@@ -33,8 +33,8 @@ const upload = multer({
 
 // Route to create a new course
 router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) => {
-    const { courseName, courseDescription, courseCount, price } = req.body;
-    const courseThumbnail = req.file ? req.file.location : null; 
+    const { courseName, courseDescription, courseCount, price, departmentId } = req.body;
+    const courseThumbnail = req.file ? req.file.location : null;
 
     try {
         const data = await prisma.course.create({
@@ -42,8 +42,9 @@ router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) 
                 courseName,
                 courseDescription,
                 courseThumbnail,
-                courseCount: parseInt(courseCount), 
-                price: parseFloat(price) 
+                courseCount: parseInt(courseCount),
+                price: parseFloat(price),
+                department: { connect: { id: departmentId } } // Associate course with department
             }
         });
 
@@ -52,6 +53,31 @@ router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) 
         res.status(500).json({ message: "Error while creating new Course", error });
     }
 });
+
+// Route to update a course
+router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, res) => {
+    const { id } = req.params;
+    const { courseName, courseDescription, courseCount, price, departmentId } = req.body;
+    const courseThumbnail = req.file ? req.file.location : null;
+
+    try {
+        const course = await prisma.course.update({
+            where: { id },
+            data: {
+                courseName,
+                courseDescription,
+                courseThumbnail,
+                courseCount: parseInt(courseCount),
+                price: price ? parseFloat(price) : undefined,
+                department: departmentId ? { connect: { id: departmentId } } : undefined // Update department if provided
+            }
+        });
+        res.status(200).json({ message: "Course updated", course });
+    } catch (error) {
+        res.status(500).json({ message: "Error while updating course", error });
+    }
+});
+
 
 // Route to delete a course
 router.delete('/deleteCourse/:id', async (req, res) => {
@@ -75,35 +101,19 @@ router.delete('/deleteCourse/:id', async (req, res) => {
     }
 });
 
-// Route to update a course
-router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, res) => {
-    const { id } = req.params;
-    const { courseName, courseDescription, courseCount, price } = req.body;
-    const courseThumbnail = req.file ? req.file.location : null; 
 
-    try {
-        const course = await prisma.course.update({
-            where: { id },
-            data: {
-                courseName,
-                courseDescription,
-                courseThumbnail,
-                courseCount: parseInt(courseCount), 
-                price: price ? parseFloat(price) : undefined 
-            }
-        });
-        res.status(200).json({ message: "Course updated", course });
-    } catch (error) {
-        res.status(500).json({ message: "Error while updating course", error });
-    }
-});
 
 // Route to get all courses
 router.get('/getAllCourse', async (req, res) => {
     try {
-        const data = await prisma.course.findMany({});
+        const data = await prisma.course.findMany({
+            include:{
+                projects:true
+            }
+        });
         res.status(200).json(data);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error while getting all courses", error });
     }
 });

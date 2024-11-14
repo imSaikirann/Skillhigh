@@ -46,7 +46,7 @@ export default function Footer() {
             <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
             <ul className="text-gray-700 space-y-2">
               <li><a href="#about" className="hover:text-main">About</a></li>
-              <li><a href="#services" className="hover:text-main">Carrers</a></li>
+              <li><a href="#services" className="hover:text-main">Careers</a></li>
               <li><a href="#courses" className="hover:text-main">Courses</a></li>
               <li><a href="#contact" className="hover:text-main">Contact Us</a></li>
             </ul>
@@ -64,8 +64,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="mt-8 text-center border-t border-gray-700 pt-4 text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} Skill High. All rights reserved.
+        <div className="mt-8 text-center flex flex-row items-center justify-between border-t border-gray-700 pt-4 text-gray-800 text-sm">
+          <div>
+            <a href="/privacy-policy" className="hover:text-main mx-2">Privacy Policy</a>
+            <span>|</span>
+            <a href="/terms-and-conditions" className="hover:text-main mx-2">Terms & Conditions</a>
+          </div>
+          <div className="mt-2">
+            &copy; {new Date().getFullYear()} Skill High. All rights reserved.
+          </div>
         </div>
       </div>
     </footer>
