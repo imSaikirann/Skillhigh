@@ -9,6 +9,9 @@ import Signup from "./pages/Signup"
 import UserProfile from "./pages/UserProfile"
 import Course from "./pages/Course"
 import Privacy from "./pages/Privacy"
+import DepartmentsList from "./pages/DepartmentsList"
+import AllCourses from "./pages/AllCourses"
+import TermsAndConditions from "./pages/Terms&Conditions"
 function App() {
 
 
@@ -23,15 +26,15 @@ function App() {
       <Route path="/signup" element={<Signup/>}/>
       <Route path="/profile" element={<UserProfile/>}/>
       <Route path="/courses" element={<Course/>}>
-     
-
-
-
-
-
-
+    
       </Route>
       <Route path="/privacy-policy" element={<Privacy/>}></Route>
+      <Route path="/terms-and-conditions" element={<TermsAndConditions/>}></Route>
+
+      <Route path="/d" element={<DepartmentsList/>}></Route>
+      <Route path="/d/courses" element={<AllCourses/>}></Route>
+
+
     </Routes>
     <Footer/>
    </div>

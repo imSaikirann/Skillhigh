@@ -58,7 +58,10 @@ export default function Footer() {
             <ul className="text-gray-700 space-y-2">
               <li>Email: <a href="mailto:skillhighedutech@gmail.com" className="hover:text-main">skillhighedutech@gmail.com</a></li>
               <li>Phone: 9182661204</li>
-              <li>Address: 123 Skill High St, City, Country</li>
+              <li>Address: P.No: 169, First Floor. 
+Woods Enclave, Woods Central Park, Suchitra Sub Post, Pet Basheerabad, 
+Suchitra Junction, Quthbullapur, Medchal-Malkajgiri Dist., Telangana, India 
+500067.</li>
             </ul>
           </div>
         </div>
