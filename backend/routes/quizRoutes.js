@@ -1,13 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
 const express = require('express');
 
-const router = express.Router(); 
-const prisma = new PrismaClient(); 
+const router = express.Router();
+const prisma = new PrismaClient();
 
-// POST route to add a quiz question and answers
+// CREATE: Add a quiz question and answers to a specific topic
 router.post('/addquiz/:topicId', async (req, res) => {
     const { topicId } = req.params;
-    const { text, answers } = req.body; 
+    const { text, answers } = req.body;
 
     try {
         // Find or create the quiz
@@ -32,7 +32,7 @@ router.post('/addquiz/:topicId', async (req, res) => {
         });
 
         const createdAnswers = await Promise.all(
-            answers.map((answer) => 
+            answers.map((answer) =>
                 prisma.answer.create({
                     data: {
                         text: answer.text,
@@ -64,15 +64,13 @@ router.post('/addquiz/:topicId', async (req, res) => {
     }
 });
 
-// GET route to fetch all questions and answers by topicId
-// GET route to fetch all questions and answers by topicId
+// READ: Get all questions and answers for a topic
 router.get('/getquiz/:topicId', async (req, res) => {
     const { topicId } = req.params;
 
     try {
-        // Fetch all quizzes related to the specified topicId, including their questions and answers
         const quizzes = await prisma.quiz.findMany({
-            where: {topicId: topicId }, 
+            where: { topicId },
             include: {
                 questions: {
                     include: {
@@ -93,5 +91,86 @@ router.get('/getquiz/:topicId', async (req, res) => {
     }
 });
 
+// UPDATE: Update a question or its answers
+router.put('/updatequestion/:questionId', async (req, res) => {
+    const { questionId } = req.params;
+    const { text, answers } = req.body;
+
+    try {
+        const updatedQuestion = await prisma.question.update({
+            where: { id: questionId },
+            data: { text },
+        });
+
+        await Promise.all(
+            answers.map(async (answer) => {
+                await prisma.answer.update({
+                    where: { id: answer.id },
+                    data: {
+                        text: answer.text,
+                        isCorrect: answer.isCorrect,
+                    },
+                });
+            })
+        );
+
+        res.status(200).json({ message: "Question and answers updated successfully", question: updatedQuestion });
+    } catch (error) {
+        console.error("Error updating question and answers:", error);
+        res.status(500).json({ error: "An error occurred while updating question and answers." });
+    }
+});
+
+// DELETE: Delete a question and its answers
+router.delete('/deletequestion/:questionId', async (req, res) => {
+    const { questionId } = req.params;
+
+    try {
+        await prisma.answer.deleteMany({
+            where: { questionId },
+        });
+        
+        await prisma.question.delete({
+            where: { id: questionId },
+        });
+
+        res.status(200).json({ message: "Question and answers deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting question and answers:", error);
+        res.status(500).json({ error: "An error occurred while deleting question and answers." });
+    }
+});
+
+// DELETE: Delete a quiz and its associated questions and answers
+router.delete('/deletequiz/:quizId', async (req, res) => {
+    const { quizId } = req.params;
+
+    try {
+        const questions = await prisma.question.findMany({
+            where: { quizId },
+            include: { answers: true },
+        });
+
+        await Promise.all(
+            questions.map(async (question) => {
+                await prisma.answer.deleteMany({
+                    where: { questionId: question.id },
+                });
+                await prisma.question.delete({
+                    where: { id: question.id },
+                });
+            })
+        );
+ 
+        await prisma.quiz.delete({
+            where: { id: quizId },
+        });
+
+        res.status(200).json({ message: "Quiz and all associated questions and answers deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting quiz and associated questions and answers:", error);
+        res.status(500).json({ error: "An error occurred while deleting quiz and associated questions and answers." });
+    }
+});
 
 module.exports = router;

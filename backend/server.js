@@ -18,8 +18,10 @@ const app = express();
 const PORT = process.env.PORT || 3000; 
 
 const allowedOrigins = [
+    'http://localhost:5174', 
     'http://localhost:5173', 
-    'https://skillhigh-3utd.vercel.app'
+    'https://skillhigh-3utd.vercel.app',
+    'https://skillhigh.in'
 ];
 
 app.use(cors({
@@ -35,7 +37,7 @@ app.use(cors({
 }));
 
 // Middleware to parse JSON requests
-app.use(express.json());
+app.use(express.json()); 
 app.use('/api/v1/user',userRoutes)
 app.use('/api/v1/course',courseRoutes)
 app.use('/api/v1/topic',topicRoutes)
