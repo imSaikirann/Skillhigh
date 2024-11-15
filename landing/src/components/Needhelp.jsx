@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function NeedHelp() {
   const gradientStyle = {
@@ -19,9 +20,12 @@ export default function NeedHelp() {
         Join SkillHigh today and start your journey to becoming industry-ready with hands-on projects and expert-led courses.
       </p>
       
+      <Link to="/d">
       <button className="mt-4 bg-white text-green-700 font-bold py-2 px-6 md:px-8 lg:px-10 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out">
         Get Started
       </button>
+      </Link>
+      
     </div>
   );
 }
