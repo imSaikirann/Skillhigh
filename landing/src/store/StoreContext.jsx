@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get('/api/v1/department/getDepartments');
       setCourses(response.data);
+      console.log(response)
     } catch (error) {
       console.log(error);
     }

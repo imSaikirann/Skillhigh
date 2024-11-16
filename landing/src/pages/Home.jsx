@@ -6,6 +6,7 @@ import Hero2 from '../components/Hero2'
 import Choose from '../components/Choose'
 import Needhelp from '../components/Needhelp'
 import TestimonialSlider from '../components/Testimonial'
+import Mentors from '../components/Mentors'
 
 
 function Home() {
@@ -17,7 +18,7 @@ function Home() {
     <Needhelp/>
     <FQA/>
     <TestimonialSlider/>
-
+    <Mentors/>
     <ContactUs/>
 
     </>

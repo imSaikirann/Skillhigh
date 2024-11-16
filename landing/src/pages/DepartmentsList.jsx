@@ -5,7 +5,7 @@ import { AppContext } from '../store/StoreContext';
 const DepartmentsList = () => {
   const { courses, selectedDepartmentCourses, fetchCoursesByDepartmentId } = useContext(AppContext);
   const [activeDepartmentId, setActiveDepartmentId] = useState(null);
-
+  console.log(courses)
   if (!courses) {
     return <div className="text-center py-10">Loading...</div>;
   }
