@@ -5,6 +5,10 @@ const topicRoutes = require('./routes/topicRoutes')
 const quizRoutes = require('./routes/quizRoutes')
 const departmentRoutes = require('./routes/departmentRoutes')
 const projectRoutes = require('./routes/projectsRoutes')
+const faqRoutes = require('./routes/faqsRoutes')
+const contactusRoutes = require('./routes/contactusRoutes')
+const testimonalRoutes = require('./routes/testimonalRoutes')
+const mentorRoutes = require('./routes/mentorRoutes')
 
 
 
@@ -22,6 +26,7 @@ const allowedOrigins = [
     'http://localhost:5173', 
     'https://skillhigh-3utd.vercel.app',
     'https://skillhigh.in'
+    
 ];
 
 app.use(cors({
@@ -44,6 +49,14 @@ app.use('/api/v1/topic',topicRoutes)
 app.use('/api/v1/topicQuiz', quizRoutes)
 app.use('/api/v1/department', departmentRoutes)
 app.use('/api/v1/project', projectRoutes)
+app.use('/api/v1/faqs', faqRoutes )
+app.use('/api/v1/contacts', contactusRoutes )
+app.use('/api/v1/testimonal', testimonalRoutes  )
+app.use('/api/v1/mentors', mentorRoutes )
+
+
+
+
 
 
  

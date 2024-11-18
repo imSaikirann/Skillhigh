@@ -18,88 +18,111 @@ model User {
   email    String @unique
   password String
 }
+
 model Department {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  departmentName String @unique
-  description String
- courses        Course[] @relation("DepartmentCourses")
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  departmentName String   @unique
+  description    String
+  courses        Course[] @relation("DepartmentCourses")
 }
 
 model Course {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  courseName        String    @unique
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  courseName        String   @unique
   courseDescription String
   courseThumbnail   String
   courseCount       Int
   price             Float?
-  updatedAt         DateTime  @updatedAt
-  createdAt         DateTime  @default(now())
+  updatedAt         DateTime @updatedAt
+  createdAt         DateTime @default(now())
 
-  topics            Topic[]   @relation("CourseTopics") 
-  projects Projects[]
-   departmentId      String     @db.ObjectId
-  department        Department @relation(fields: [departmentId], references: [id], name: "DepartmentCourses")
+  topics       Topic[]    @relation("CourseTopics")
+  projects     Projects[]
+  departmentId String     @db.ObjectId
+  department   Department @relation(fields: [departmentId], references: [id], name: "DepartmentCourses")
 }
 
 model Topic {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  title             String
-  description       String
-  video             String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  video       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-
-  courseId          String    @db.ObjectId
-  course            Course    @relation(fields: [courseId], references: [id], name: "CourseTopics")
-
-
- 
-
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id], name: "CourseTopics")
 
   Quiz Quiz[]
 }
- 
+
 model Quiz {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  topicId           String    @db.ObjectId
-  topic             Topic     @relation(fields: [topicId], references: [id])
-  createdAt         DateTime  @default(now())
-  questions         Question[] 
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  topicId   String     @db.ObjectId
+  topic     Topic      @relation(fields: [topicId], references: [id])
+  createdAt DateTime   @default(now())
+  questions Question[]
 }
 
-
 model Question {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  quizId            String    @db.ObjectId
-  quiz              Quiz      @relation(fields: [quizId], references: [id])
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  quizId String @db.ObjectId
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
 
-  text              String    
-  answers           Answer[]  
-  correctAnswerId   String?   
+  text            String
+  answers         Answer[]
+  correctAnswerId String?
 }
 
 model Answer {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  questionId        String    @db.ObjectId
-  question          Question  @relation(fields: [questionId], references: [id])
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  questionId String   @db.ObjectId
+  question   Question @relation(fields: [questionId], references: [id])
 
-  text              String    
-  isCorrect         Boolean   
+  text      String
+  isCorrect Boolean
 }
 
-
 model Projects {
-  id            String             @id @default(auto()) @map("_id") @db.ObjectId
-  courseId      String             @db.ObjectId
-  course        Course             @relation(fields: [courseId], references: [id])
-  project       String
-  solutions     ProjectSolutions[] 
+  id        String             @id @default(auto()) @map("_id") @db.ObjectId
+  courseId  String             @db.ObjectId
+  course    Course             @relation(fields: [courseId], references: [id])
+  project   String
+  solutions ProjectSolutions[]
 }
 
 model ProjectSolutions {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  projectId  String    @db.ObjectId
-  project    Projects  @relation(fields: [projectId], references: [id])
-  link       String    
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String   @db.ObjectId
+  project   Projects @relation(fields: [projectId], references: [id])
+  link      String
+}
+
+model FAQ {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  question String @unique
+  answer   String
+}
+
+model Contactus {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  email   String
+  phone   String
+  message String
+}
+
+model Testimonals {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  collageName String
+  review      String
+}
+
+model Mentors {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  photo         String
+  name          String
+  qualification String
+  company       String
 }
