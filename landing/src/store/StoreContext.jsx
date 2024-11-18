@@ -12,8 +12,8 @@ export const AppProvider = ({ children }) => {
   const fetchCourses = async () => {
     try {
       const response = await axios.get('/api/v1/department/getDepartments');
-      setCourses(response.data);
-      console.log(response)
+      setCourses(response.data.departments);
+      console.log(response.data)
     } catch (error) {
       console.log(error);
     }
