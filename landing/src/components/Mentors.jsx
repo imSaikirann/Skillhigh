@@ -1,38 +1,75 @@
-import React from 'react';
-import Mentor from '../assets/Cofounder.jpg';
+import React from "react";
+import Mentor from "../assets/Cofounder.jpg";
 
 export default function Mentors() {
   const mentors = [
-    { name: 'Lakshmana', qualification: "Graduate Engineer Trainee", company: "ZF", phoneImage: Mentor },
+    { name: "Lakshmana", qualification: "Graduate Engineer Trainee", company: "ZF", phoneImage: Mentor },
+    { name: "John Doe", qualification: "Software Developer", company: "Google", phoneImage: Mentor },
+    { name: "Jane Smith", qualification: "Data Analyst", company: "Microsoft", phoneImage: Mentor },
   ];
 
   return (
-    <div className='flex flex-col items-center justify-center'>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-black mb-6 drop-shadow-md text-center md:text-left">
-        Meet Our Mentor
+    <div className="flex flex-col items-center justify-center py-16 font-inter bg-gray-50">
+      {/* Heading */}
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-12 text-center">
+        Meet Our Mentors
       </h1>
-      <div className="  grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
-    
-    {mentors.map((mentor, index) => (
-      <div key={index} className="relative w-full max-w-xs mx-auto rounded-lg overflow-hidden shadow-lg">
-        <img
-          src={mentor.phoneImage}
-          alt={`${mentor.name} phone`}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-16 left-4 text-white font-inter font-bold text-2xl bg-opacity-50 p-2 rounded-lg z-10">
-          {mentor.name}
-        </div>
-        <div className="absolute bottom-12 left-4 text-white text-sm bg-opacity-50 p-2 rounded-lg z-10">
-          {mentor.qualification}
-        </div>
-        <div className="absolute bottom-8 left-4 text-white text-sm bg-opacity-50 p-2 rounded-lg z-10">
-          {mentor.company}
+
+      {/* Scrolling Wrapper */}
+      <div className="relative w-full overflow-hidden">
+        <div
+          className="flex space-x-6 sm:space-x-8 animate-scroll"
+          style={{
+            animation: "scroll 25s linear infinite",
+          }}
+        >
+          {[...mentors, ...mentors].map((mentor, index) => (
+            <div
+              key={index}
+              className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96 h-80 sm:h-96 rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-300"
+            >
+              {/* Image */}
+              <img
+                src={mentor.phoneImage}
+                alt={`${mentor.name}`}
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90"></div>
+              {/* Text */}
+              <div className="absolute bottom-6 left-4 right-4 sm:bottom-8 sm:left-6 sm:right-6 space-y-2 text-center text-white">
+                <h3 className="font-bold text-lg sm:text-xl">{mentor.name}</h3>
+                <p className="text-xs sm:text-sm md:text-base">{mentor.qualification}</p>
+                <p className="text-xs sm:text-sm md:text-base">{mentor.company}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    ))}
-  </div>
+
+      {/* Styling */}
+      <style jsx>
+        {`
+          @keyframes scroll {
+            0% {
+              transform: translateX(0%);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .animate-scroll {
+            display: flex;
+            white-space: nowrap;
+            will-change: transform;
+            cursor: pointer;
+            transition: animation-play-state 0.3s ease;
+          }
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}
+      </style>
     </div>
-  
   );
 }
