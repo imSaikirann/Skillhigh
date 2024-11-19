@@ -21,7 +21,7 @@ export default function Courses() {
     };
     fetchCourses();
   }, [departmentId]);
-  if (!courses.length) return <div className='flex item-center justify-center h-screen px-6 sm:pl-80'><Spinner /></div>;
+
   return (
     <div className="p-8 sm:pl-80 font-poppins">
       <div className="flex justify-between items-center mb-4">

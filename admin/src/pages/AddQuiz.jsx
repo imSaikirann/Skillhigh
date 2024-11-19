@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 export default function AddQuiz() {
   const [questionText, setQuestionText] = useState('');
   const [answers, setAnswers] = useState([]);
-  const [editMode, setEditMode] = useState(false); // Manage form visibility
+  const [editMode, setEditMode] = useState(false); // To toggle form visibility
   const [questions, setQuestions] = useState([]); // Store all questions
   const { topicId } = useParams();
 
@@ -14,7 +14,7 @@ export default function AddQuiz() {
       try {
         const response = await axios.get(`/api/v1/topicQuiz/getquiz/${topicId}`);
         const quizData = response.data.quizzes[0];
-        setQuestions(quizData.questions || []);
+        setQuestions(quizData?.questions || []); // Ensure questions exist
       } catch (error) {
         console.error('Error fetching quiz data:', error);
       }
@@ -27,9 +27,9 @@ export default function AddQuiz() {
   };
 
   const handleAnswerChange = (index, field, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index][field] = value;
-    setAnswers(newAnswers);
+    const updatedAnswers = [...answers];
+    updatedAnswers[index][field] = value;
+    setAnswers(updatedAnswers);
   };
 
   const handleAddAnswer = () => {
@@ -43,12 +43,14 @@ export default function AddQuiz() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/api/v1/topicQuiz/addquiz/${topicId}`, {
-        text: questionText,
+      await axios.post(`/api/v1/topicQuiz/addquiz/${topicId}`, {
+        text:questionText,
         answers,
       });
-      alert('Quiz added successfully!');
+      alert('Quiz question added successfully!');
       setEditMode(false);
+      setQuestionText('');
+      setAnswers([]);
     } catch (error) {
       console.error('Error adding quiz:', error);
       alert('Failed to add quiz.');
@@ -95,7 +97,7 @@ export default function AddQuiz() {
           {!editMode ? (
             <div>
               <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Quiz Questions</h2>
-              {questions.map((question, index) => (
+              {questions.map((question) => (
                 <div key={question.id} className="mb-4 p-4 border-b">
                   <div className="flex justify-between items-center">
                     <div>
@@ -125,17 +127,10 @@ export default function AddQuiz() {
                   </div>
                 </div>
               ))}
-              <button
-                type="button"
-                onClick={() => setEditMode(true)}
-                className="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
-              >
-                Edit Quiz
-              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="grid gap-4">
-              <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Edit Quiz</h2>
+              <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Add/Edit Question</h2>
 
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Question:</label>
@@ -189,7 +184,7 @@ export default function AddQuiz() {
                 type="submit"
                 className="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-200"
               >
-                Submit Quiz
+                Submit Question
               </button>
             </form>
           )}

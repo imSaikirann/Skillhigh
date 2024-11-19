@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from '../auth/axiosConfig';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../components/Spinner';  
+import Spinner from '../components/Spinner';
+import Alert from '../components/Alert';
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
@@ -14,7 +15,9 @@ export default function Departments() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(null);
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,14 +25,18 @@ export default function Departments() {
   }, []);
 
   const fetchDepartments = async () => {
-    setLoading(true);  
+    setLoading(true);
     try {
       const response = await axios.get('/api/v1/department/getDepartments');
-      setDepartments(response.data);
+      setDepartments(response.data.departments);
+      console.log(response.data)
+      setAlertMessage(response.data.message);
+      setAlertVisible(true);
     } catch (error) {
       console.error("Error fetching departments:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);  // End loading
   };
 
   const handleAddDepartmentClick = () => {
@@ -41,38 +48,16 @@ export default function Departments() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isEditing) {
-      await updateDepartment(editId, departmentName, description);
-    } else {
-      await addDepartment(departmentName, description);
-    }
-    setShowFormModal(false);
-    fetchDepartments();
-  };
-
-  const addDepartment = async (departmentName, description) => {
     try {
-      await axios.post('/api/v1/department/addDepartments', { departmentName, description });
-    } catch (error) {
-      console.error("Error adding department:", error);
-    }
-  };
-
-  const updateDepartment = async (id, departmentName, description) => {
-    try {
-      await axios.put(`/api/v1/department/updateDepartments/${id}`, { departmentName, description });
-    } catch (error) {
-      console.error("Error updating department:", error);
-    }
-  };
-
-  const deleteDepartment = async () => {
-    try {
-      await axios.delete(`/api/v1/department/deleteDepartments/${selectedDepartment.id}`);
+      if (isEditing) {
+        await axios.put(`/api/v1/department/updateDepartments/${editId}`, { departmentName, description });
+      } else {
+        await axios.post('/api/v1/department/addDepartments', { departmentName, description });
+      }
       fetchDepartments();
-      setShowDeleteConfirm(false);
+      setShowFormModal(false);
     } catch (error) {
-      console.error("Error deleting department:", error);
+      console.error(isEditing ? "Error updating department:" : "Error adding department:", error);
     }
   };
 
@@ -91,6 +76,24 @@ export default function Departments() {
     setDropdownVisible(null);
   };
 
+  const handleAlertClose = () => {
+    setAlertVisible(false);
+};
+  const deleteDepartment = async () => {
+    try {
+      if (selectedDepartment) {
+       const res =  await axios.delete(`/api/v1/department/deleteDepartments/${selectedDepartment.id}`);
+       setAlertMessage(res.data.message);
+       setAlertVisible(true);
+
+        fetchDepartments();
+        setShowDeleteConfirm(false);
+      }
+    } catch (error) {
+      console.error("Error deleting department:", error);
+    }
+  };
+
   const toggleDropdown = (departmentId) => {
     setDropdownVisible(dropdownVisible === departmentId ? null : departmentId);
   };
@@ -101,6 +104,11 @@ export default function Departments() {
 
   return (
     <div className="container mx-auto p-8 pl-0 sm:pl-80 font-poppins">
+        <Alert 
+                message={alertMessage} 
+                isVisible={alertVisible} 
+                onClose={handleAlertClose} 
+            />
       <h1 className="text-4xl font-bold text-center mb-8 text-main">Manage Departments</h1>
 
       <button
@@ -110,9 +118,11 @@ export default function Departments() {
         Add Department
       </button>
 
-      {loading ? (  // Show spinner when loading
-        <Spinner />
-      ) : (
+      {loading ? (
+        <div className="h-screen flex items-center justify-center">
+          <Spinner />
+        </div>
+      ) : departments.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-24 sm:mt-0">
           {departments.map((department) => (
             <div
@@ -121,7 +131,10 @@ export default function Departments() {
             >
               <h3 className="text-xl font-semibold text-main">{department.departmentName}</h3>
               <p className="text-gray-600 mt-2">{department.description}</p>
-              <button className="bg-main px-4 py-2 rounded-md mt-4 text-white" onClick={() => handleTopics(department.id)}>
+              <button
+                className="bg-main px-4 py-2 rounded-md mt-4 text-white"
+                onClick={() => handleTopics(department.id)}
+              >
                 View courses
               </button>
               <div className="absolute top-4 right-4">
@@ -149,6 +162,8 @@ export default function Departments() {
             </div>
           ))}
         </div>
+      ) : (
+        <div className="text-center text-gray-600 mt-12">No departments found.</div>
       )}
 
       {/* Add/Edit Department Modal */}

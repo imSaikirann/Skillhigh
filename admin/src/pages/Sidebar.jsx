@@ -17,7 +17,7 @@ export default function Sidebar() {
 
   return (
     <div className=''>
-      <div className="md:hidden flex items-center p-4 h-16 bg-main text-white">
+      <div className="md:hidden flex items-center p-4 h-16 bg-main text-white ">
         <button onClick={() => setIsSidebarOpen(true)}>
           <Bars3Icon className="h-6 w-6" />
         </button>
@@ -41,6 +41,10 @@ export default function Sidebar() {
         <nav className="flex flex-col gap-4 px-4">
           <Link to="/" className="rounded-md p-2" onClick={closeSidebar}>
             Admin Dashboard
+          </Link>
+
+          <Link to="/contactus" className="rounded-md p-2" onClick={closeSidebar}>
+            Customers
           </Link>
 
           {/* Courses Dropdown */}
@@ -69,16 +73,19 @@ export default function Sidebar() {
               onClick={toggleDropdownDashboard}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
-              Dashboard
+              Website Dashboard
               <span>{isDropdownOpenDashboard ? '-' : '+'}</span>
             </button>
             {isDropdownOpenDashboard && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
-                <Link to="/dashboard/courses" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  View Courses
+                <Link to="/website/faq" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                  FAQS
                 </Link>
-                <Link to="/dashboard/user-reports" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  User Reports
+                <Link to="/website/mentors" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                  Mentors
+                </Link>
+                <Link to="/reviews" className="text-main p-2 rounded-md" onClick={closeSidebar}>
+                Testimonals
                 </Link>
               </div>
             )}

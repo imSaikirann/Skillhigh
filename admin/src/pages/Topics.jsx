@@ -26,7 +26,7 @@ export default function Topics() {
     };
 
     if (error) return <div className="text-red-500 text-center py-4">{error}</div>;
-    if (!topics.length) return <div className='flex items-center justify-center h-screen px-6 sm:pl-80'><Spinner /></div>;
+   
 
     return (
         <div className="container mx-auto p-6 px-6 sm:pl-80 font-poppins">
@@ -68,12 +68,15 @@ export default function Topics() {
                                 className="w-full rounded-lg mb-4"
                             ></video>
                         )}
-                        <button 
-                            className="bg-main text-white font-semibold py-2 px-4 rounded hover:bg-main-dark transition-colors w-full"
-                            onClick={() => handleTaskBox(topic.id)}
-                        >
-                            Open TaskBox
-                        </button>
+                        {/* Only show the "Open TaskBox" button for every 5th topic */}
+                        {(index + 1) % 5 === 0 && (
+                            <button 
+                                className="bg-main text-white font-semibold py-2 px-4 rounded hover:bg-main-dark transition-colors w-full"
+                                onClick={() => handleTaskBox(topic.id)}
+                            >
+                                Open TaskBox
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>

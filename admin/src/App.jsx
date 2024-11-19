@@ -9,6 +9,11 @@ import Topics from "./pages/Topics";
 import Departments from "./pages/Departments";
 import AddQuiz from "./pages/AddQuiz";
 import Projects from "./pages/Projects";
+import Users from "./pages/Users";
+import FAQs from "./pages/FAQs";
+import Contactus from "./pages/Contactus";
+import Testimonals from "./pages/Testimonals";
+import Mentors from "./pages/Mentors";
 
 function App() {
   return (
@@ -24,6 +29,20 @@ function App() {
         <Route path="/dashboard/departments" element={<Departments />} />
         <Route path="/dashboard/departments/courses/topic/:topicId" element={<AddQuiz />} />
         <Route path="/dashboard/courses/projects/:courseId" element={<Projects/>} />
+
+        <Route path="/dashboard/users" element={<Users/>} />
+        <Route path="/website/faq" element={<FAQs/>} />
+        <Route path="/contactus" element={<Contactus/>} />
+        <Route path="/reviews" element={<Testimonals/>} />
+        <Route path="/website/mentors" element={<Mentors/>} />
+
+
+
+
+
+
+
+        
 
 
       </Routes>
