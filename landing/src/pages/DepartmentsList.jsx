@@ -35,7 +35,7 @@ const DepartmentsList = () => {
            <Link to="/d/courses">
            <button
               className="mt-auto bg-main text-white py-2 px-4 rounded-md transition duration-300"
-              onClick={() => handleExploreClick(department.id)}
+              // onClick={() => handleExploreClick(department.id)}
             >
               Explore Courses
             </button>
