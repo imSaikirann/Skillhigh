@@ -9,6 +9,9 @@ const faqRoutes = require('./routes/faqsRoutes')
 const contactusRoutes = require('./routes/contactusRoutes')
 const testimonalRoutes = require('./routes/testimonalRoutes')
 const mentorRoutes = require('./routes/mentorRoutes')
+const adminRoutes = require('./routes/adminRoutes')
+const authenticateAdmin = require('./middleware/adminAuth')
+require('dotenv').config();
 
 
 
@@ -40,6 +43,11 @@ app.use(cors({
     credentials: true
 }));
 
+app.post('/api/checking', authenticateAdmin, (req, res) => {
+    const value = true;
+    res.status(200).json({ message: "Welcome to the admin dashboard", value }); 
+  });
+
 // Middleware to parse JSON requests
 app.use(express.json()); 
 app.use('/api/v1/user',userRoutes)
@@ -52,6 +60,8 @@ app.use('/api/v1/faqs', faqRoutes )
 app.use('/api/v1/contacts', contactusRoutes )
 app.use('/api/v1/testimonal', testimonalRoutes  )
 app.use('/api/v1/mentors', mentorRoutes )
+app.use('/api/v1/admin',adminRoutes)
+
 
 
 
