@@ -3,27 +3,24 @@ import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.jpg';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
+
 export default function Sidebar() {
-  const [isDropdownOpenCourses, setIsDropdownOpenCourses] = React.useState(false);
-  const [isDropdownOpenDashboard, setIsDropdownOpenDashboard] = React.useState(false);
-  const [isDropdownOpenUser, setIsDropdownOpenUser] = React.useState(false);
-  const [isDropdownOpenSettings, setIsDropdownOpenSettings] = React.useState(false);
-
+  const [openDropdown, setOpenDropdown] = React.useState(null); // Tracks the currently open dropdown
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-const navigate = useNavigate()
-
-  const toggleDropdownCourses = () => setIsDropdownOpenCourses(!isDropdownOpenCourses);
-  const toggleDropdownDashboard = () => setIsDropdownOpenDashboard(!isDropdownOpenDashboard);
-  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser);
-  const toggleDropdownSettings = () => setIsDropdownOpenSettings(!isDropdownOpenSettings);
-
+  const navigate = useNavigate();
 
   const closeSidebar = () => setIsSidebarOpen(false);
 
-  const handleLogout = ()=>{
-    localStorage.removeItem('token')
+  const handleDropdownToggle = (dropdown) => {
+    // If the clicked dropdown is already open, close it, otherwise open it
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
     window.location.reload();
-  }
+  };
+
   return (
     <div className=''>
       <div className="md:hidden flex items-center p-4 h-16 bg-main text-white ">
@@ -52,25 +49,23 @@ const navigate = useNavigate()
           </Link>
 
           <Link to="/contactus" className="rounded-md p-2" onClick={closeSidebar}>
-            Customers
+            New Students
           </Link>
 
           {/* Courses Dropdown */}
           <div className="relative">
             <button
-              onClick={toggleDropdownCourses}
+              onClick={() => handleDropdownToggle('courses')}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
               Courses
-              <span>{isDropdownOpenCourses ? '-' : '+'}</span>
+              <span>{openDropdown === 'courses' ? '-' : '+'}</span>
             </button>
-            {isDropdownOpenCourses && (
+            {openDropdown === 'courses' && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
                 <Link to="/dashboard/departments" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   Departments
                 </Link>
-
-
               </div>
             )}
           </div>
@@ -78,13 +73,13 @@ const navigate = useNavigate()
           {/* Dashboard Dropdown */}
           <div className="relative">
             <button
-              onClick={toggleDropdownDashboard}
+              onClick={() => handleDropdownToggle('dashboard')}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
               Website Dashboard
-              <span>{isDropdownOpenDashboard ? '-' : '+'}</span>
+              <span>{openDropdown === 'dashboard' ? '-' : '+'}</span>
             </button>
-            {isDropdownOpenDashboard && (
+            {openDropdown === 'dashboard' && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
                 <Link to="/website/faq" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   FAQS
@@ -93,7 +88,7 @@ const navigate = useNavigate()
                   Mentors
                 </Link>
                 <Link to="/reviews" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                  Testimonals
+                  Testimonials
                 </Link>
               </div>
             )}
@@ -102,13 +97,13 @@ const navigate = useNavigate()
           {/* Users Dropdown */}
           <div className="relative">
             <button
-              onClick={toggleDropdownUsers}
+              onClick={() => handleDropdownToggle('users')}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
               Users
-              <span>{isDropdownOpenUser ? '-' : '+'}</span>
+              <span>{openDropdown === 'users' ? '-' : '+'}</span>
             </button>
-            {isDropdownOpenUser && (
+            {openDropdown === 'users' && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
                 <Link to="/dashboard/users/add" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   Add New User
@@ -120,24 +115,20 @@ const navigate = useNavigate()
             )}
           </div>
 
-          {/* Logout Dropdown */}
+          {/* Settings Dropdown */}
           <div className="relative">
             <button
-              onClick={toggleDropdownSettings}
+              onClick={() => handleDropdownToggle('settings')}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
               Settings
-              <span>{isDropdownOpenSettings ? '-' : '+'}</span>
+              <span>{openDropdown === 'settings' ? '-' : '+'}</span>
             </button>
-            {isDropdownOpenSettings && (
+            {openDropdown === 'settings' && (
               <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
-
                 <button onClick={handleLogout} className="bg-red-500 text-white rounded-md px-4 py-2 font-sans font-medium shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
                   Logout
                 </button>
-
-
-
               </div>
             )}
           </div>
