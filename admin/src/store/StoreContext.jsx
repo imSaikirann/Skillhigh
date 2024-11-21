@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
 
  const [courses,setCourses] = useState([])
  const [loading,setLoading] = useState(false)
+ const [isUser,setUser] = useState(false)
 
 
 
@@ -28,7 +29,8 @@ const fetchCourses = async ()=>{
    courses,
    loading,
    setLoading,
-
+   isUser,
+   setUser,
 
 
 

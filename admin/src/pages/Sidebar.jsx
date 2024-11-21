@@ -2,19 +2,28 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/logo.jpg';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-
+import { useNavigate } from 'react-router-dom';
 export default function Sidebar() {
   const [isDropdownOpenCourses, setIsDropdownOpenCourses] = React.useState(false);
   const [isDropdownOpenDashboard, setIsDropdownOpenDashboard] = React.useState(false);
   const [isDropdownOpenUser, setIsDropdownOpenUser] = React.useState(false);
+  const [isDropdownOpenSettings, setIsDropdownOpenSettings] = React.useState(false);
+
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+const navigate = useNavigate()
 
   const toggleDropdownCourses = () => setIsDropdownOpenCourses(!isDropdownOpenCourses);
   const toggleDropdownDashboard = () => setIsDropdownOpenDashboard(!isDropdownOpenDashboard);
-  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser); 
+  const toggleDropdownUsers = () => setIsDropdownOpenUser(!isDropdownOpenUser);
+  const toggleDropdownSettings = () => setIsDropdownOpenSettings(!isDropdownOpenSettings);
+
 
   const closeSidebar = () => setIsSidebarOpen(false);
 
+  const handleLogout = ()=>{
+    localStorage.removeItem('token')
+    window.location.reload();
+  }
   return (
     <div className=''>
       <div className="md:hidden flex items-center p-4 h-16 bg-main text-white ">
@@ -24,9 +33,8 @@ export default function Sidebar() {
       </div>
 
       <div
-        className={`fixed top-0 left-0 h-full w-72 bg-white text-black border-r-2 font-poppins transition-transform transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 z-50 flex flex-col`}
+        className={`fixed top-0 left-0 h-full w-72 bg-white text-black border-r-2 font-poppins transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } md:translate-x-0 z-50 flex flex-col`}
       >
         <div className="md:hidden flex justify-end p-4">
           <button onClick={closeSidebar}>
@@ -61,8 +69,8 @@ export default function Sidebar() {
                 <Link to="/dashboard/departments" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   Departments
                 </Link>
-               
-               
+
+
               </div>
             )}
           </div>
@@ -85,7 +93,7 @@ export default function Sidebar() {
                   Mentors
                 </Link>
                 <Link to="/reviews" className="text-main p-2 rounded-md" onClick={closeSidebar}>
-                Testimonals
+                  Testimonals
                 </Link>
               </div>
             )}
@@ -97,7 +105,7 @@ export default function Sidebar() {
               onClick={toggleDropdownUsers}
               className="rounded-md p-2 w-full text-left flex justify-between items-center"
             >
-              Users 
+              Users
               <span>{isDropdownOpenUser ? '-' : '+'}</span>
             </button>
             {isDropdownOpenUser && (
@@ -108,6 +116,28 @@ export default function Sidebar() {
                 <Link to="/dashboard/users" className="text-main p-2 rounded-md" onClick={closeSidebar}>
                   View Users
                 </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Logout Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleDropdownSettings}
+              className="rounded-md p-2 w-full text-left flex justify-between items-center"
+            >
+              Settings
+              <span>{isDropdownOpenSettings ? '-' : '+'}</span>
+            </button>
+            {isDropdownOpenSettings && (
+              <div className="flex flex-col bg-main bg-opacity-10 rounded-md p-2 mt-1">
+
+                <button onClick={handleLogout()} className="bg-red-500 text-white rounded-md px-4 py-2 font-sans font-medium shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                  Logout
+                </button>
+
+
+
               </div>
             )}
           </div>
