@@ -2,9 +2,11 @@ const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const router = express.Router();
+const authenticateAdmin = require('../middleware/adminAuth')
+
 
 // Create a new testimonial
-router.post('/addtestimonials', async (req, res) => {
+router.post('/addtestimonials',authenticateAdmin, async (req, res) => {
   const { name, collageName, review } = req.body;
 
   try {
@@ -16,7 +18,7 @@ router.post('/addtestimonials', async (req, res) => {
       },
     });
 
-    res.status(201).json({ success: true, data: newTestimonial });
+    res.status(201).json({ message:"Added", success: true, data: newTestimonial });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: 'Internal server error' });
@@ -35,7 +37,7 @@ router.get('/testimonials', async (req, res) => {
 });
 
 // Get a single testimonial by ID
-router.get('/testimonials/:id', async (req, res) => {
+router.get('/testimonials/:id', authenticateAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -55,7 +57,7 @@ router.get('/testimonials/:id', async (req, res) => {
 });
 
 // Update a testimonial
-router.put('/updateTestimonials/:id', async (req, res) => {
+router.put('/updateTestimonials/:id',authenticateAdmin, async (req, res) => {
   const { id } = req.params;
   const { name, collageName, review } = req.body;
 
@@ -77,7 +79,7 @@ router.put('/updateTestimonials/:id', async (req, res) => {
 });
 
 // Delete a testimonial by ID
-router.delete('/deleteTestimonials/:id', async (req, res) => {
+router.delete('/deleteTestimonials/:id', authenticateAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {

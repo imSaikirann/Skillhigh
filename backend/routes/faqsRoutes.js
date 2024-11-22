@@ -4,9 +4,10 @@ const router = express.Router();
 const z = require('zod');
 const prisma = new PrismaClient();
 const { faqSchema } = require('../zodValidation/vaidation');
+const authenticateAdmin = require('../middleware/adminAuth')
 
 
-router.post('/addFAQ', async (req, res) => {
+router.post('/addFAQ', authenticateAdmin, async (req, res) => {
   const { question, answer } = req.body;
 
   try {
@@ -64,7 +65,7 @@ router.get('/getFAQs', async (req, res) => {
 });
 
 
-router.get('/getFAQ/:id', async (req, res) => {
+router.get('/getFAQ/:id',authenticateAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -93,7 +94,7 @@ router.get('/getFAQ/:id', async (req, res) => {
 });
 
 
-router.put('/updateFAQ/:id', async (req, res) => {
+router.put('/updateFAQ/:id',authenticateAdmin, async (req, res) => {
   const { id } = req.params;
   const { question, answer } = req.body;
   console.log(id)
@@ -135,9 +136,9 @@ router.put('/updateFAQ/:id', async (req, res) => {
 });
 
 
-router.delete('/deleteFAQ/:id', async (req, res) => {
+router.delete('/deleteFAQ/:id',authenticateAdmin, async (req, res) => {
   const { id } = req.params;
-
+  console.log(id)
   try {
  
     const deletedFAQ = await prisma.fAQ.delete({
@@ -150,12 +151,13 @@ router.delete('/deleteFAQ/:id', async (req, res) => {
       data: deletedFAQ, 
     });
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       success: false,
       message: 'Failed to delete FAQ.',
       error: error.message,
     });
   }
-});
+}); 
 
 module.exports = router;
