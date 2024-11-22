@@ -29,9 +29,8 @@ export default function Departments() {
     try {
       const response = await axios.get('/api/v1/department/getDepartments');
       setDepartments(response.data.departments);
-      console.log(response.data)
-      setAlertMessage(response.data.message);
-      setAlertVisible(true);
+    
+ 
     } catch (error) {
       console.error("Error fetching departments:", error);
     } finally {

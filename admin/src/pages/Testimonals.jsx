@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../auth/axiosConfig';
 import Spinner from '../components/Spinner';
+import Alert from '../components/Alert';
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({ name: '', collageName: '', review: '' });
   const [editingId, setEditingId] = useState(null);
-  const [showForm, setShowForm] = useState(false); // To toggle the form visibility
+  const [showForm, setShowForm] = useState(false);
+  const token = localStorage.getItem('token');
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  
+  const fetchTestimonials = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/v1/testimonal/testimonials');
+      setTestimonials(response.data.data);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const response = await axios.get('/api/v1/testimonal/testimonials');
-        setTestimonials(response.data.data);
-      } catch (error) {
-        console.error('Error fetching testimonials:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchTestimonials();
   }, []);
 
@@ -33,16 +38,22 @@ export default function Testimonials() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`/api/v1/testimonal/updateTestimonials/${editingId}`, formData);
+        await axios.put(`/api/v1/testimonal/updateTestimonials/${editingId}`, formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         alert('Testimonial updated successfully!');
       } else {
-        await axios.post('/api/v1/testimonal/addtestimonials', formData);
-        alert('Testimonial added successfully!');
+       const res =  await axios.post('/api/v1/testimonal/addtestimonials', formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        
+        setAlertMessage(res.data.message);
+        setAlertVisible(true);
       }
       setFormData({ name: '', collageName: '', review: '' });
       setEditingId(null);
-      setShowForm(false); // Close the form after submission
-      fetchTestimonials();
+      setShowForm(false); 
+      fetchTestimonials(); 
     } catch (error) {
       console.error('Error submitting testimonial:', error);
       alert('Error submitting testimonial');
@@ -51,17 +62,25 @@ export default function Testimonials() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/testimonal/deleteTestimonials/${id}`);
-      alert('Testimonial deleted successfully!');
-      fetchTestimonials();
+      const res = await axios.delete(`/api/v1/testimonal/deleteTestimonials/${id}`,{
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAlertMessage(res.data.message);
+      setAlertVisible(true);
+      fetchTestimonials(); 
     } catch (error) {
       console.error('Error deleting testimonial:', error);
       alert('Error deleting testimonial');
     }
   };
 
+  const handleAlertClose = () => {
+    setAlertVisible(false);
+  };
+
   const renderForm = () => (
     <div className="bg-white shadow-lg rounded-lg p-6 mb-8 w-full max-w-lg mx-auto font-poppins">
+       <Alert message={alertMessage} isVisible={alertVisible} onClose={handleAlertClose} />
       <h2 className="text-2xl font-semibold text-center mb-4">{editingId ? 'Edit Testimonial' : 'Add Testimonial'}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
