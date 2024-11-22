@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // New function to fetch courses by department ID
+ 
   const fetchCoursesByDepartmentId = async (departmentId) => {
     try {
       const response = await axios.get(`/api/v1/department/departments/${departmentId}`);
@@ -30,7 +30,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // Fetch departments on mount
+
   React.useEffect(() => {
     fetchCourses();
   }, []);

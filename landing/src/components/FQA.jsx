@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
 import Pattern from '../assets/patternMask.png';
+import { useEffect } from 'react';
+import axios from '../auth/axiosConfig'
 
 export default function FQA() {
-  const faqs = [
+ const [faqs,setfaqs] = useState([])
+
+ useEffect(()=>{
+  async function fetchFAQS() {
+  try {
+    const res = await axios('/api/v1/faqs/getFAQs')
+    console.log(res)
+    if(res.data.success)
     {
-      question: "What makes SkillHigh different from other online learning platforms?",
-      answer: "SkillHigh focuses on real-world projects and hands-on training designed to make you job-ready and prepared for real industry challenges.",
-    },
-    {
-      question: "Are there any prerequisites for enrolling in the programs?",
-      answer: "Most of our programs are beginner-friendly, but we also offer advanced courses for experienced learners. Specific requirements, if any, are listed in each course description.",
-    },
-    {
-      question: "How are the courses structured?",
-      answer: "Courses combine video lessons, interactive assignments, and project-based assessments. You'll have access to expert mentors and a community of learners.",
-    },
-    {
-      question: "What kind of certification will I receive?",
-      answer: "Upon completing a program, you'll earn a certificate that can be shared on LinkedIn and included in your resume.",
-    },
-    {
-      question: "Can I learn at my own pace?",
-      answer: "Absolutely! Our programs are designed to be flexible, allowing you to learn at your own pace. You can access course materials anytime and anywhere, tailoring your learning schedule to fit your life.",
-    },
-    {
-      question: "How do I access my courses after enrolling?",
-      answer: "After enrolling, you'll receive immediate access to your course materials through your account. Log in and start learning!",
-    },
-    {
-      question: "Can I take multiple courses at the same time?",
-      answer: "Yes, you can enroll in multiple courses at the same time. Feel free to explore various topics and develop a diverse skill set that aligns with your career goals.",
-    },
-  ];
+      setfaqs(res.data.data)
+      
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+  }
+
+  fetchFAQS()
+ },[])
 
   const [openIndex, setOpenIndex] = useState(null);
 

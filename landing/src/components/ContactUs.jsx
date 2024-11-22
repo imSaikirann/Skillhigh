@@ -1,46 +1,114 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from '../auth/axiosConfig';
 
 const gradientStyle = {
-  backgroundImage: 'linear-gradient(to right, #0D8267, #044233)', 
+  backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
   color: 'white',
   textAlign: 'center',
 };
 
 export default function ContactUs() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+
+  const [formStatus, setFormStatus] = useState({ success: false, message: '' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // For phone field, restrict to numeric input only
+    if (name === 'phone' && !/^\d*$/.test(value)) return;
+
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const { name, email, phone, message } = formData;
+
+    if (!name.trim()) return 'Name is required.';
+    if (!email.trim()) return 'Email is required.';
+    if (!phone.trim()) return 'Phone number is required.';
+    if (phone.length !== 10) return 'Phone number must be exactly 10 digits.';
+    if (!message.trim()) return 'Message is required.';
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const errorMessage = validateForm();
+    if (errorMessage) {
+      setFormStatus({ success: false, message: errorMessage });
+      // Remove the alert after 3 seconds
+      setTimeout(() => {
+        setFormStatus({ success: false, message: '' });
+      }, 3000);
+      return;
+    }
+
+    try {
+      const response = await axios.post('/api/v1/contacts/contactus', formData);
+
+      if (response.status === 201) {
+        setFormStatus({ success: true, message: 'Message sent successfully!' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setFormStatus({
+          success: false,
+          message: response.data.errors?.[0]?.message || 'Something went wrong!',
+        });
+      }
+    } catch (error) {
+      setFormStatus({
+        success: false,
+        message: error.response?.data?.error || 'Internal server error. Please try again later.',
+      });
+    }
+
+    // Remove the alert after 3 seconds
+    setTimeout(() => {
+      setFormStatus({ success: false, message: '' });
+    }, 3000);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row justify-around items-center p-6 font-inter">
-      
-      {/* Flex 1: Intro Text */}
+      {/* Intro Text */}
       <div className="lg:w-1/3 mb-8 lg:mb-0 lg:text-left">
-     
-
         <h1
-            className="text-5xl font-bold text-gray-800 mb-4  text-transparent bg-clip-text"
-            style={{
-              backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
-              backgroundSize: '100%',
-              backgroundRepeat: 'repeat',
-            }}
-          >
-            Get in touch
-          </h1>
+          className="text-5xl font-bold text-gray-800 mb-4 text-transparent bg-clip-text"
+          style={{
+            backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+            backgroundSize: '100%',
+            backgroundRepeat: 'repeat',
+          }}
+        >
+          Get in touch
+        </h1>
         <p className="text-gray-600">
-        Have questions or need assistance? Our team is here to help you make the right choice for your career.
+          Have questions or need assistance? Our team is here to help you make the right choice for your career.
         </p>
       </div>
-      
-      {/* Flex 2: Contact Form */}
+
+      {/* Contact Form */}
       <div className="w-full max-w-lg bg-white rounded-lg border border-gray-300 p-8 space-y-6">
         <h2 className="text-2xl font-bold text-left text-gray-800">Contact Us</h2>
         <p className="text-gray-600 text-left">We'd love to hear from you! Please fill out the form below.</p>
-        
-        <form className="space-y-4">
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div className="w-full sm:w-1/2">
               <label className="block text-gray-700">Name</label>
               <input
                 type="text"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
                 placeholder="Your Name"
               />
             </div>
@@ -49,7 +117,10 @@ export default function ContactUs() {
               <label className="block text-gray-700">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
                 placeholder="Your Email"
               />
             </div>
@@ -59,7 +130,10 @@ export default function ContactUs() {
             <label className="block text-gray-700">Phone Number</label>
             <input
               type="tel"
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
               placeholder="Phone Number"
             />
           </div>
@@ -67,7 +141,10 @@ export default function ContactUs() {
           <div>
             <label className="block text-gray-700">Message</label>
             <textarea
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-border"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
               placeholder="Your Message"
               rows="4"
             ></textarea>
@@ -76,11 +153,17 @@ export default function ContactUs() {
           <button
             type="submit"
             style={gradientStyle}
-            className="w-full px-4 py-3 text-white  rounded-md focus:outline-none focus:ring focus:ring-border"
+            className="w-full px-4 py-3 text-white rounded-md hover:bg-opacity-90 focus:outline-none focus:ring focus:ring-green-300"
           >
             Send Message
           </button>
         </form>
+
+        {formStatus.message && (
+          <p className={`mt-4 font-semibold font-inter text-center ${formStatus.success ? 'text-main' : 'text-red-600'}`}>
+            {formStatus.message}
+          </p>
+        )}
       </div>
     </div>
   );
