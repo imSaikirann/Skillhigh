@@ -17,6 +17,7 @@ export default function AllCourses() {
         console.log(response.data.department.courses)
         setCourses(response.data.department.courses); 
       } catch (err) {
+        console.log(err)
         setError(err.message); // Save error message
       } finally {
         setLoading(false); // Stop loading
