@@ -1,18 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { AppContext } from '../store/StoreContext';
 
 const DepartmentsList = () => {
   const { courses, selectedDepartmentCourses, fetchCoursesByDepartmentId } = useContext(AppContext);
   const [activeDepartmentId, setActiveDepartmentId] = useState(null);
-  console.log(courses)
+  const navigate = useNavigate()
   if (!courses) {
     return <div className="text-center py-10">Loading...</div>;
   }
 
-  const handleExploreClick = async (departmentId) => {
-    setActiveDepartmentId(departmentId);
-    await fetchCoursesByDepartmentId(departmentId); // Fetch courses for this department
+  const handleExploreClick = async (id) => {
+    navigate(`/department/courses/${id}`)
   };
 
   return (
@@ -32,14 +31,14 @@ const DepartmentsList = () => {
               </p>
             </div>
 
-           <Link to="/d/courses">
+   
            <button
               className="mt-auto bg-main text-white py-2 px-4 rounded-md transition duration-300"
-              // onClick={() => handleExploreClick(department.id)}
+              onClick={() => handleExploreClick(department.id)}
             >
               Explore Courses
             </button>
-           </Link>
+         
           </div>
         ))}
       </div>
