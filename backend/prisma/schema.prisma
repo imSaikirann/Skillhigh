@@ -136,7 +136,7 @@ model User {
   userId   String         @unique
   email    String   @unique
   name       String
-  photoUrl   String?
+
   courses  UserOnCourse[] 
 }
 

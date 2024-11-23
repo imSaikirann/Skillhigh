@@ -124,7 +124,7 @@ router.get('/getCourse/:id', async (req, res) => {
 
     try {
         const course = await prisma.course.findUnique({
-            where: { id },
+            where: { id }, 
             include:{
                 topics:true,
             }

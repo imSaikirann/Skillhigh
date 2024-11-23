@@ -57,7 +57,7 @@ router.get('/getDepartments', async (req, res) => {
 // Get a specific department by ID
 router.get('/departments/:id', async (req, res) => {
   try {
-    const { id } = departmentIdSchema.parse(req.params); 
+    const { id } = req.params
 
     const department = await prisma.department.findUnique({
       where: { id },

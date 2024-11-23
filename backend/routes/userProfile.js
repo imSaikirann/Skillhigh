@@ -10,6 +10,9 @@ router.get('/profile',authenticateUser,async(req,res)=>{
         const data = await prisma.user.findUnique({
             where:{
                 userId:userId
+            },
+            include:{
+                courses:true
             }
         })
            
