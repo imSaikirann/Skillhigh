@@ -1,5 +1,5 @@
 const cors = require('cors')
-const userRoutes = require('./routes/userRoutes')
+
 const courseRoutes = require('./routes/courseRoutes')
 const topicRoutes = require('./routes/topicRoutes')
 const quizRoutes = require('./routes/quizRoutes')
@@ -11,6 +11,10 @@ const testimonalRoutes = require('./routes/testimonalRoutes')
 const mentorRoutes = require('./routes/mentorRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 const authenticateAdmin = require('./middleware/adminAuth')
+const userRoutes = require('./routes/userRoutes')
+const profileRoutes = require('./routes/userProfile')
+
+
 require('dotenv').config();
 
 
@@ -50,17 +54,21 @@ app.post('/api/checking', authenticateAdmin, (req, res) => {
 
 // Middleware to parse JSON requests
 app.use(express.json()); 
-app.use('/api/v1/user',userRoutes)
+
 app.use('/api/v1/course',courseRoutes)
 app.use('/api/v1/topic',topicRoutes)
 app.use('/api/v1/topicQuiz', quizRoutes)
-app.use('/api/v1/department', departmentRoutes)
+app.use('/api/v1/department', departmentRoutes) 
 app.use('/api/v1/project', projectRoutes)
 app.use('/api/v1/faqs', faqRoutes )
 app.use('/api/v1/contacts', contactusRoutes )
-app.use('/api/v1/testimonal', testimonalRoutes  )
+app.use('/api/v1/testimonal', testimonalRoutes  ) 
 app.use('/api/v1/mentors', mentorRoutes )
 app.use('/api/v1/admin',adminRoutes)
+app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/profile', profileRoutes)
+
+
 
 
 

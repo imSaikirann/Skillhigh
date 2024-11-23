@@ -5,48 +5,49 @@ const express = require('express');
 const router = express.Router();
 const prisma = new PrismaClient();
 require('dotenv').config();
+const { admin } = require('../config/firebase');
 
 
 
-//login
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+
+
+router.post('/signup', async (req, res) => {
+    const { token, email, name, photoUrl } = req.body;
+  
     try {
    
-        const hashedPassword = await bcrypt.hash(password, 10);
-
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const uid = decodedToken.uid;
+  
+     
+      const user = await prisma.user.upsert({
+        where: { userId: uid },
+        update: {},
+        create: {
+          userId: uid,
+          email,
+          name,
+          photoUrl,
+        },
+      });
+  
     
-        const user = await prisma.user.create({
-            data: {
-                email,
-                password: hashedPassword
-            }
-        });
-
-    
-        const accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15d' }); 
-
-        res.status(201).json({
-            user,
-            accessToken,
- 
-        });
+      const jwtToken = jwt.sign(
+        { userId: user.userId, email: user.email },
+        process.env.JWT_USER_SECRET, 
+        { expiresIn: '1h' }
+      );
+  
+   
+      res.status(201).json({
+        success: true,
+        user,
+        token: jwtToken, 
+      });
     } catch (error) {
-        console.log(error)
-        res.status(500).json( error );
+      console.error('Error during signup:', error.message);
+      res.status(500).json({ success: false, message: 'Signup failed' });
     }
-});
-
-//get users
-router.get('/get', async(req,res)=>{
-    try {
-        const data = await prisma.user.findMany({})
-        res.status(200).json(data)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
-
-
+  });
 
 module.exports = router;

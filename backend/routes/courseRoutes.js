@@ -33,7 +33,7 @@ const upload = multer({
 
 // Route to create a new course
 router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) => {
-    const { courseName, courseDescription, courseCount, price, departmentId } = req.body;
+    const { courseName, courseDescription, courseCount,  departmentId } = req.body;
     const courseThumbnail = req.file ? req.file.location : null;
 
     try {
@@ -43,8 +43,8 @@ router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) 
                 courseDescription,
                 courseThumbnail,
                 courseCount: parseInt(courseCount),
-                price: parseFloat(price),
-                department: { connect: { id: departmentId } } // Associate course with department
+              
+                department: { connect: { id: departmentId } }
             }
         });
 
@@ -57,7 +57,7 @@ router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) 
 // Route to update a course
 router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, res) => {
     const { id } = req.params;
-    const { courseName, courseDescription, courseCount, price, departmentId } = req.body;
+    const { courseName, courseDescription, courseCount, departmentId } = req.body;
     const courseThumbnail = req.file ? req.file.location : null;
 
     try {
@@ -68,8 +68,8 @@ router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, re
                 courseDescription,
                 courseThumbnail,
                 courseCount: parseInt(courseCount),
-                price: price ? parseFloat(price) : undefined,
-                department: departmentId ? { connect: { id: departmentId } } : undefined // Update department if provided
+             
+                department: departmentId ? { connect: { id: departmentId } } : undefined 
             }
         });
         res.status(200).json({ message: "Course updated", course });
