@@ -12,6 +12,7 @@ import Privacy from "./pages/Privacy"
 import DepartmentsList from "./pages/DepartmentsList"
 import AllCourses from "./pages/AllCourses"
 import TermsAndConditions from "./pages/Terms&Conditions"
+import CheckoutPage from "./pages/Checkout"
 function App() {
 
 
@@ -33,6 +34,8 @@ function App() {
 
       <Route path="/d" element={<DepartmentsList/>}></Route>
       <Route path="/department/courses/:id" element={<AllCourses/>}></Route>
+      <Route path="/course/checkout/:id" element={<CheckoutPage/>}></Route>
+
 
 
     </Routes>

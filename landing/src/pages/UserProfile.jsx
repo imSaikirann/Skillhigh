@@ -20,12 +20,15 @@ const UserProfile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+      
 
         if (response.status === 200) {
           setUserData(response.data);
+          
         } else {
           console.error('Failed to fetch user data');
         }
+        console.log(userData)
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -63,26 +66,31 @@ const UserProfile = () => {
       {/* Courses Section */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Enrolled Courses</h2>
-        {userData.courses && userData.courses.length > 0 ? (
+        {userData.purchase&& userData.purchase.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {userData.courses.map((course, index) => (
-              <div
-                key={index}
-                className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="bg-main text-white rounded-full w-10 h-10 flex items-center justify-center font-semibold">
-                    {index + 1}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-700">
-                      {course.name || `Course ${index + 1}`}
-                    </h3>
-                    <p className="text-sm text-gray-500">Instructor: {course.instructor || 'N/A'}</p>
-                    <p className="text-sm text-gray-500">Duration: {course.duration || 'N/A'}</p>
-                  </div>
-                </div>
-              </div>
+            {userData.purchase.map((course, index) => (
+             <div
+             key={index}
+             className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-lg transition-shadow"
+           >
+             <div className="flex items-center space-x-4">
+               <div className="bg-main text-white rounded-full w-10 h-10 flex items-center justify-center font-semibold">
+                 {index + 1}
+               </div>
+               <div>
+                 <h3 className="text-lg font-medium text-gray-700">
+                   {course.courseName || `Course ${index + 1}`}
+                 </h3>
+                 <p className="text-sm text-gray-500">Purchased by: {course.name}</p>
+                 <p className="text-sm text-gray-500">Email: {course.email}</p>
+                 <p className="text-sm text-gray-500">
+                   Purchase Date: {new Date(course.createdAt).toLocaleDateString()}
+                 </p>
+                 <p className="text-sm text-gray-500">Price: ₹{course.price}</p>
+               </div>
+             </div>
+           </div>
+           
             ))}
           </div>
         ) : (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams ,useNavigate} from 'react-router-dom';
 import Wave from '../assets/wave.png';
 
 import axios from '../auth/axiosConfig'
@@ -9,7 +9,7 @@ export default function Course_Banner() {
   const [course, setCourse] = useState(null); 
   const [error, setError] = useState(null); 
   const [loading, setLoading] = useState(true); 
-
+  const navigate = useNavigate()
   useEffect(() => {
    
     const fetchCourse = async () => {
@@ -36,12 +36,16 @@ export default function Course_Banner() {
     textAlign: 'center',
   };
 
-  // Show loading or error
+
   if (loading) {
     return <div className="text-center mt-10">Loading...</div>;
   }
   if (error) {
     return <div className="text-center text-red-500 mt-10">Error: {error}</div>;
+  }
+
+  const handleCourseCheckout = (id) =>{
+    navigate(`/course/checkout/${id}`)
   }
 
   return (
@@ -106,12 +110,15 @@ export default function Course_Banner() {
 
           {/* Enroll Button */}
           <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
-            <button
+       
+          <button
               style={gradientStyle}
+              onClick={()=>handleCourseCheckout(course.id)}
               className=" px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base"
             >
               Enroll now
             </button>
+       
           </div>
         </div>
 
