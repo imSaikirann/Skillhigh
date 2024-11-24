@@ -13,16 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Department {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   departmentName String   @unique
   description    String
   courses        Course[] @relation("DepartmentCourses")
 }
-
-
 
 model Topic {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -109,35 +105,36 @@ model Mentors {
   company       String
 }
 
-
 model admin {
-   id            String @id @default(auto()) @map("_id") @db.ObjectId
-   email String @unique
-   password  String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  password String
 }
 
 model Course {
-  id                String        @id @default(auto()) @map("_id") @db.ObjectId
-  courseName        String        @unique
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  courseName        String         @unique
   courseDescription String
   courseThumbnail   String
   courseCount       Int
-  updatedAt         DateTime      @updatedAt
-  createdAt         DateTime      @default(now())
-  topics            Topic[]       @relation("CourseTopics")
+  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime       @default(now())
+  topics            Topic[]        @relation("CourseTopics")
   projects          Projects[]
-  departmentId      String        @db.ObjectId
-  department        Department    @relation(fields: [departmentId], references: [id], name: "DepartmentCourses")
-  users             UserOnCourse[] 
+  departmentId      String         @db.ObjectId
+  department        Department     @relation(fields: [departmentId], references: [id], name: "DepartmentCourses")
+  users             UserOnCourse[]
+  purchase          Purchase[]
 }
 
 model User {
-  id       String         @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String         @unique
-  email    String   @unique
-  name       String
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique
+  email  String @unique
+  name   String
 
-  courses  UserOnCourse[] 
+  courses  UserOnCourse[]
+  purchase Purchase[]
 }
 
 model UserOnCourse {
@@ -148,5 +145,18 @@ model UserOnCourse {
   course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, courseId]) 
+  @@unique([userId, courseId])
 }
+
+model Purchase {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String @db.ObjectId
+  user       User   @relation(fields: [userId], references: [id])
+  name       String
+  price      Float
+  email      String
+  courseName String
+  courseId   String @db.ObjectId
+  course     Course @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+} 

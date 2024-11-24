@@ -12,7 +12,7 @@ router.get('/profile',authenticateUser,async(req,res)=>{
                 userId:userId
             },
             include:{
-                courses:true
+                purchase :true
             }
         })
            

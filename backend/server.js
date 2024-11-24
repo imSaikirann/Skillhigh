@@ -13,6 +13,8 @@ const adminRoutes = require('./routes/adminRoutes')
 const authenticateAdmin = require('./middleware/adminAuth')
 const userRoutes = require('./routes/userRoutes')
 const profileRoutes = require('./routes/userProfile')
+const purchaseRoutes = require('./routes/purchaseRoutes')
+
 
 
 require('dotenv').config();
@@ -67,6 +69,8 @@ app.use('/api/v1/mentors', mentorRoutes )
 app.use('/api/v1/admin',adminRoutes)
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/profile', profileRoutes)
+app.use('/api/v1/purchaseCourse', purchaseRoutes)
+
 
 
 
