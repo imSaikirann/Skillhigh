@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import { AppContext } from "../store/StoreContext";
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
-  const [isCSSubmenuOpen, setIsCSSubmenuOpen] = useState(false); // Secondary state for Computer Science submenu
-
+  const [isCSSubmenuOpen, setIsCSSubmenuOpen] = useState(false); 
   const coursesDropdownRef = useRef(null);
 
+  const { token } = useContext(AppContext);
+  console.log(token)
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsCoursesDropdownOpen(false);
-    setIsCSSubmenuOpen(false); // Close submenu when the main menu is closed
+    setIsCSSubmenuOpen(false); 
   };
 
-  // Close dropdown when clicking outside
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (coursesDropdownRef.current && !coursesDropdownRef.current.contains(event.target)) {
@@ -85,13 +88,21 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* Sign In Button */}
-        <Link to="/signin">
-          <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
-            Sign In
-          </button>
-        </Link>
+{token ? (
+    <Link to="/profile">
+    <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+      Profile
+    </button>
+  </Link>
+):(
+  <Link to="/signin">
+  <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+    Sign In
+  </button>
+</Link>
 
+) }
+       
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -150,11 +161,23 @@ export const Navbar = () => {
             )}
           </div>
 
-          <Link to="/signin">
-            <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
-              Sign In
-            </button>
+        {token ? (
+          <Link to="/profile">
+          <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
+            Profile
+          </button>
           </Link>
+        ) :(
+          <Link to="/signin">
+          <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
+            Sign In
+          </button>
+        </Link>
+        )
+
+
+          }
+        
         </div>
       )}
     </div>

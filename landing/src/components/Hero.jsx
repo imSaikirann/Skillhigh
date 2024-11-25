@@ -44,7 +44,7 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-row gap-4 md:gap-6">
-            <Link to="/d">
+            <Link to="/allcourses">
               <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
               Get Started Now
               </button>

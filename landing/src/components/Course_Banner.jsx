@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams ,useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Wave from '../assets/wave.png';
-
-import axios from '../auth/axiosConfig'
+import axios from '../auth/axiosConfig';
+import Spinner from '../components/Spinner';
 
 export default function Course_Banner() {
   const { id } = useParams(); 
   const [course, setCourse] = useState(null); 
   const [error, setError] = useState(null); 
   const [loading, setLoading] = useState(true); 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
-   
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`/api/v1/course/getCourse/${id}`); 
-       
-     
         setCourse(response.data); 
-        console.log(course)
       } catch (err) {
         setError(err.message); 
       } finally {
@@ -29,23 +26,26 @@ export default function Course_Banner() {
     fetchCourse();
   }, [id]);
 
-  // Gradient style for the button
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
     color: 'white',
     textAlign: 'center',
   };
 
+  const handleCourseCheckout = (id) => {
+    navigate(`/course/checkout/${id}`);
+  };
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
-  }
-  if (error) {
-    return <div className="text-center text-red-500 mt-10">Error: {error}</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-white">
+        <Spinner />
+      </div>
+    );
   }
 
-  const handleCourseCheckout = (id) =>{
-    navigate(`/course/checkout/${id}`)
+  if (error) {
+    return <div className="text-center text-red-500 mt-10">Error: {error}</div>;
   }
 
   return (
@@ -64,18 +64,15 @@ export default function Course_Banner() {
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-16 z-10 space-y-6 md:space-y-0">
         {/* Text Section */}
         <div className="flex flex-col items-start md:items-start md:text-left w-full md:w-1/2 lg:w-3/5 space-y-4 mt-6 font-inter">
-          {/* <div className="px-4 py-2 rounded-full text-main bg-border text-sm font-medium w-auto md:w-max">
-            {course.departmentName || 'Course Category'} 
-          </div> */}
           <h1 className="text-black text-2xl md:text-4xl lg:text-5xl font-bold">
-            {course.courseName || 'Course Title'} {/* Example: Basics of AI */}
+            {course.courseName || 'Course Title'}
           </h1>
           <p className="text-black text-md md:text-lg lg:text-lg mt-3 mb-4 w-full">
-            {course.courseDescription || 'Course Description'} {/* Example: Course description */}
+            {course.courseDescription || 'Course Description'}
           </p>
 
-             {/* Features List */}
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-black text-md md:text-lg lg:text-lg mt-3">
+          {/* Features List */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-black text-md md:text-lg lg:text-lg mt-3">
             <div className="flex items-center space-x-2">
               <span className="text-green-500">✓</span>
               <span>Lifetime Membership</span>
@@ -106,19 +103,15 @@ export default function Course_Banner() {
             </div>
           </div>
 
-
-
           {/* Enroll Button */}
           <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
-       
-          <button
+            <button
               style={gradientStyle}
-              onClick={()=>handleCourseCheckout(course.id)}
-              className=" px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base"
+              onClick={() => handleCourseCheckout(course.id)}
+              className="px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base"
             >
               Enroll now
             </button>
-       
           </div>
         </div>
 

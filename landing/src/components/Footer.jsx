@@ -56,7 +56,7 @@ export default function Footer() {
           <div>
             <h2 className="text-lg font-semibold mb-4">Contact</h2>
             <ul className="text-gray-700 space-y-2">
-              <li>Email: <a href="mailto:skillhighedutech@gmail.com" className="hover:text-main">skillhighedutech@gmail.com</a></li>
+              <li>Email: <a href="mailto:admin@skillhigh.in" className="hover:text-main">admin@skillhigh.in</a></li>
               <li>Phone: 9182661204</li>
               <li>Address: P.No: 169, First Floor. 
 Woods Enclave, Woods Central Park, Suchitra Sub Post, Pet Basheerabad, 
