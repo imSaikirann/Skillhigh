@@ -54,6 +54,9 @@ app.post('/api/checking', authenticateAdmin, (req, res) => {
     res.status(200).json({ message: "Welcome to the admin dashboard", value }); 
   });
 
+
+
+
 // Middleware to parse JSON requests
 app.use(express.json()); 
 

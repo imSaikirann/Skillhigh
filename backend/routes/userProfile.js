@@ -22,5 +22,16 @@ router.get('/profile',authenticateUser,async(req,res)=>{
     }
 })
 
+router.post('/tokenChecking', authenticateUser, async (req, res) => {
+    try {
+      const value = true; // Your main logic
+      res.status(200).json({ value }); // Success response
+    } catch (error) {
+      console.error('Error in /tokenChecking:', error.message);
+      res.status(500).json({ message: 'Internal Server Error', error: error.message }); // Error response
+    }
+  });
+  
+
 
 module.exports = router
