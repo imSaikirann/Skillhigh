@@ -38,14 +38,14 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-
+    origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            console.error(`CORS error: Origin ${origin} not allowed`);
+            callback(new Error('CORS policy violation: Access denied'));
         }
-    },  
+    },
     credentials: true
 }));
 
@@ -83,9 +83,9 @@ app.use('/api/v1/purchaseCourse', purchaseRoutes)
  
  
 
+ 
 
-
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { 
     res.send('Welcome to the Express Server!');
 });
 
