@@ -32,9 +32,18 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         {/* <Route path="/d" element={<DepartmentsList />} /> */}
         <Route path="/allcourses" element={<AllCourses />} />
-        <Route path="/course/checkout/:id" element={<CheckoutPage />} />
+    
 
       
+       {/* Protected Routes */}
+       <Route
+          path="/course/checkout/:id"
+          element={
+            <ProtectedRoutes>
+              <CheckoutPage />
+            </ProtectedRoutes>
+          }
+        />
         <Route
           path="/profile"
           element={
@@ -43,7 +52,6 @@ function App() {
             </ProtectedRoutes>
           }
         />
-
         
         <Route path="*" element={<Signin />} />
       </Routes>
