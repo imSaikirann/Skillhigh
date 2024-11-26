@@ -100,23 +100,27 @@ router.delete('/deleteCourse/:id', async (req, res) => {
         res.status(500).json({ message: "Error while deleting course", error });
     }
 });
+ 
 
-
-
-// Route to get all courses
+ 
 router.get('/getAllCourse', async (req, res) => {
     try {
         const data = await prisma.course.findMany({
-            include:{
-                projects:true
-            }
+            include: {
+                modules: {
+                    include: {
+                        contents: true, 
+                    },
+                },
+            },
         });
         res.status(200).json(data);
     } catch (error) {
-        console.log(error)
+        console.error("Error while getting all courses:", error);
         res.status(500).json({ message: "Error while getting all courses", error });
     }
 });
+
 
 // Route to get a specific course by ID
 router.get('/getCourse/:id', async (req, res) => {
@@ -125,18 +129,26 @@ router.get('/getCourse/:id', async (req, res) => {
     try {
         const course = await prisma.course.findUnique({
             where: { id }, 
-            include:{
-                topics:true,
-            }
+            include: {
+                topics: true,
+                modules: {
+                    include: {
+                        contents: true,
+                    },
+                },
+            },
         });
+
         if (!course) {
             return res.status(404).json({ message: "Course not found" });
         }
+
         res.status(200).json(course);
     } catch (error) {
         res.status(500).json({ message: "Error while getting course", error });
     }
 });
+
 
 // Delete function for removing files from S3
 const deleteFileFromS3 = async (bucketName, fileKey) => {
