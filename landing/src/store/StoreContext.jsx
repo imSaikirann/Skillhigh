@@ -4,24 +4,39 @@ import axios from "../auth/axiosConfig";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [courses, setCourses] = useState(null);
+  const [course, setCourse] = useState(null);
   const [selectedDepartmentCourses, setSelectedDepartmentCourses] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") !== null);
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(null); // Error state
-
-  // Fetch all courses
+  const [courses, setCourses] = useState([]);
+ 
   const fetchCourses = async () => {
     try {
       setLoading(true);
       const response = await axios.get("/api/v1/department/getDepartments");
-      setCourses(response.data.departments);
+      setCourse(response.data.departments);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
+
+  const fetchAllCourses = async () => {
+    if (courses.length > 0) return; 
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/v1/course/getAllCourse");
+      setCourses(response.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
 
   // Fetch courses by department ID
   const fetchCoursesByDepartmentId = async (departmentId) => {
@@ -61,6 +76,7 @@ export const AppProvider = ({ children }) => {
     setToken,
     loading,
     error,
+    fetchAllCourses 
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

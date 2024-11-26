@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Wave from '../assets/wave.png';
 import axios from '../auth/axiosConfig';
 import Spinner from '../components/Spinner';
-
+import CourseModules from './Module';
 export default function Course_Banner() {
   const { id } = useParams(); 
   const [course, setCourse] = useState(null); 
@@ -16,6 +16,7 @@ export default function Course_Banner() {
       try {
         const response = await axios.get(`/api/v1/course/getCourse/${id}`); 
         setCourse(response.data); 
+        console.log(response.data)
       } catch (err) {
         setError(err.message); 
       } finally {
@@ -49,7 +50,8 @@ export default function Course_Banner() {
   }
 
   return (
-    <div className="relative bg-white overflow-hidden">
+   <div>
+     <div className="relative bg-white overflow-hidden">
       {/* Background Image */}
       <img
         src={Wave}
@@ -64,7 +66,7 @@ export default function Course_Banner() {
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-16 z-10 space-y-6 md:space-y-0">
         {/* Text Section */}
         <div className="flex flex-col items-start md:items-start md:text-left w-full md:w-1/2 lg:w-3/5 space-y-4 mt-6 font-inter">
-          <h1 className="text-black text-2xl md:text-4xl lg:text-5xl font-bold">
+          <h1  className=" text-main text-2xl md:text-6xl lg:text-6xl font-bold">
             {course.courseName || 'Course Title'}
           </h1>
           <p className="text-black text-md md:text-lg lg:text-lg mt-3 mb-4 w-full">
@@ -122,6 +124,9 @@ export default function Course_Banner() {
           className="w-4/5 md:w-1/2 lg:w-1/3 h-auto object-contain"
         />
       </div>
+      
     </div>
+    <CourseModules modules={course.modules} />
+   </div>
   );
 }

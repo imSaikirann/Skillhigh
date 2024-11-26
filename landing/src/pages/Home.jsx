@@ -7,6 +7,7 @@ import Choose from '../components/Choose'
 import Needhelp from '../components/Needhelp'
 import TestimonialSlider from '../components/Testimonial'
 import Mentors from '../components/Mentors'
+import Carousel from '../components/CourseCarousal'
 
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
     <Hero/>
     <Hero2/>
     <Choose/>
+    <Carousel/>
     <Needhelp/>
     <FQA/>
     <TestimonialSlider/>
