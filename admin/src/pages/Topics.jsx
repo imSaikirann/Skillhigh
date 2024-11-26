@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from '../auth/axiosConfig';
 import { useParams, useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import { AppContext } from '../store/StoreContext';
 
 export default function Topics() {
+    const {setModules} = useContext(AppContext)
     const [topics, setTopics] = useState([]);
     const [error, setError] = useState(null);
     const { courseId } = useParams();
@@ -14,6 +16,7 @@ export default function Topics() {
             try {
                 const res = await axios.get(`/api/v1/course/getCourse/${courseId}`);
                 setTopics(res.data.topics);
+                setModules(res.data.modules)
             } catch (err) {
                 setError("An error occurred while fetching the topics.");
             }
@@ -45,6 +48,12 @@ export default function Topics() {
                         onClick={() => navigate(`/dashboard/courses/projects/${courseId}`)}
                     >
                         Course Projects
+                    </button>
+                    <button 
+                        className="bg-main text-white font-semibold py-2 px-4 rounded hover:bg-main-dark transition-colors"
+                        onClick={() => navigate(`/dashboard/courses/modules/${courseId}`)}
+                    >
+                        Modules
                     </button>
                 </div>
             </div>

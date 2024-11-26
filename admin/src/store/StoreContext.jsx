@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
  const [courses,setCourses] = useState([])
  const [loading,setLoading] = useState(false)
  const [isUser,setUser] = useState(false)
+ const [modules,setModules] = useState(null)
 
 
 
@@ -36,7 +37,8 @@ const fetchCourses = async ()=>{
 
 
 
-   fetchCourses
+   fetchCourses,
+   modules,setModules
   };
 
   return (

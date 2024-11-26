@@ -16,6 +16,7 @@ import Testimonals from "./pages/Testimonals";
 import Mentors from "./pages/Mentors";
 import Signin from "./pages/Signin";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import Module from "./pages/Module";
 
 function App() {
   const isUser = localStorage.getItem("token");
@@ -60,6 +61,10 @@ function App() {
                   <Route
                     path="/dashboard/courses/projects/:courseId"
                     element={<Projects />}
+                  />
+                   <Route
+                    path="//dashboard/courses/modules/:courseId"
+                    element={<Module/>}
                   />
                   <Route path="/dashboard/users" element={<Users />} />
                   <Route path="/website/faq" element={<FAQs />} />
