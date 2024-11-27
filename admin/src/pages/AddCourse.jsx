@@ -13,7 +13,7 @@ export default function AddCourse() {
         courseName: '',
         courseDescription: '',
         courseCount: '',
-        price: '',
+      
         image: null,
         departmentId: '',
     });
@@ -39,7 +39,7 @@ export default function AddCourse() {
         formDataToSend.append('courseName', formData.courseName);
         formDataToSend.append('courseDescription', formData.courseDescription);
         formDataToSend.append('courseCount', formData.courseCount);
-        formDataToSend.append('price', formData.price);
+    
         formDataToSend.append('departmentId', departmentId);
         if (formData.image) {
             formDataToSend.append('courseThumbnail', formData.image);
@@ -61,7 +61,7 @@ export default function AddCourse() {
                 courseName: '',
                 courseDescription: '',
                 courseCount: '',
-                price: '',
+           
                 image: null,
                 departmentId: '', 
             });
@@ -125,21 +125,6 @@ export default function AddCourse() {
                     ></textarea>
                 </div>
 
-                {/* Price */}
-                <div>
-                    <label className="block text-gray-600 font-medium mb-1" htmlFor="price">
-                        Price (USD)
-                    </label>
-                    <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-600"
-                    />
-                </div>
 
                 {/* Number of Lessons */}
                 <div>

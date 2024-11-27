@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { AppContext } from '../store/StoreContext';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../auth/axiosConfig';
 import { FiMoreVertical } from 'react-icons/fi';
 
 export default function Module() {
-  const { modules } = useContext(AppContext);
+  const { courseId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [moduleName, setModuleName] = useState('');
   const [contentModal, setContentModal] = useState(false);
@@ -15,13 +14,28 @@ export default function Module() {
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [moduleModalOpen, setModuleModalOpen] = useState(false);
   const [editingModuleId, setEditingModuleId] = useState(null);
-  const { courseId } = useParams();
-  console.log(modules)
+  const [modules, setModules] = useState([]);
+
+  // Fetch modules on initial render and after any data change
+  const fetchModules = async () => {
+    try {
+      const res = await axios.get(`/api/v1/course/getCourse/${courseId}`);
+      setModules(res.data.modules);
+    } catch (error) {
+      console.error('Error fetching modules:', error.message);
+      alert('Error fetching modules');
+    }
+  };
+
+  useEffect(() => {
+    fetchModules(); // Fetch modules when the component mounts
+  }, [courseId]);
+
   // Toggle Module Modal
   const toggleModuleModal = (module = null) => {
     setModuleModalOpen(!moduleModalOpen);
     setModuleName(module ? module.moduleName : '');
-    setEditingModuleId(module ? module.id : null); 
+    setEditingModuleId(module ? module.id : null);
   };
 
   // Handle Module Submission (Add or Edit)
@@ -33,17 +47,18 @@ export default function Module() {
         await axios.put(`/api/v1/CourseModules/updateModule/${editingModuleId}`, {
           moduleName,
         });
-        alert('Module updated successfully');
+       
       } else {
         // Add new module
         await axios.post(`/api/v1/CourseModules/addModule/${courseId}`, {
           moduleName,
         });
-        alert('Module added successfully');
+      
       }
       setModuleModalOpen(false);
       setModuleName('');
       setEditingModuleId(null);
+      fetchModules(); // Fetch updated modules after add or edit
     } catch (error) {
       console.error('Error saving module:', error.message);
       alert('Error saving module');
@@ -55,7 +70,7 @@ export default function Module() {
     setContentModal(!contentModal);
     setSelectedModuleId(moduleId || null);
     setContentName(content.contentName || '');
-    setEditingContentId(content.id || null); 
+    setEditingContentId(content.id || null);
   };
 
   // Handle Content Submission
@@ -63,56 +78,53 @@ export default function Module() {
     e.preventDefault();
     try {
       if (editingContentId) {
-        // Update existing content
         await axios.put(`/api/v1/CourseModules/updateContent/${editingContentId}`, {
           contentName,
           moduleId: selectedModuleId,
         });
-        alert('Content updated successfully');
+      
       } else {
-        // Add new content
         await axios.post(`/api/v1/CourseModules/addContent/${selectedModuleId}`, {
           contentName,
         });
-        alert('Content added successfully');
+       
       }
       setContentModal(false);
       setContentName('');
       setEditingContentId(null);
+      fetchModules(); // Fetch updated modules after add or edit content
     } catch (error) {
       console.error('Error saving content:', error.message);
       alert('Error saving content');
     }
   };
 
-  // Handle Delete Content
   const handleDeleteContent = async (contentId) => {
     try {
       await axios.delete(`/api/v1/CourseModules/deleteContent/${contentId}`);
-      alert('Content deleted successfully');
+   
+      fetchModules(); // Fetch updated modules after content deletion
     } catch (error) {
-    
       console.error('Error deleting content:', error.message);
       alert('Error deleting content');
     }
   };
 
-  const handleDeleteModule = async (moduleId) =>{
+  const handleDeleteModule = async (moduleId) => {
     try {
-        await axios.delete(`/api/v1/CourseModules/deleteModule/${moduleId}`);
-        alert('Module deleted successfully');
-      } catch (error) {
-    
-        console.error('Error deleting Module:', error);
-        alert('Error deleting Module');
-      }
-  }
+      await axios.delete(`/api/v1/CourseModules/deleteModule/${moduleId}`);
+  
+      fetchModules(); 
+    } catch (error) {
+      console.error('Error deleting Module:', error);
+      alert('Error deleting Module');
+    }
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen py-10 px-6 sm:pl-80">
       <h1 className="text-3xl font-bold text-center mb-8">Course Modules</h1>
 
-      {/* Add Module Button */}
       <div className="flex justify-end mb-4">
         <button
           onClick={() => toggleModuleModal()}
@@ -122,88 +134,86 @@ export default function Module() {
         </button>
       </div>
 
-      {/* Display Modules */}
-     {modules.length === 0 ? (
-  <p className="text-center text-gray-600 text-lg">No modules available.</p>
-) : (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {modules.map((module, index) => (
-      <div
-        key={module.id}
-        className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 relative"
-      >
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold mb-2">
-            Module {index + 1}: {module.moduleName}
-          </h2>
-          <div className="relative">
-            <FiMoreVertical
-              onClick={() =>
-                setDropdownOpen(dropdownOpen === module.id ? null : module.id)
-              }
-              className="cursor-pointer text-gray-600 hover:text-gray-800"
-            />
-            {dropdownOpen === module.id && (
-              <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md text-sm w-40">
-                <button
-                  onClick={() => toggleContentModal(module.id)}
-                  className="block px-4 py-2 text-left w-full hover:bg-gray-100"
-                >
-                  Add Content
-                </button>
-                <button
-                  onClick={() => toggleModuleModal(module)}
-                  className="block px-4 py-2 text-left w-full hover:bg-gray-100"
-                >
-                  Edit Module
-                </button>
-                <button
-                  onClick={() => handleDeleteModule(module.id)}
-                  className="block px-4 py-2 text-left w-full text-red-500 hover:bg-gray-100"
-                >
-                  Delete Module
-                </button>
+      {modules?.length === 0 ? (
+        <p className="text-center text-gray-600 text-lg">No modules available.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {modules.map((module, index) => (
+            <div
+              key={module.id}
+              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 relative"
+            >
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold mb-2">
+                  Module {index + 1}: {module.moduleName}
+                </h2>
+                <div className="relative">
+                  <FiMoreVertical
+                    onClick={() =>
+                      setDropdownOpen(dropdownOpen === module.id ? null : module.id)
+                    }
+                    className="cursor-pointer text-gray-600 hover:text-gray-800"
+                  />
+                  {dropdownOpen === module.id && (
+                    <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md text-sm w-40">
+                      <button
+                        onClick={() => toggleContentModal(module.id)}
+                        className="block px-4 py-2 text-left w-full hover:bg-gray-100"
+                      >
+                        Add Content
+                      </button>
+                      <button
+                        onClick={() => toggleModuleModal(module)}
+                        className="block px-4 py-2 text-left w-full hover:bg-gray-100"
+                      >
+                        Edit Module
+                      </button>
+                      <button
+                        onClick={() => handleDeleteModule(module.id)}
+                        className="block px-4 py-2 text-left w-full text-red-500 hover:bg-gray-100"
+                      >
+                        Delete Module
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        </div>
-        <p className="text-sm text-gray-500">
-          Created At: {new Date(module.createdAt).toLocaleDateString()}
-        </p>
+              <p className="text-sm text-gray-500">
+                Created At: {new Date(module.createdAt).toLocaleDateString()}
+              </p>
 
-        <div className="border-t pt-4">
-          <h3 className="text-lg font-medium mb-3">Contents:</h3>
-          {module.contents.length > 0 ? (
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
-              {module.contents.map((content) => (
-                <li key={content.id} className="flex justify-between items-center">
-                  {content.contentName}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => toggleContentModal(module.id, content)}
-                      className="text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteContent(content.id)}
-                      className="text-red-500 hover:underline"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-600">No contents available.</p>
-          )}
+              <div className="border-t pt-4">
+                <h3 className="text-lg font-medium mb-3">Contents:</h3>
+                {module.contents.length > 0 ? (
+                  <ul className="list-disc list-inside space-y-2 text-gray-700">
+                    {module.contents.map((content) => (
+                      <li key={content.id} className="flex justify-between items-center">
+                        {content.contentName}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => toggleContentModal(module.id, content)}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteContent(content.id)}
+                            className="text-red-500 hover:underline"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-600">No contents available.</p>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
-)}
-
+      )}
 
       {/* Module Modal */}
       {moduleModalOpen && (

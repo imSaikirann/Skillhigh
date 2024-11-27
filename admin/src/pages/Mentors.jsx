@@ -129,7 +129,7 @@ export default function Mentors() {
               <img
                 src={mentor.photo || 'https://via.placeholder.com/150'}
                 alt={mentor.name}
-                className="w-full h-40 object-cover"
+                className="w-full h-auto object-cover"
               />
               <div className="p-4">
                 <h2 className="text-lg font-bold text-gray-800">{mentor.name}</h2>

@@ -8,7 +8,7 @@ import Alert from '../components/Alert';
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [departmentName, setDepartmentName] = useState('');
-  const [description, setDescription] = useState('');
+ 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [showFormModal, setShowFormModal] = useState(false);
@@ -41,7 +41,7 @@ export default function Departments() {
   const handleAddDepartmentClick = () => {
     setIsEditing(false);
     setDepartmentName('');
-    setDescription('');
+
     setShowFormModal(true);
   };
 
@@ -49,9 +49,9 @@ export default function Departments() {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`/api/v1/department/updateDepartments/${editId}`, { departmentName, description });
+        await axios.put(`/api/v1/department/updateDepartments/${editId}`, { departmentName });
       } else {
-        await axios.post('/api/v1/department/addDepartments', { departmentName, description });
+        await axios.post('/api/v1/department/addDepartments', { departmentName});
       }
       fetchDepartments();
       setShowFormModal(false);
@@ -64,7 +64,7 @@ export default function Departments() {
     setIsEditing(true);
     setEditId(department.id);
     setDepartmentName(department.departmentName);
-    setDescription(department.description);
+  
     setShowFormModal(true);
     setDropdownVisible(null);
   };
@@ -183,16 +183,7 @@ export default function Departments() {
                   required
                 />
               </div>
-              <div className="mb-4">
-                <label className="block font-medium mb-1">Description</label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full border border-gray-300 p-2 rounded"
-                  rows="3"
-                  required
-                />
-              </div>
+            
               <div className="flex justify-end space-x-4">
                 <button
                   type="button"
