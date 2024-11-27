@@ -14,6 +14,7 @@ import AllCourses from "./pages/AllCourses";
 import TermsAndConditions from "./pages/Terms&Conditions";
 import CheckoutPage from "./pages/Checkout";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
  
@@ -32,6 +33,8 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         {/* <Route path="/d" element={<DepartmentsList />} /> */}
         <Route path="/allcourses" element={<AllCourses />} />
+        <Route path="/contactus" element={<ContactUs />} />
+
     
 
       

@@ -64,8 +64,11 @@ const UserProfile = () => {
       {/* Header Section */}
       <div className="bg-white rounded-xl shadow-md p-6 mb-8 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
         <div className="flex items-center space-x-3 sm:space-x-6">
-          <div style={gradientStyle } className=" text-white rounded-full w-14 h-14 sm:w-20 sm:h-20 flex items-center justify-center text-3xl font-bold">
-            {userData.name ? userData.name[0].toUpperCase() : 'U'}
+          <div  className=" text-main  rounded-full w-14 h-14 sm:w-20 sm:h-20 flex items-center justify-center text-3xl font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-14">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
           </div>
           <div>
             <h1 className="text-xl sm:text-3xl font-semibold text-gray-800">{userData.name || 'User'}</h1>

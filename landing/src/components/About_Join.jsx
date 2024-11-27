@@ -11,37 +11,37 @@ export default function AboutJoin() {
   // Array of grid items, each with title, content, and image source
   const gridItems = [
     { 
-      title: "Standardization", 
-      content: "When working in a global workplace, it’s often difficult to gauge learners’ training.",
-      src:  standardization 
+      title: "Experience", 
+      content: "Gain hands-on exposure with real-world projects that prepare you for the industry.",
+      src: standardization // Ensure the correct image reference for this category
     },
     { 
-      title: "Reduced Costs", 
-      content: "With Weekend UX, there’s no cost to reproduce materials, thanks to mobile accessibility.",
-      src: Reduced
+      title: "Expertise", 
+      content: "Master cutting-edge skills that top employers demand today.",
+      src: Reduced // Update with the appropriate image reference if needed
     },
     { 
-      title: "More Customization", 
-      content: "Learning isn’t a one-size-fits-all experience, and customization is key.",
-      src: customization
+      title: "Opportunities", 
+      content: "Kickstart your career with impactful, career-ready internship experiences.",
+      src: customization // Update the image reference if necessary
     },
     { 
-      title: "Affordable Pricing", 
-      content: "Weekend UX reduces material costs, utilizing mobile learning and microlearning.",
-      src: Cost
+      title: "Flexibility", 
+      content: "Study anytime, anywhere with programs tailored to your schedule.",
+      src: Cost // Ensure the correct image reference here
     },
     { 
-      title: "Learner Satisfaction", 
-      content: "High learner satisfaction is crucial for better knowledge retention.",
-      src: satisfaction 
+      title: "Mentorship", 
+      content: "Receive personalized guidance from experienced mentors and industry leaders.",
+      src: satisfaction // Verify the correct image for mentorship
     },
     { 
-      title: "Multimedia Materials", 
-      content: "Custom eLearning is effective as it uses diverse delivery methods.",
-      src: multimedia
+      title: "Affordability", 
+      content: "Access quality education through budget-friendly and inclusive programs.",
+      src: multimedia // Confirm the appropriate image reference
     },
   ];
-
+  
   return (
     <div className="relative overflow-hidden font-inter ">
       {/* Background Image */}

@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Mentor from "../assets/Cofounder.jpg";
+import axios from "../auth/axiosConfig";
 
 export default function Mentors() {
-  const mentors = [
-    { name: "Lakshmana", qualification: "Graduate Engineer Trainee", company: "ZF", phoneImage: Mentor },
-    { name: "John Doe", qualification: "Software Developer", company: "Google", phoneImage: Mentor },
-    { name: "Jane Smith", qualification: "Data Analyst", company: "Microsoft", phoneImage: Mentor },
-  ];
+  const [mentors,setMentors] = useState([])
+
+  useEffect(()=>{
+    async function fetchMentors() {
+      const res = await axios.get('/api/v1/mentors/mentors')
+      console.log(res.data)
+      setMentors(res.data)
+    }
+    fetchMentors()
+  },[])
+ 
 
   return (
     <div className="flex flex-col items-center justify-center py-16 font-inter bg-gray-50">
@@ -30,7 +37,7 @@ export default function Mentors() {
             >
               {/* Image */}
               <img
-                src={mentor.phoneImage}
+                src={mentor.photo}
                 alt={`${mentor.name}`}
                 className="w-full h-full object-cover"
               />
