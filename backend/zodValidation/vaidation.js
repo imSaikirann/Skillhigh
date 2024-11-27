@@ -4,8 +4,7 @@ const departmentSchema = z.object({
   departmentName: z
     .string()
     .min(1, 'Department name is required')
-    .max(15, 'Department name must not exceed 15 characters'),
-  description: z.string().min(1, 'Description is required'),
+    .max(15, 'Department name must not exceed 15 characters')
 });
 
 const faqSchema = z.object({

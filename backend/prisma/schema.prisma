@@ -16,7 +16,6 @@ datasource db {
 model Department {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   departmentName String   @unique
-  description    String
   courses        Course[] @relation("DepartmentCourses")
 }
 

@@ -73,9 +73,9 @@ router.put('/editMentor/:id', upload.single('photo'), async (req, res) => {
             return res.status(404).json({ message: "Mentor not found" });
         }
 
-        // If a new photo is uploaded, delete the old one
+       
         if (photo && existingMentor.photo) {
-            const photoKey = existingMentor.photo.split('/').pop(); // Extract the key
+            const photoKey = existingMentor.photo.split('/').pop(); 
             await s3Client.send(
                 new DeleteObjectCommand({
                     Bucket: process.env.S3_BUCKET_NAME,
@@ -111,18 +111,18 @@ router.delete('/deleteMentor/:id', async (req, res) => {
     console.log("Mentor ID to delete:", id);
 
     try {
-        // Ensure the ID is used correctly
+       
         const mentor = await prisma.mentors.findUnique({
-            where: { id }, // Directly pass the id if it’s a string
+            where: { id }, 
         });
 
         if (!mentor) {
             return res.status(404).json({ message: "Mentor not found" });
         }
 
-        // Delete photo from S3 if it exists
+        
         if (mentor.photo) {
-            const photoKey = mentor.photo.split('/').pop(); // Extract the key
+            const photoKey = mentor.photo.split('/').pop(); 
             await s3Client.send(
                 new DeleteObjectCommand({
                     Bucket: process.env.S3_BUCKET_NAME,
@@ -131,7 +131,7 @@ router.delete('/deleteMentor/:id', async (req, res) => {
             );
         }
 
-        // Delete the mentor from the database
+       
         await prisma.mentors.delete({
             where: { id },
         });

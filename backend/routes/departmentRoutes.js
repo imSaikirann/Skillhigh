@@ -12,6 +12,7 @@ const departmentIdSchema = z.object({
 
 // Create a new department
 router.post('/addDepartments', async (req, res) => {
+  console.log(req.body)
   try {
     const validatedData = departmentSchema.parse(req.body);
 
