@@ -15,6 +15,7 @@ import TermsAndConditions from "./pages/Terms&Conditions";
 import CheckoutPage from "./pages/Checkout";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import ContactUs from "./pages/ContactUs";
+import Careers from "./pages/Careers";
 
 function App() {
  
@@ -34,6 +35,8 @@ function App() {
         {/* <Route path="/d" element={<DepartmentsList />} /> */}
         <Route path="/allcourses" element={<AllCourses />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/careers" element={<Careers />} />
+
 
     
 
