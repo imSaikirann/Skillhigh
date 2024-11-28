@@ -10,6 +10,8 @@ export default function AllCourses() {
   const navigate = useNavigate();
   const { fetchAllCourses, courses, loading, error } = useContext(AppContext);
 
+
+
   // Fetch courses only once
   useEffect(() => {
     if (courses.length === 0) {

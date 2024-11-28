@@ -2,6 +2,14 @@ import React from 'react';
 
 export default function Careers() {
   const jobs = [
+
+    {
+        title: "Campus Delegate",
+        responsibilities: [
+          "Email :admin@skillhigh.in",
+          "Phone Number:9182661204"
+        ],
+      },
     {
       title: "Business Development Manager",
       responsibilities: [
@@ -28,12 +36,7 @@ export default function Careers() {
         "Meet requirements of minimum 60% in 10th, 12th, and graduation, exceptional communication skills, resilience, goal orientation, and the ability to thrive in a dynamic environment.",
       ],
     },
-    {
-      title: "Campus Delegate",
-      responsibilities: [
-        
-      ],
-    },
+  
   ];
 
   return (
@@ -52,7 +55,7 @@ export default function Careers() {
               ))}
             </ul>
             <div className="text-right mt-6">
-              <button className="bg-main text-white px-6 py-2 rounded-md focus:ring focus:ring-blue-300">
+              <button className="bg-main text-white px-6 py-2 rounded-md focus:ring focus:ring-green-800">
                 Apply Now
               </button>
             </div>
