@@ -73,6 +73,10 @@ Suchitra Junction, Quthbullapur, Medchal-Malkajgiri Dist., Telangana, India 
               <a href="/privacy-policy" className="hover:text-main">Privacy Policy</a>
               <span>|</span>
               <a href="/terms-and-conditions" className="hover:text-main">Terms & Conditions</a>
+              <span>|</span>
+              <a href="/refund-and-cancellation" className="hover:text-main">Refund and Cancellation</a>
+              <span>|</span>
+              <a href="/shipping-and-delivery" className="hover:text-main">Shipping and Delivery</a>
             </div>
             <p className="mt-4 md:mt-0 text-gray-400">
               &copy; {new Date().getFullYear()} Skill High. All rights reserved.

@@ -1,186 +1,294 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
-import { useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png";
 import { AppContext } from "../store/StoreContext";
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
-  const [isCSSubmenuOpen, setIsCSSubmenuOpen] = useState(false); 
-  const coursesDropdownRef = useRef(null);
+  const [isDepartmentDropdownOpen, setIsDepartmentDropdownOpen] = useState(false);
+  const [isCourseDropdownOpen, setIsCourseDropdownOpen] = useState(false);
+  const [selectedCourses, setSelectedCourses] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState(null); // State for selected department
+  const departmentDropdownRef = useRef(null);
+  const courseDropdownRef = useRef(null);
+  const { token, departments, fetchDepartments } = useContext(AppContext);
+const navigate = useNavigate()
+  useEffect(() => {
+    fetchDepartments();
+  }, []);
 
-  const { token } = useContext(AppContext);
-  console.log(token)
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
-    setIsCoursesDropdownOpen(false);
-    setIsCSSubmenuOpen(false); 
+    setIsDepartmentDropdownOpen(false);
+    setIsCourseDropdownOpen(false);
   };
 
- 
+  const handleNavigate = (id) =>{
+    navigate(`/courses/${id}`)
+    closeMenu()
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (coursesDropdownRef.current && !coursesDropdownRef.current.contains(event.target)) {
-        setIsCoursesDropdownOpen(false);
+      if (
+        departmentDropdownRef.current &&
+        !departmentDropdownRef.current.contains(event.target)
+      ) {
+        setIsDepartmentDropdownOpen(false);
+      }
+
+      if (
+        courseDropdownRef.current &&
+        !courseDropdownRef.current.contains(event.target)
+      ) {
+        setIsCourseDropdownOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
+  const handleDepartmentClick = (department) => {
+    setSelectedDepartment(department.departmentName); 
+    setSelectedCourses(department.courses);
+    setIsCourseDropdownOpen(true);
+  };
+
   return (
     <div className="bg-white p-3 relative font-inter z-50">
       <div className="bg-nav h-[65px] sm:h-[70px] rounded-full border-2 border-border flex items-center justify-between px-6 md:px-12 lg:px-16">
-        
-        {/* Logo and Title on the left */}
+        {/* Logo */}
         <div className="flex items-center space-x-3">
           <Link to="/">
-            <img src={Logo} alt="Logo" className="h-auto w-[120px] md:w-[160px] md:h-auto" /> 
+            <img src={Logo} alt="Logo" className="h-auto w-[120px] md:w-[160px] md:h-auto" />
           </Link>
         </div>
 
         {/* Navbar Links */}
         <div className="hidden md:flex space-x-6">
           <Link to="/">
-            <div className="text-md font-normal cursor-pointer hover:text-gray-700">
-              Home
-            </div>
+            <div className="text-md font-normal cursor-pointer hover:text-gray-700">Home</div>
           </Link>
           <Link to="/aboutus">
-            <div className="text-md font-normal cursor-pointer hover:text-gray-700">
-              About
-            </div>
+            <div className="text-md font-normal cursor-pointer hover:text-gray-700">About</div>
           </Link>
-          
-          {/* Courses Dropdown Wrapper */}
-          <div 
-            onClick={() => setIsCoursesDropdownOpen(!isCoursesDropdownOpen)} 
-            ref={coursesDropdownRef}
+
+          {/* Courses Dropdown */}
+          <div
+            ref={departmentDropdownRef}
             className="relative text-md font-normal cursor-pointer flex items-center gap-1 hover:text-gray-700"
           >
-            <h1>Courses</h1>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-            
-            {/* Dropdown Menu */}
-            {isCoursesDropdownOpen && (
+            <div
+              className="flex flex-row items-center justify-center"
+              onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
+            >
+              <h1>Courses</h1>
+              <DownArrowIcon />
+            </div>
+
+            {/* Department Dropdown */}
+            {isDepartmentDropdownOpen && (
               <div className="absolute top-full mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10">
-                <Link to="/courses/computer-science" className="block px-4 py-2 text-sm hover:bg-gray-100 rounded">
-                  Computer Science
-                </Link>
-                <Link to="/courses/artificial-intelligence" className="block px-4 py-2 text-sm hover:bg-gray-100 rounded">
-                  Artificial Intelligence
-                </Link>
-                <Link to="/courses/cyber-security" className="block px-4 py-2 text-sm hover:bg-gray-100 rounded">
-                  Cyber Security
-                </Link>
-                <Link to="/courses/ui-ux-design" className="block px-4 py-2 text-sm hover:bg-gray-100 rounded">
-                  UI/UX Designing
-                </Link>
+                {departments &&
+                  departments.map((department, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleDepartmentClick(department)}
+                      className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${
+                        selectedDepartment === department.departmentName
+                          ? "bg-main text-white" // Selected department color
+                          : "hover:bg-gray-100 text-black" // Default hover style
+                      }`}
+                    >
+                      {department.departmentName}
+                      <ArrowIcon />
+                    </div>
+                  ))}
               </div>
             )}
-
-
           </div>
+
+          {/* Courses Dropdown */}
+          {isCourseDropdownOpen && selectedCourses.length > 0 && (
+            <div
+              ref={courseDropdownRef}
+              className="absolute top-16 right-52 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+            >
+              {selectedCourses.map((course, index) => (
+                <div
+                onClick={()=>handleNavigate(course.id)}
+                  key={index}
+                  className={`block px-4 py-2 text-sm hover:bg-gray-100 rounded  ${index ===  selectedCourses.length-1 ? "border-b-0" :"border-b-2" } `}
+                >
+                  {course.courseName}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-{token ? (
-    <Link to="/profile">
-    <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
-      Profile
-    </button>
-  </Link>
-):(
-  <Link to="/signin">
-  <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
-    Sign In
-  </button>
-</Link>
+        {/* Profile or Sign-In Button */}
+        {token ? (
+          <Link to="/profile">
+            <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+              Profile
+            </button>
+          </Link>
+        ) : (
+          <Link to="/signin">
+            <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+              Sign In
+            </button>
+          </Link>
+        )}
 
-) }
-       
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2"
           aria-label="Toggle mobile menu"
         >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
-</svg>
-
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
+          </svg>
         </button>
-      </div>
 
-      {/* Full-Screen Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-nav flex flex-col items-center justify-center space-y-6 z-50">
-          <button onClick={closeMenu} className="absolute top-4 right-4 p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 text-black">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        {isMobileMenuOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
+    <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
+      {/* Close Button */}
+      <button
+        onClick={closeMenu}
+        className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+        aria-label="Close menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          stroke="currentColor"
+          className="w-6 h-6 text-gray-800"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
 
-          <Link to='/' onClick={closeMenu}>
-            <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
-              Home
-            </div>
-          </Link>
+      {/* Navigation Links */}
+      <nav className="mt-10 space-y-6">
+        <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+          Home
+        </Link>
+        <Link to="/aboutus" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+          About
+        </Link>
 
-          <Link to='/aboutus' onClick={closeMenu}>
-            <div className="text-lg font-semibold cursor-pointer hover:text-gray-700">
-              About
-            </div>
-          </Link>
-         
-          {/* Mobile Courses Dropdown */}
-          <div onClick={() => setIsCSSubmenuOpen(!isCSSubmenuOpen)} className="text-lg font-semibold cursor-pointer hover:text-gray-700">
-            <div className="flex items-center">
-              <h1>Computer Science</h1>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </div>
-
-            {/* Secondary Submenu */}
-            {isCSSubmenuOpen && (
-              <div className="flex flex-col items-start mt-2 space-y-3 pl-4">
-                <Link to="/courses/ui-ux-design" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
-                  UI/UX
-                </Link>
-                <Link to="/courses/web-development" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
-                  Web Development
-                </Link>
-                <Link to="/courses/ai" onClick={closeMenu} className="text-lg font-normal hover:text-gray-700">
-                  AI
-                </Link>
-              </div>
-            )}
+        {/* Dropdown for Courses */}
+        <div className="relative">
+          <div
+            onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
+            className="flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 hover:text-main"
+          >
+            <span>Courses</span>
+            <DownArrowIcon />
           </div>
 
-        {token ? (
-          <Link to="/profile">
-          <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
-            Profile
-          </button>
-          </Link>
-        ) :(
-          <Link to="/signin">
-          <button onClick={closeMenu} className="text-black bg-nav border-2 border-black px-6 py-3 rounded-full hover:bg-gray-100">
-            Sign In
-          </button>
-        </Link>
-        )
-
-
-          }
-        
+          {isDepartmentDropdownOpen && (
+            <div className="mt-2 bg-gray-50 rounded shadow-md">
+              {departments.map((department, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleDepartmentClick(department)}
+                  className={`px-4 py-2 text-sm cursor-pointer ${
+                    selectedDepartment === department.departmentName
+                      ? "bg-main text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {department.departmentName}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+
+        {/* Courses List */}
+        {isCourseDropdownOpen && selectedCourses.length > 0 && (
+          <div className="mt-4 bg-gray-50 rounded shadow-md">
+            {selectedCourses.map((course, index) => (
+              <Link
+                to={`/courses/${course.id}`}
+                key={index}
+                onClick={closeMenu}
+                className="block px-4 py-2 text-sm hover:bg-gray-100 rounded"
+              >
+                {course.courseName}
+              </Link>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* Profile or Sign-In Button */}
+      <div className="mt-8">
+        {token ? (
+          <Link to="/profile" onClick={closeMenu}>
+            <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark transition">
+              Profile
+            </button>
+          </Link>
+        ) : (
+          <Link to="/signin" onClick={closeMenu}>
+            <button className="w-full text-main border-2 border-main px-4 py-2 rounded-full font-semibold hover:bg-main hover:text-white transition">
+              Sign In
+            </button>
+          </Link>
+        )}
+      </div>
     </div>
+  </div>
+)}
+
+      </div>
+    </div>
+  );
+};
+
+// Arrow Icon Component
+const ArrowIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-4 h-4"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+  );
+};
+
+// Down Arrow Icon Component
+const DownArrowIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
   );
 };

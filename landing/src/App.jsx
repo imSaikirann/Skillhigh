@@ -16,6 +16,8 @@ import CheckoutPage from "./pages/Checkout";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import ContactUs from "./pages/ContactUs";
 import Careers from "./pages/Careers";
+import Refund from "./pages/Refund";
+import Shipping from "./pages/Shipping";
 
 function App() {
  
@@ -32,6 +34,10 @@ function App() {
         <Route path="/courses/:id" element={<Course />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/refund-and-cancellation" element={<Refund />} />
+        <Route path="/shipping-and-delivery" element={<Shipping/>} />
+
+
         {/* <Route path="/d" element={<DepartmentsList />} /> */}
         <Route path="/allcourses" element={<AllCourses />} />
         <Route path="/contactus" element={<ContactUs />} />
