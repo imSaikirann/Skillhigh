@@ -58,7 +58,7 @@ const navigate = useNavigate()
   };
 
   return (
-    <div className="bg-white p-3 relative font-inter z-50">
+    <div className="bg-white p-3 relative font-inter z-50 ">
       <div className="bg-nav h-[65px] sm:h-[70px] rounded-full border-2 border-border flex items-center justify-between px-6 md:px-12 lg:px-16">
         {/* Logo */}
         <div className="flex items-center space-x-3">
@@ -112,22 +112,25 @@ const navigate = useNavigate()
           </div>
 
           {/* Courses Dropdown */}
-          {isCourseDropdownOpen && selectedCourses.length > 0 && (
-            <div
-              ref={courseDropdownRef}
-              className="absolute top-16 right-52 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
-            >
-              {selectedCourses.map((course, index) => (
-                <div
-                onClick={()=>handleNavigate(course.id)}
-                  key={index}
-                  className={`block px-4 py-2 text-sm hover:bg-gray-100 rounded  ${index ===  selectedCourses.length-1 ? "border-b-0" :"border-b-2" } `}
-                >
-                  {course.courseName}
-                </div>
-              ))}
-            </div>
-          )}
+        {isCourseDropdownOpen && selectedCourses.length > 0 && (
+  <div
+    ref={courseDropdownRef}
+    className="absolute top-16 sm:left-52 md:right-[800px] lg:left-[900px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+  >
+    {selectedCourses.map((course, index) => (
+      <div
+        onClick={() => handleNavigate(course.id)}
+        key={index}
+        className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded ${
+          index === selectedCourses.length - 1 ? "border-b-0" : "border-b-2"
+        }`}
+      >
+        {course.courseName}
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
 
         {/* Profile or Sign-In Button */}
@@ -186,54 +189,25 @@ const navigate = useNavigate()
         <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
           Home
         </Link>
-        <Link to="/aboutus" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+        <Link to="/aboutus" onClick={closeMenu}  className="block text-lg font-semibold text-gray-700 hover:text-main">
           About
         </Link>
 
         {/* Dropdown for Courses */}
         <div className="relative">
           <div
-            onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
+           onClick={closeMenu}
             className="flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 hover:text-main"
           >
-            <span>Courses</span>
-            <DownArrowIcon />
+            <Link to="/allcourses">Courses</Link>
+     
           </div>
 
-          {isDepartmentDropdownOpen && (
-            <div className="mt-2 bg-gray-50 rounded shadow-md">
-              {departments.map((department, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleDepartmentClick(department)}
-                  className={`px-4 py-2 text-sm cursor-pointer ${
-                    selectedDepartment === department.departmentName
-                      ? "bg-main text-white"
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  {department.departmentName}
-                </div>
-              ))}
-            </div>
-          )}
+         
         </div>
 
         {/* Courses List */}
-        {isCourseDropdownOpen && selectedCourses.length > 0 && (
-          <div className="mt-4 bg-gray-50 rounded shadow-md">
-            {selectedCourses.map((course, index) => (
-              <Link
-                to={`/courses/${course.id}`}
-                key={index}
-                onClick={closeMenu}
-                className="block px-4 py-2 text-sm hover:bg-gray-100 rounded"
-              >
-                {course.courseName}
-              </Link>
-            ))}
-          </div>
-        )}
+       
       </nav>
 
       {/* Profile or Sign-In Button */}

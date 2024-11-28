@@ -15,7 +15,7 @@ export default function Hero() {
       <img
         src={Content}
         alt="Background"
-        className="h-[700px] object-cover"
+        className="h-[750px] object-cover"
       />
 
       {/* Pseudo-elements for the gradient effect */}
@@ -24,12 +24,12 @@ export default function Hero() {
 
       {/* Content wrapper to keep text and image above the gradients */}
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:text-left z-10 px-4">
-        <div className="flex flex-col mb-6 md:mb-0 ">
+        <div className="flex flex-col mb-6 md:mb-0 animate-fadeIn">
           <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
          
           </h1>
           <h1
-            className="text-4xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 text-transparent bg-clip-text"
+            className="text-4xl md:text-3xl lg:text-6xl font-bold mb-2 md:mb-4 text-transparent bg-clip-text"
             style={{
               backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
               backgroundSize: '100%',
@@ -45,7 +45,7 @@ export default function Hero() {
 
           <div className="flex flex-row gap-4 md:gap-6">
             <Link to="/allcourses">
-              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-full text-white font-medium text-sm md:text-base">
               Get Started Now
               </button>
             </Link>
@@ -57,7 +57,7 @@ export default function Hero() {
         <img
           src={HeroIM}
           alt="Hero Illustration"
-          className="w-4/5 md:w-1/2 lg:w-1/3 h-auto object-cover"
+          className=" animate-float w-4/5 md:w-1/2 lg:w-1/3 h-auto object-cover "
         />
       </div>
 

@@ -33,7 +33,7 @@ const CoursesCarousel = () => {
   };
   return (
     <div className="p-6 font-inter bg-gray-50 rounded-md min-h-screen flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-main mb-4">Explore Our Courses</h1>
+      <h1 className=" text-lg md:text:3xl lg:text-5xl font-bold text-main mb-4">Explore Our Courses</h1>
       <p className="text-gray-600 mb-8 text-center max-w-3xl">
         Find the course that suits your interests and skills!
       </p>
@@ -105,7 +105,7 @@ const CoursesCarousel = () => {
               speed={2000}
               modules={[Autoplay]}
               breakpoints={{
-                480: { slidesPerView: 1 },
+                480: { slidesPerView: 2 },
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 3 },
                 1440: { slidesPerView: 4 },

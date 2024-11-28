@@ -9,12 +9,12 @@ export default function Hero2() {
     textAlign: 'center',
   };
   return (
-    <div className="relative bg-white overflow-hidden">
+    <div className="relative bg-white overflow-hidden font-inter">
       {/* Background Image */}
       <img
         src={Wave}
         alt="Background"
-        className="w-full h-[500px] md:h-[600px] lg:h-[700px] object-cover"
+        className="w-full h-[700px] md:h-[600px] lg:h-[700px] object-cover"
       />
 
       {/* Gradient Overlays */}
@@ -26,7 +26,11 @@ export default function Hero2() {
         
         {/* Text Content */}
         <div className="flex flex-col mb-6 p-2 text-left md:text-left">
-          <h1 className="text-black text-3xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
+          <h1  style={{
+              backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+              backgroundSize: '100%',
+              backgroundRepeat: 'repeat',
+            }} className=" text-transparent bg-clip-text text-3xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
           Innovative & Effective E-learning Platform
           </h1>
           <p className="text-black text-md md:text-lg lg:text-xl mt-3 mb-4 w-full">
@@ -36,7 +40,7 @@ export default function Hero2() {
           
           {/* Buttons */}
           <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
-            <button style={gradientStyle} className=" px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base">
+            <button style={gradientStyle} className=" px-10 py-3 md:px-6 md:py-3 rounded-full text-white font-medium text-sm md:text-base">
             Learn more
             </button>
            

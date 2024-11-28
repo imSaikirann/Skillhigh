@@ -86,12 +86,12 @@ export default function AllCourses() {
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg"
+            className="bg-white border  border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg"
           >
             <img
               src={course.courseThumbnail}
               alt={`${course.courseName} Thumbnail`}
-              className="w-full h-60 object-cover"
+              className="w-full h-56 object-cover"
             />
             <div className="p-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">{course.courseName}</h3>

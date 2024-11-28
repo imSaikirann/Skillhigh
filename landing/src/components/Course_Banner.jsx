@@ -56,17 +56,17 @@ export default function Course_Banner() {
       <img
         src={Wave}
         alt="Background"
-        className="w-full h-[900px] md:h-[500px] lg:h-[600px] object-cover"
+        className="w-full h-[900px] md:h-[800px] lg:h-[600px] object-cover"
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white opacity-80 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white opacity-80 pointer-events-none " />
 
       {/* Hero Content */}
-      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-16 z-10 space-y-6 md:space-y-0">
+      <div className="absolute inset-0 flex flex-col md:flex-col lg:flex-row items-center justify-between animate-fadeIn px-6 md:px-2 lg:px-16 z-10 space-y-6 md:space-y-0">
         {/* Text Section */}
-        <div className="flex flex-col items-start md:items-start md:text-left w-full md:w-1/2 lg:w-3/5 space-y-4 mt-6 font-inter">
-          <h1  className=" text-main text-2xl md:text-6xl lg:text-6xl font-bold">
+        <div className="flex flex-col items-start md:items-start md:text-left w-full md:w-4/5 lg:w-3/5 space-y-4 mt-6 font-inter ">
+          <h1  className=" text-main text-3xl md:text-4xl lg:text-6xl font-bold">
             {course.courseName || 'Course Title'}
           </h1>
           <p className="text-black text-md md:text-lg lg:text-lg mt-3 mb-4 w-full">

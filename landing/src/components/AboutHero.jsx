@@ -11,8 +11,8 @@ export const AboutHero = () => {
   };
   return (
     <div className="relative h-screen bg-cover bg-center font-inter" style={{ backgroundImage: `url(${Three})` }}>
-      <div className="absolute inset-0  opacity-50"></div> {/* Optional overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
+      <div className="absolute inset-0  opacity-50 "></div> {/* Optional overlay */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 animate-fadeIn">
         
     
 
@@ -33,7 +33,7 @@ export const AboutHero = () => {
         </p>
 
         <Link to="/d">
-              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-md text-white font-medium text-sm md:text-base mt-4">
+              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-full text-white font-medium text-sm md:text-base mt-4">
               Take the First Step
               </button>
       </Link>
