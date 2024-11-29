@@ -82,10 +82,10 @@ router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, re
 // Route to delete a course
 router.delete('/deleteCourse/:id', async (req, res) => {
     const { id } = req.params;
-
+    
     try {
         const course = await prisma.course.findUnique({ where: { id } }); 
-
+        console.log(id)
 
         if (course && course.courseThumbnail) {
             const fileKey = course.courseThumbnail.split('/').pop(); 
@@ -112,14 +112,25 @@ router.get('/getAllCourse', async (req, res) => {
                         contents: true, 
                     },
                 },
+                department: true, 
             },
         });
-        res.status(200).json(data);
+
+      
+        const formattedData = data.map(course => ({
+            ...course,
+            departmentName: course.department?.departmentName || null, 
+        }));
+
+       
+        res.status(200).json(formattedData);
     } catch (error) {
         console.error("Error while getting all courses:", error);
         res.status(500).json({ message: "Error while getting all courses", error });
     }
 });
+
+
 
 
 // Route to get a specific course by ID
