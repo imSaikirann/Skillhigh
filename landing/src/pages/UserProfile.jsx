@@ -111,11 +111,11 @@ const UserProfile = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8">
+          <div className="flex items-center flex-col justify-center  py-8">
             <p className="text-lg text-gray-500 italic mb-4">You haven't enrolled in any courses yet!</p>
             <Link to="/allcourses">
             <button
-              className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-medium rounded-lg shadow hover:from-green-500 hover:to-blue-600 transition"
+              className="flex items-center justify-center px-6 py-3 bg-main text-white font-medium rounded-lg shadow hover:from-green-500 hover:to-blue-600 transition"
               onClick={() => navigate('/courses')}
             >
               <span>Explore Courses</span>

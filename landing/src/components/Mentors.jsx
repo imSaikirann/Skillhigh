@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Mentor from "../assets/Cofounder.jpg";
 import axios from "../auth/axiosConfig";
 
 export default function Mentors() {
-  const [mentors,setMentors] = useState([])
+  const [mentors, setMentors] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchMentors() {
-      const res = await axios.get('/api/v1/mentors/mentors')
-      console.log(res.data)
-      setMentors(res.data)
+      const res = await axios.get('/api/v1/mentors/mentors');
+      console.log(res.data);
+      setMentors(res.data);
     }
-    fetchMentors()
-  },[])
- 
+    fetchMentors();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center py-16 font-inter bg-gray-50">
@@ -25,15 +23,16 @@ export default function Mentors() {
       {/* Scrolling Wrapper */}
       <div className="relative w-full overflow-hidden">
         <div
-          className="flex space-x-6 sm:space-x-8 animate-scroll"
+          className="flex animate-scroll space-x-3"
           style={{
             animation: "scroll 25s linear infinite",
           }}
         >
+          {/* Duplicating mentors for continuous loop */}
           {[...mentors, ...mentors].map((mentor, index) => (
             <div
               key={index}
-              className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96 h-80 sm:h-96 rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-300"
+              className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96 h-80 sm:h-96 rounded-2xl  overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-300"
             >
               {/* Image */}
               <img
@@ -59,21 +58,18 @@ export default function Mentors() {
         {`
           @keyframes scroll {
             0% {
-              transform: translateX(0%);
+              transform: translateX(0);
             }
             100% {
-              transform: translateX(-50%);
+              transform: translateX(-100%);
             }
           }
           .animate-scroll {
             display: flex;
             white-space: nowrap;
             will-change: transform;
-            cursor: pointer;
-            transition: animation-play-state 0.3s ease;
-          }
-          .animate-scroll:hover {
-            animation-play-state: paused;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
           }
         `}
       </style>
