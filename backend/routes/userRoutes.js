@@ -28,9 +28,9 @@ router.post('/signup', async (req, res) => {
 
     // Generate JWT
     const jwtToken = jwt.sign(
-      { userId: user.userId, email: user.email },
+      { userId: user.id, email: user.email },
       process.env.JWT_USER_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '7h' }
     );
 
     res.status(201).json({
@@ -67,9 +67,9 @@ router.post('/signin', async (req, res) => {
 
     // Generate a new JWT for authenticated access
     const jwtToken = jwt.sign(
-      { userId: user.userId, email: user.email },
+      { userId: user.id, email: user.email },
       process.env.JWT_USER_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '7h' }
     );
 
     res.status(200).json({

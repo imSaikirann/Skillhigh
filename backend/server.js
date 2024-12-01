@@ -1,5 +1,6 @@
 const cors = require('cors')
 
+const express = require('express');
 const courseRoutes = require('./routes/courseRoutes')
 const topicRoutes = require('./routes/topicRoutes')
 const quizRoutes = require('./routes/quizRoutes')
@@ -15,6 +16,8 @@ const userRoutes = require('./routes/userRoutes')
 const profileRoutes = require('./routes/userProfile')
 const purchaseRoutes = require('./routes/purchaseRoutes')
 const courseModuleRoutes = require('./routes/courseModules')
+const paymentRoutes = require('./routes/paymentRoutes')
+
 
 
 
@@ -25,7 +28,7 @@ require('dotenv').config();
 
 
 
-const express = require('express');
+
 
 require('dotenv').config(); 
 
@@ -62,6 +65,8 @@ app.post('/api/checking', authenticateAdmin, (req, res) => {
 // Middleware to parse JSON requests
 app.use(express.json()); 
 
+
+
 app.use('/api/v1/course',courseRoutes)
 app.use('/api/v1/topic',topicRoutes)
 app.use('/api/v1/topicQuiz', quizRoutes)
@@ -76,6 +81,8 @@ app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/profile', profileRoutes)
 app.use('/api/v1/purchaseCourse', purchaseRoutes)
 app.use('/api/v1/CourseModules', courseModuleRoutes)
+app.use('/api/v1/payments',paymentRoutes )
+
 
 
 

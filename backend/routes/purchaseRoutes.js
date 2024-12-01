@@ -5,56 +5,108 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 // Create a new purchase
-router.post('/purchases', authenticateUser,  async (req, res) => {
+router.post('/purchaseFromSales', async (req, res) => {
+  console.log(req.body)
+  const { email, courseId,orderId ,amount,phone} = req.body;
+
+ 
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
 
   try {
 
-    const userId = req.user.userId
-    
-    const user = await prisma.user.findFirst({
-      where:{
-        userId:userId
-      }
-    })
+    const isEmailExists = await prisma.dashboardUsers.findUnique({
+      where: {
+        email: email,
+      },
 
-    const { courseId, price } = req.body;
 
-    const course = await prisma.course.findUnique({
-      where:{
-        id:courseId
-      }
-    })
- 
-    const purchase = await prisma.purchase.create({
+    });
+
+    if (isEmailExists) {
+     try { 
+
+      const user = await prisma.dashboardUsers.create({
+        data: {
+          email,
+        },
+      });
+  
+      const courseData = await prisma.course.findUnique({
+        where:{
+          id:courseId
+        },
+        select:{
+          courseName:true
+        }
+      })
+      const purchaseData = await prisma.purchase.create({
+        data: {
+          userId: user.id,
+          courseName:courseData.courseName,
+          courseId: courseId,
+          purchaseId: orderId,
+          price: amount,
+          phoneNumber: phone,
+          email: email,
+          using:false
+        }
+        
+      });
+      res.status(201).json({message:"Created"})
+     } catch (error) {
+      console.error('Error creating purchase:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+     }
+    }
+
+
+    const user = await prisma.dashboardUsers.create({
       data: {
-        userId:user.id,
-        name:user.name,
-        email:user.email,
-        price,
-        courseName:course.courseName,
-        courseId,
+        email,
       },
     });
-    res.status(201).json(purchase);
+
+    const courseData = await prisma.course.findUnique({
+      where:{
+        id:courseId
+      },
+      select:{
+        courseName:true
+      }
+    })
+    const purchaseData = await prisma.purchase.create({
+      data: {
+        userId: user.id,
+        courseName:courseData.courseName,
+        courseId: courseId,
+        purchaseId: orderId,
+        price: amount,
+        phoneNumber: phone,
+        email: email,
+        using:false
+      },
+    });
+
+    console.log(purchaseData);
+    return res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     console.error('Error creating purchase:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
 
 // Get all purchases
 router.get('/purchases', async (req, res) => {
   try {
-    const purchases = await prisma.purchase.findMany({
-      include: {
-        user: true,
-        course: true,
-      },
-    });
+    const purchases = await prisma.purchase.findMany({});
     res.status(200).json(purchases);
   } catch (error) {
     console.error('Error fetching purchases:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' }); 
   }
 });
 

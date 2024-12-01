@@ -5,11 +5,12 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/profile',authenticateUser,async(req,res)=>{
+    console.log(req.user)
     const userId = req.user.userId
     try {
         const data = await prisma.user.findUnique({
             where:{
-                userId:userId
+                id:userId
             },
             include:{
                 purchase :true
