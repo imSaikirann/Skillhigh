@@ -126,7 +126,7 @@ export default function CheckoutPage() {
         amount,
         currency,
         order_id: orderId,
-        name: selectedCourse,
+        name: `${selectedCourse}`,
         description: `Purchase of ${selectedPlan} plan`,
         image:  Icon, 
         prefill: {
