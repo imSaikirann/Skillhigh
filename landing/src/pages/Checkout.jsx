@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../auth/axiosConfig';
-
+import Icon from '../assets/icon.png'
 export default function CheckoutPage() {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showPlanModal, setShowPlanModal] = useState(false);  
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);  
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [course, setCourse] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [checkoutError, setCheckoutError] = useState('');
-  const { id } = useParams();
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   const [userInfo, setUserInfo] = useState({
     name: '',
     email: '',
     phone: '',
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [checkoutError, setCheckoutError] = useState('');
+  const { id } = useParams();
 
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
@@ -65,7 +64,20 @@ export default function CheckoutPage() {
 
   const handleSelectPlan = (planName) => {
     setSelectedPlan(planName);
-    setShowDetails(false);
+    setShowPlanModal(true); 
+  };
+
+  const handleClosePlanModal = () => {
+    setShowPlanModal(false); 
+  };
+
+  const handleOpenCheckoutModal = () => {
+    setShowCheckoutModal(true); 
+    setShowPlanModal(false);    
+  };
+
+  const handleCloseCheckoutModal = () => {
+    setShowCheckoutModal(false); 
   };
 
   const loadRazorpayScript = () => {
@@ -110,13 +122,13 @@ export default function CheckoutPage() {
   
       // Razorpay options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_LIVE_ID, // Razorpay key
+        key: import.meta.env.VITE_RAZORPAY_LIVE_ID, 
         amount,
         currency,
         order_id: orderId,
-        name: 'Course Purchase',
+        name: selectedCourse,
         description: `Purchase of ${selectedPlan} plan`,
-        image: 'your-logo-url', // Update with your logo URL
+        image:  Icon, 
         prefill: {
           name: userInfo.name,
           email: userInfo.email,
@@ -126,7 +138,7 @@ export default function CheckoutPage() {
           color: '#0D8267',
         },
         handler: async (response) => {
-          // Payment success handler
+      
           setSuccessMessage(
             'Payment successful! Your course purchase is confirmed. Check your Profile for further details.'
           );
@@ -137,8 +149,8 @@ export default function CheckoutPage() {
           try {
             await axios.post('/api/v1/payments/verifyPayment', {
               courseId: id,
-              phone:userInfo.phone,
-              email:userInfo.email,
+              phone: userInfo.phone,
+              email: userInfo.email,
               price: plans[selectedPlan].price,
               orderId,
               paymentId: response.razorpay_payment_id,
@@ -167,19 +179,15 @@ export default function CheckoutPage() {
       setCheckoutError('Something went wrong during checkout.');
     }
   };
-  
-  
-  
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`/api/v1/course/getCourse/${id}`);
-        setCourse(response.data);
+        console.log(response.data)
+        setSelectedCourse(response.data)
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.error(err);
       }
     };
 
@@ -190,7 +198,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-inter">
       <h1 className="text-3xl font-bold text-center text-gray-800">Checkout</h1>
       <p className="text-center text-gray-600 mt-2">Select your plan and explore its features.</p>
-
+      <div className="text-center text-2xl text-main font-bold mt-2">Course Name : {selectedCourse.courseName}</div>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
         {Object.entries(plans).map(([planName, planDetails]) => (
           <div
@@ -204,15 +212,9 @@ export default function CheckoutPage() {
             </p>
             <div className="mt-6 flex flex-col space-y-4">
               <button
-                onClick={() => setShowDetails(!showDetails)}
+                onClick={() => handleSelectPlan(planName)} // Open Plan Details Modal
                 style={gradientStyle}
                 className="text-white px-6 py-2 rounded-md transition"
-              >
-                {showDetails ? 'Hide Details' : 'Know More'}
-              </button>
-              <button
-                onClick={() => handleSelectPlan(planName)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-md transition"
               >
                 Select Plan
               </button>
@@ -221,48 +223,87 @@ export default function CheckoutPage() {
         ))}
       </div>
 
-      {selectedPlan && (
-        <div className="mt-10">
-          <h2 className="text-2xl font-bold text-gray-800">Fill Your Details</h2>
-          <div className="mt-4 space-y-4">
-            <input
-              type="text"
-              placeholder="Name"
-              className="border rounded-md w-full px-4 py-2"
-              value={userInfo.name}
-              onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="border rounded-md w-full px-4 py-2"
-              value={userInfo.email}
-              onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className="border rounded-md w-full px-4 py-2"
-              value={userInfo.phone}
-              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-            />
+      {/* Plan Details Modal */}
+      {showPlanModal && selectedPlan && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-lg max-w-lg w-full">
+            <h2 className="text-2xl font-bold text-gray-800">{selectedPlan} Plan</h2>
+            <ul className="mt-4 space-y-2">
+              {plans[selectedPlan].features.map((feature, index) => (
+                <li key={index} className="text-gray-600">
+                  - {feature}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 flex  flex-row-reverse justify-between">
+              <button
+                onClick={handleOpenCheckoutModal} // Open Checkout Modal
+                style={gradientStyle}
+                className="text-white px-6 py-2 rounded-md transition"
+              >
+                Proceed to Checkout
+              </button>
+              <button
+                onClick={handleClosePlanModal} // Close Plan Modal
+                className="text-gray-600 hover:text-gray-800 px-4 py-2"
+              >
+                Close
+              </button>
+            </div>
           </div>
+        </div>
+      )}
 
-          <div className="mt-6">
-            <button
-              style={gradientStyle}
-              className="text-white px-6 py-2 rounded-md transition"
-              onClick={handleCheckout}
-            >
-              Proceed to Checkout
-            </button>
+      {/* Checkout Form Modal */}
+      {showCheckoutModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-lg max-w-lg w-full">
+            <h2 className="text-2xl font-bold text-gray-800">Enter Your Details</h2>
+            <div className="mt-4 space-y-4">
+              <input
+                type="text"
+                placeholder="Name"
+                className="border rounded-md w-full px-4 py-2"
+                value={userInfo.name}
+                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="border rounded-md w-full px-4 py-2"
+                value={userInfo.email}
+                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                className="border rounded-md w-full px-4 py-2"
+                value={userInfo.phone}
+                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+              />
+            </div>
+
+            <div className="mt-6 flex flex-row-reverse justify-between">
+              <button
+                onClick={handleCheckout}
+                style={gradientStyle}
+                className="text-white px-6 py-2 rounded-md transition"
+              >
+                Proceed to Checkout
+              </button>
+              <button
+                onClick={handleCloseCheckoutModal}
+                className="text-gray-600 hover:text-gray-800 px-4 py-2"
+              >
+                Close
+              </button>
+            </div>
             {successMessage && (
-  <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-800 rounded-md">
-    <p className="font-bold">Thank you!</p>
-    <p>{successMessage}</p>
-  </div>
-)}
-
+              <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-800 rounded-md">
+                <p className="font-bold">Thank you!</p>
+                <p>{successMessage}</p>
+              </div>
+            )}
           </div>
         </div>
       )}

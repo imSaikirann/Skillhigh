@@ -1,7 +1,16 @@
 import React from 'react';
 import Logo from '../assets/logo.jpg';
+import PP from '../assets/PRIVACY_POLICY.pdf'
+import TC from '../assets/TermsandConditions.pdf'
+
 
 export default function Footer() {
+  const handlePP = ()=>{
+    window.open(PP, "_blank");
+  }
+  const handleTC = ()=>{
+    window.open(TC, "_blank");
+  }
   return (
     <footer className="bg-white text-black py-10 border-t-2 font-inter">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -70,9 +79,9 @@ Suchitra Junction, Quthbullapur, Medchal-Malkajgiri Dist., Telangana, India 
         <div className="mt-8 border-t border-gray-700 pt-6">
           <div className="flex flex-col md:flex-row items-center justify-between text-sm">
             <div className="flex space-x-4">
-              <a href="/privacy-policy" className="hover:text-main">Privacy Policy</a>
+              <a onClick={handlePP} className="hover:text-main cursor-pointer">Privacy Policy</a>
               <span>|</span>
-              <a href="/terms-and-conditions" className="hover:text-main">Terms & Conditions</a>
+              <a onClick={handleTC} className="hover:text-main cursor-pointer">Terms & Conditions</a>
               {/* <span>|</span>
               <a href="/refund-and-cancellation" className="hover:text-main">Refund and Cancellation</a>
               <span>|</span>

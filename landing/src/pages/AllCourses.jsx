@@ -11,8 +11,8 @@ export default function AllCourses() {
   const { fetchAllCourses, courses, loading, error } = useContext(AppContext);
 
   const items = [
-    { text: "Lifetime access", checked: <ArrowPathIcon />  },
-    { text: "All levels", checked: <AcademicIcon />  },
+    { text: "Lifetime access", checked: <ArrowPathIcon /> },
+    { text: "All levels", checked: <AcademicIcon /> },
     { text: "Assignments", checked: <ChartIcon /> },
   ];
 
@@ -104,16 +104,18 @@ export default function AllCourses() {
               className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg"
             >
               {/* Thumbnail */}
-              <div className="relative">
+              {/* Thumbnail */}
+              <div className="relative flex justify-center items-center w-full h-56 bg-gray-100">
                 <img
                   src={course.courseThumbnail}
                   alt={`${course.courseName} Thumbnail`}
-                  className="w-full h-56 object-cover"
+                  className="object-contain max-w-full max-h-full"
                 />
                 <div className="absolute top-2 left-2 bg-main text-white px-3 py-1 rounded-full text-sm">
                   {course.departmentName}
                 </div>
               </div>
+
 
               {/* Content */}
               <div className="flex flex-col p-4 flex-grow">

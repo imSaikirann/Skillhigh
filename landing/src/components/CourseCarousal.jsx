@@ -76,13 +76,13 @@ const CoursesCarousel = () => {
               {firstHalf.length > 0 ? (
                 firstHalf.map((course, index) => (
                   <SwiperSlide key={index}>
-                  <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl w-full min-h-md">
+                  <div className="bg-white cursor-pointer  rounded-lg shadow-lg p-6 flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl w-full min-h-md">
   {/* Thumbnail Section */}
   <div className="relative">
     <img
       src={course.courseThumbnail}
       alt={course.courseName}
-      className="w-full h-48 object-cover rounded-lg shadow-md"
+      className="w-full h-full object-cover rounded-lg shadow-md"
     />
     <div className="absolute top-2 left-2 bg-main text-white px-3 py-1 rounded-full text-sm">
       {course.departmentName}
@@ -151,13 +151,13 @@ const CoursesCarousel = () => {
               {secondHalf.length > 0 ? (
                 secondHalf.map((course, index) => (
                   <SwiperSlide key={index}>
-                  <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-xl w-full min-h-md">
+                  <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl w-full min-h-md">
   {/* Thumbnail Section */}
   <div className="relative">
     <img
       src={course.courseThumbnail}
       alt={course.courseName}
-      className="w-full h-48 object-cover rounded-lg shadow-md"
+      className="w-full h-full object-cover rounded-lg shadow-md"
     />
     <div className="absolute top-2 left-2 bg-main text-white px-3 py-1 rounded-full text-sm">
       {course.departmentName}

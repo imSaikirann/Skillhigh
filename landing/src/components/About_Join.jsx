@@ -70,7 +70,7 @@ export default function AboutJoin() {
             <div
               key={index}
               className="p-6 bg-white border border-gray-200 rounded-lg shadow-md flex flex-col items-center justify-center text-center
-                         transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:bg-gray-50"
+                         transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:bg-border"
             >
               <img src={item.src} alt={item.title} className="mb-4 h-24 w-auto object-contain" />
               <h2 className="text-lg font-semibold mb-2">{item.title}</h2>

@@ -9,11 +9,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { setToken } = useContext(AppContext);
-  const gradientStyle = {
-    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
-    color: 'white',
-    textAlign: 'center',
-  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -29,8 +25,6 @@ const UserProfile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(response)
 
         if (response.status === 200) {
           setUserData(response.data);
@@ -62,80 +56,101 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="p-6 sm:px-12 font-inter bg-gray-50 min-h-screen">
+    <div className="p-4 sm:p-6 font-inter bg-gray-50 min-h-screen">
       {/* Header Section */}
-      <div className="bg-white rounded-xl shadow-md p-6 mb-8 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-        <div className="flex items-center space-x-3 sm:space-x-6">
-          <div  className=" text-main  rounded-full w-14 h-14 sm:w-20 sm:h-20 flex items-center justify-center text-3xl font-bold">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-14">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-</svg>
-
+      <div className="bg-white rounded-xl shadow-md p-6 mb-8 grid grid-cols-1 md:grid-cols-2 items-center gap-4">
+        <div className="flex items-center space-x-4">
+          <div className="bg-main text-white rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-2xl font-bold">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-10 h-10"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
           </div>
           <div>
-            <h1 className="text-xl sm:text-3xl font-semibold text-gray-800">{userData.name || 'User'}</h1>
-            <p className="text-md sm:text-lg text-gray-500">{userData.email || 'Email not available'}</p>
+            <h1 className="text-lg sm:text-2xl font-semibold text-gray-800">
+              {userData.name || 'User'}
+            </h1>
+            <p className="text-sm sm:text-lg text-gray-500">
+              {userData.email || 'Email not available'}
+            </p>
           </div>
         </div>
-        <button
-          className="px-6 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
+        <div className="flex justify-end">
+          <button
+            className="px-4 sm:px-6 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Courses Section */}
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Enrolled Courses</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
+          Enrolled Courses
+        </h2>
         {userData.purchase && userData.purchase.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {userData.purchase.map((course, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition-shadow"
+                className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition-shadow"
               >
                 <div className="flex items-center space-x-4 mb-4">
-                  <div className="bg-border text-main rounded-full w-10 h-10 flex items-center justify-center font-medium">
+                  <div className="bg-main text-white rounded-full w-8 h-8 flex items-center justify-center font-medium">
                     {index + 1}
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-gray-700">{course.courseName || `Course ${index + 1}`}</h3>
+                    <h3 className="text-md font-medium text-gray-700">
+                      {course.courseName || `Course ${index + 1}`}
+                    </h3>
                   </div>
                 </div>
-                <p className="text-sm text-gray-600">Purchased by: {course.name}</p>
-                <p className="text-sm text-gray-600">Email: {course.email}</p>
                 <p className="text-sm text-gray-600">
-                  Purchase Date: {new Date(course.createdAt).toLocaleDateString()}
+                  Purchased by: {course.name}
                 </p>
-                <p className="text-sm text-gray-600 font-semibold">Price: ₹{course.price}</p>
+                <p className="text-sm text-gray-600">Email: {course.email}</p>
+               
+                <p className="text-sm text-gray-600 font-semibold">
+                  Price: ₹{course.price}
+                </p>
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex items-center flex-col justify-center  py-8">
-            <p className="text-lg text-gray-500 italic mb-4">You haven't enrolled in any courses yet!</p>
+          <div className="flex items-center flex-col justify-center py-8">
+            <p className="text-lg text-gray-500 italic mb-4">
+              You haven't enrolled in any courses yet!
+            </p>
             <Link to="/allcourses">
-            <button
-              className="flex items-center justify-center px-6 py-3 bg-main text-white font-medium rounded-lg shadow hover:from-green-500 hover:to-blue-600 transition"
-              onClick={() => navigate('/courses')}
-            >
-              <span>Explore Courses</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                className="w-5 h-5 ml-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+              <button className="px-6 py-3 bg-main text-white font-medium rounded-lg shadow hover:bg-green-500 transition flex items-center">
+                Explore Courses
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="w-5 h-5 ml-2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </Link>
           </div>
         )}
