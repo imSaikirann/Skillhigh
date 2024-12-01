@@ -33,7 +33,7 @@ export default function Signup() {
         email: user.email,
         name: user.displayName,
       });
-
+      console.log(response)
       if (response.data.success) {
         const { token: jwtToken, user } = response.data;
         localStorage.setItem('token', jwtToken);
@@ -56,6 +56,7 @@ export default function Signup() {
         email: user.email,
         name: name,
       });
+      
 
       if (response.data.success) {
         const { token: jwtToken } = response.data;
