@@ -14,7 +14,7 @@ export default {
         border: "#C3DED8",
       },
       fontFamily: {
-        inter: ["Inter", "serif"],
+        inter: ["Red Hat Text", "serif"],
       },
       screens: {
         xs: "480px",
