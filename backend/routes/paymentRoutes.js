@@ -37,7 +37,7 @@ router.post('/createOrder', authenticateUser, async (req, res) => {
     if (!order) {
       throw new Error('Order creation with Razorpay failed');
     }
-
+    console.log(order)
     res.json({
       success: true,
       orderId: order.id,
@@ -88,16 +88,17 @@ router.post('/verifyPayment', authenticateUser, async (req, res) => {
     const userId = req.user.userId; 
     const purchaseData = await prisma.purchase.create({
       data: {
-        userId: userId,
-      courseName:courseData.courseName,
+        userId: userId, 
+        courseName: courseData.courseName,
         courseId: courseId,
         purchaseId: orderId,
-        price: req.body.amount,
+        price: price,
         phoneNumber: phone,
         email: email,
-        using:false
+        using: false,
       },
     });
+    
 
     res.json({
       success: true,

@@ -181,7 +181,7 @@ model Purchase {
   courseId   String @db.ObjectId
   course     Course @relation(fields: [courseId], references: [id])
   using     Boolean @default(false)
-  createdAt DateTime @default(now())
+
 } 
 
 
