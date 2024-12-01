@@ -1,43 +1,105 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from '../auth/axiosConfig';
 
 export default function Users() {
-  const [users, setUsers] = useState([
-    { name: 'John Doe', email: 'johndoe@example.com', phone: '+1 (555) 123-4567', courseName: 'React Development', using: 'Yes' },
-    { name: 'Jane Smith', email: 'janesmith@example.com', phone: '+1 (555) 987-6543', courseName: 'Node.js Mastery', using: 'No' },
-    { name: 'Alice Johnson', email: 'alicej@example.com', phone: '+1 (555) 555-1234', courseName: 'Full Stack Bootcamp', using: 'Yes' },
-  ]);
-
+  const [users, setUsers] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [newUser, setNewUser] = useState({
-    name: '',
     email: '',
+    orderId: '',
     phone: '',
     courseName: '',
-    using: 'Yes',
+    amount: "",
+    using: 'NO',
   });
 
+  // Fetch users from the API
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const res = await axios.get('/api/v1/purchaseCourse/purchases');
+        console.log(res.data);
+        setUsers(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUsers();
+  }, []); 
+
+  // Fetch courses from the API
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const res = await axios.get('/api/v1/course/getAllCourse');
+        console.log(res.data);
+        setCourses(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchCourses();
+  }, []); 
+
+  // Filter users based on search input
   const filteredUsers = users.filter(
     (user) =>
-      user.name.toLowerCase().includes(search.toLowerCase()) ||
+      user.courseName.toLowerCase().includes(search.toLowerCase()) ||
       user.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleAddUser = () => {
-    setUsers([...users, newUser]);
-    setShowForm(false);
-    setNewUser({ name: '', email: '', phone: '', courseName: '', using: 'Yes' });
+  // Handle adding a new user
+  const handleAddUser = async () => {
+    try {
+      // Send the new user data to the backend
+      const response = await axios.post('/api/v1/purchaseCourse/purchaseFromSales', {
+        email: newUser.email,
+        courseId: newUser.courseName, 
+        orderId: newUser.orderId, 
+        amount: parseFloat(newUser.amount),
+        phone: newUser.phone,
+      });
+
+      if (response.status === 201) {
+       
+        setUsers([...users, {
+          email: newUser.email,
+          phoneNumber: newUser.phone,
+          courseName: newUser.courseName,
+          price: newUser.amount, 
+   
+        }]);
+
+        // Reset form and hide modal
+        setShowForm(false);
+        setNewUser({
+          email: '',
+          orderId: '',
+          phone: '',
+          courseName: '',
+          amount: "",
+
+        });
+      } else {
+        console.error("Unexpected response:", response.data);
+      }
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
   };
 
   return (
-    <div className='container mx-auto p-6 px-6 sm:pl-80 font-poppins'>
+    <div className="container mx-auto p-6 px-6 sm:pl-80 font-poppins">
       <header className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-semibold">Users</h1>
         <button onClick={() => setShowForm(true)} className="bg-main text-white px-4 py-2 rounded-md">
           Add New User
         </button>
       </header>
-      
+
+      {/* Search Bar */}
       <div className="mb-4">
         <input
           type="text"
@@ -47,28 +109,37 @@ export default function Users() {
           className="w-full px-4 py-2 border rounded-md"
         />
       </div>
-      
+
+      {/* Users Table */}
       <div className="relative overflow-x-auto p-8 max-h-96">
         <table className="w-full text-sm text-left bg-main text-white">
           <thead className="text-xs text-white uppercase">
             <tr>
-              <th scope="col" className="px-6 py-3">Name</th>
-              <th scope="col" className="px-6 py-3">Email</th>
-              <th scope="col" className="px-6 py-3">Phone Number</th>
-              <th scope="col" className="px-6 py-3">Course Name</th>
-              <th scope="col" className="px-6 py-3">Using (Yes/No)</th>
+              <th className="px-6 py-3">Email</th>
+              <th className="px-6 py-3">Phone Number</th>
+              <th className="px-6 py-3">Course Name</th>
+              <th className="px-6 py-3">Price</th>
+              <th className="px-6 py-3">Using (Yes/No)</th>
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((user, index) => (
-              <tr key={index} className="bg-white border-b text-black">
-                <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">{user.name}</th>
-                <td className="px-6 py-4">{user.email}</td>
-                <td className="px-6 py-4">{user.phone}</td>
-                <td className="px-6 py-4">{user.courseName}</td>
-                <td className="px-6 py-4">{user.using}</td>
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user, index) => (
+                <tr key={index} className="bg-white border-b text-black">
+                  <td className="px-6 py-4">{user.email}</td>
+                  <td className="px-6 py-4">{user.phoneNumber}</td>
+                  <td className="px-6 py-4">{user.courseName}</td>
+                  <td className="px-6 py-4">{user.price}</td>
+                  <td className="px-6 py-4">{user.using ? "Yes" : "No"}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center py-4">
+                  No users found
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -80,18 +151,18 @@ export default function Users() {
             <h2 className="text-2xl font-semibold mb-4">Add New User</h2>
             <form onSubmit={(e) => { e.preventDefault(); handleAddUser(); }}>
               <input
-                type="text"
-                placeholder="Name"
-                value={newUser.name}
-                onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                className="w-full px-4 py-2 mb-3 border rounded-md"
-                required
-              />
-              <input
                 type="email"
                 placeholder="Email"
                 value={newUser.email}
                 onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                className="w-full px-4 py-2 mb-3 border rounded-md"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Order Id"
+                value={newUser.orderId}
+                onChange={(e) => setNewUser({ ...newUser, orderId: e.target.value })}
                 className="w-full px-4 py-2 mb-3 border rounded-md"
                 required
               />
@@ -103,22 +174,33 @@ export default function Users() {
                 className="w-full px-4 py-2 mb-3 border rounded-md"
                 required
               />
-              <input
-                type="text"
-                placeholder="Course Name"
+              
+              {/* Course Selection Dropdown */}
+              <select
                 value={newUser.courseName}
                 onChange={(e) => setNewUser({ ...newUser, courseName: e.target.value })}
                 className="w-full px-4 py-2 mb-3 border rounded-md"
                 required
-              />
+              >
+                <option value="">Select Course</option>
+                {courses && courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.courseName}
+                  </option>
+                ))}
+              </select>
+
+            
+              {/* Using Select */}
               <select
-                value={newUser.using}
-                onChange={(e) => setNewUser({ ...newUser, using: e.target.value })}
+                value={newUser.amount}
+                onChange={(e) => setNewUser({ ...newUser, amount: e.target.value })}
                 className="w-full px-4 py-2 mb-3 border rounded-md"
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="4500">4500</option>
+                <option value="6500">6500</option>
               </select>
+
               <div className="flex justify-end">
                 <button
                   type="button"
