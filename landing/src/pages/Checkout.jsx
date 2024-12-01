@@ -126,7 +126,7 @@ export default function CheckoutPage() {
         amount,
         currency,
         order_id: orderId,
-        name: `${selectedCourse.courseName && selectedCourse.courseName}`,
+        name: 'course',
         description: `Purchase of ${selectedPlan} plan`,
         image:  Icon, 
         prefill: {
@@ -198,7 +198,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-inter">
       <h1 className="text-3xl font-bold text-center text-gray-800">Checkout</h1>
       <p className="text-center text-gray-600 mt-2">Select your plan and explore its features.</p>
-      <div className="text-center text-2xl text-main font-bold mt-2">Course Name : {selectedCourse.courseName && selectedCourse.courseName}</div>
+      {/* <div className="text-center text-2xl text-main font-bold mt-2">Course Name : {selectedCourse.courseName && selectedCourse.courseName}</div> */}
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
         {Object.entries(plans).map(([planName, planDetails]) => (
           <div
