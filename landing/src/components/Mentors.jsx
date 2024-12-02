@@ -16,7 +16,7 @@ export default function Mentors() {
   return (
     <div className="flex flex-col items-center justify-center py-16 font-inter bg-gray-50">
       {/* Heading */}
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-12 text-center">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-headings mb-12 text-center">
         Meet Our Mentors
       </h1>
 

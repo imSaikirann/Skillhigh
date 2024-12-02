@@ -69,38 +69,38 @@ export default function Course_Banner() {
           <h1  className=" text-main text-3xl md:text-4xl lg:text-6xl font-bold">
             {course.courseName || 'Course Title'}
           </h1>
-          <p className="text-black text-md md:text-lg lg:text-lg mt-3 mb-4 w-full">
+          <p className="text-textColor font-medium text-md md:text-lg lg:text-lg mt-3 mb-4 w-full">
             {course.courseDescription || 'Course Description'}
           </p>
 
           {/* Features List */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-black text-md md:text-lg lg:text-lg mt-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-textColor font-medium text-md md:text-lg lg:text-lg mt-3">
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>Lifetime Membership</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>3+ Real-World Projects</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>Expert-Led Live Guidance</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>Internship Completion Certification</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>Career Support and Placement Services</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>60 Days Program</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-green-500">✓</span>
+              <span className="text-main">✓</span>
               <span>Periodic Skills Assessment</span>
             </div>
           </div>
@@ -110,7 +110,7 @@ export default function Course_Banner() {
             <button
               style={gradientStyle}
               onClick={() => handleCourseCheckout(course.id)}
-              className="px-10 py-3 md:px-6 md:py-3 rounded-md text-white font-medium text-sm md:text-base"
+              className="px-10 py-3 md:px-6 md:py-3 rounded-full text-white font-medium text-sm md:text-base"
             >
               Enroll now
             </button>

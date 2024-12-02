@@ -55,10 +55,10 @@ export default function AboutJoin() {
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 ">
         {/* Text content */}
         <div className="flex flex-col items-center text-center mb-8">
-          <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
+          <h1 className="text-main text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
             Join SkillHigh Today
           </h1>
-          <p className="text-black text-md md:text-lg lg:text-xl mt-3 mb-4 max-w-2xl">
+          <p className="text-textColor font-medium text-md md:text-lg lg:text-xl mt-3 mb-4 max-w-2xl">
             Install our top-rated dropshipping app to your e-commerce site and gain access to US suppliers, AliExpress vendors, and more.
           </p>
         </div>
@@ -73,8 +73,8 @@ export default function AboutJoin() {
                          transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:bg-border"
             >
               <img src={item.src} alt={item.title} className="mb-4 h-24 w-auto object-contain" />
-              <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
-              <p className="text-md text-gray-600">{item.content}</p>
+              <h2 className=" text-lg sm:text-xl font-semibold mb-2 text-main">{item.title}</h2>
+              <p className="text-md text-gray-700 font-medium">{item.content}</p>
             </div>
           ))}
         </div>

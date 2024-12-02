@@ -89,15 +89,15 @@ export default function ContactUs() {
         >
           Get in touch
         </h1>
-        <p className="text-gray-600">
+        <p className="text-textColor font-medium">
           Have questions or need assistance? Our team is here to help you make the right choice for your career.
         </p>
       </div>
 
       {/* Contact Form */}
       <div className="w-full max-w-lg bg-white rounded-lg border border-gray-300 p-8 space-y-6">
-        <h2 className="text-2xl font-bold text-left text-gray-800">Contact Us</h2>
-        <p className="text-gray-600 text-left">We'd love to hear from you! Please fill out the form below.</p>
+        <h2 className="text-4xl font-bold text-left text-headings">Contact Us</h2>
+        <p className="text-textColor font-medium text-left">We'd love to hear from you! Please fill out the form below.</p>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row sm:space-x-4">
@@ -108,7 +108,7 @@ export default function ContactUs() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-border"
                 placeholder="Your Name"
               />
             </div>
@@ -120,7 +120,7 @@ export default function ContactUs() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-border"
                 placeholder="Your Email"
               />
             </div>
@@ -133,7 +133,7 @@ export default function ContactUs() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-border"
               placeholder="Phone Number"
             />
           </div>
@@ -144,7 +144,7 @@ export default function ContactUs() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-border"
               placeholder="Your Message"
               rows="4"
             ></textarea>
@@ -153,7 +153,9 @@ export default function ContactUs() {
           <button
             type="submit"
             style={gradientStyle}
-            className="w-full px-4 py-3 text-white rounded-md hover:bg-opacity-90 focus:outline-none focus:ring focus:ring-green-300"
+            className="w-full px-4 py-3 text-white rounded-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-border transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-md hover:shadow-lg "
+            
+    
           >
             Send Message
           </button>

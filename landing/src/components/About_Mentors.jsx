@@ -10,12 +10,12 @@ function Card({ image, title, role, description, link }) {
       <div className="w-32 h-32 overflow-hidden rounded-full shadow-md">
         <img src={image} alt={title} className="w-full h-full object-cover transition-transform transform hover:scale-110" />
       </div>
-      <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
+      <h2 className="text-2xl font-semibold text-main">{title}</h2>
       <h3 className="text-lg font-medium text-gray-600">{role}</h3>
       <a href={link} target="_blank" rel="noopener noreferrer">
         <img src={Linkedin} alt="LinkedIn Icon" className="w-6 h-6 hover:opacity-80 transition-opacity" />
       </a>
-      <p className="text-center text-gray-600 text-sm">{description}</p>
+      <p className="text-center text-gray-700 font-medium text-sm">{description}</p>
     </div>
   );
 }
@@ -34,8 +34,8 @@ export default function AboutMentors() {
       <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/60 to-white/80"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-6">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-black mb-6 drop-shadow-md">Meet Our Team</h1>
-        <p className="text-lg md:text-xl text-gray-800 w-full md:w-2/3 lg:w-1/2 mb-8">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-main mb-6 drop-shadow-md">Meet Our Team</h1>
+        <p className="text-lg md:text-xl text-textColor font-medium w-full md:w-2/3 lg:w-1/2 mb-8">
           Our team is driven by passion and expertise, delivering excellence in every endeavor.
         </p>
 

@@ -16,6 +16,10 @@ export default function AllCourses() {
     { text: "Assignments", checked: <ChartIcon /> },
   ];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Fetch courses only once
   useEffect(() => {
     if (courses.length === 0) {
@@ -56,8 +60,8 @@ export default function AllCourses() {
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-main mb-2">Explore Our Courses</h1>
-            <p className="text-gray-600">Find the course that suits your interests and skills!</p>
+            <h1 className=" text-3xl md:text-4xl font-bold text-headings mb-2">Explore Our Courses</h1>
+            <p className="text-textColor font-medium">Find the course that suits your interests and skills!</p>
           </div>
           {/* Search Input */}
           <div className="relative w-full sm:w-96">
@@ -119,11 +123,11 @@ export default function AllCourses() {
 
               {/* Content */}
               <div className="flex flex-col p-4 flex-grow">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{course.courseName}</h3>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                <h3 className=" text-lg sm:text-xl font-semibold text-main mb-2">{course.courseName}</h3>
+                <p className="text-sm text-textColor mb-4 line-clamp-3 font-medium">
                   {course.courseDescription.slice(0, 128)}...
                 </p>
-                <p className="text-gray-500 text-sm mb-4">Lessons: {course.courseCount}</p>
+                <p className="text-gray-700 font-medium text-sm mb-4">Lessons: {course.courseCount}</p>
                 <button
                   className="block w-full bg-main text-white text-center py-2 rounded-lg font-medium transition-colors hover:bg-main-dark"
                   onClick={() => handleSelectedCourse(course.id)}

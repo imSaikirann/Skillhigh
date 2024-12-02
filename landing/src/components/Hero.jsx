@@ -25,29 +25,36 @@ export default function Hero() {
       {/* Content wrapper to keep text and image above the gradients */}
       <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center md:text-left z-10 px-4">
         <div className="flex flex-col mb-6 md:mb-0 animate-fadeIn">
-          <h1 className="text-black text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
-         
-          </h1>
+       
           <h1
             className="text-4xl md:text-3xl lg:text-6xl font-bold mb-2 md:mb-4 text-transparent bg-clip-text"
             style={{
               backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
               backgroundSize: '100%',
               backgroundRepeat: 'repeat',
+              lineHeight: '1.2',
             }}
           >
              Gain Skills. Get Certified. Reach Higher
           </h1>
 
-          <p className="text-black text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 ">
+          <p className="text-textColor font-medium text-md md:text-lg lg:text-xl mt-2 sm:smt-3 mb-4 ">
           Where Ambition Meets Opportunity – Learn from Industry Leaders, Build Practical Skills, and Step Confidently into Your Future
           </p>
 
-          <div className="flex flex-row gap-4 md:gap-6">
+          <div className="flex flex-row gap-4 md:gap-6 ">
             <Link to="/allcourses">
-              <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-full text-white font-medium text-sm md:text-base">
-              Get Started Now
-              </button>
+            <button
+  style={{
+    ...gradientStyle,
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)',
+  }}
+  className="px-4 py-3 md:px-8 md:py-4 rounded-full text-white font-medium text-sm md:text-base mt-3 
+    transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-md hover:shadow-lg"
+>
+  Get Started Now
+</button>
+
             </Link>
 
           </div>

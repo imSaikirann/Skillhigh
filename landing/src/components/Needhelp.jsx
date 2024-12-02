@@ -20,8 +20,8 @@ export default function NeedHelp() {
         Join SkillHigh today and start your journey to becoming industry-ready with hands-on projects and expert-led courses.
       </p>
       
-      <Link to="/d">
-      <button className="mt-4 bg-white text-main font-bold py-2 px-6 md:px-8 lg:px-10 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out">
+      <Link to="/allcourses">
+      <button className="mt-4 bg-white text-main font-bold py-2 px-6 md:px-8 lg:px-10 lg:py-3 rounded-full hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-md hover:shadow-lg">
         Get Started
       </button>
       </Link>

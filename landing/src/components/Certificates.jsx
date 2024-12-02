@@ -23,10 +23,10 @@ export default function Certificates() {
       <div className="flex flex-col md:flex-row gap-8 p-6 md:p-10 bg-white shadow-2xl rounded-3xl w-full max-w-6xl">
         {/* Left Section: Buttons */}
         <div className="flex flex-col gap-4 md:gap-6 w-full md:w-1/3">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center">
+          <h2 className="text-2xl md:text-4xl font-bold text-headings text-center">
             Our Certificates
           </h2>
-          <p className="text-gray-600 text-sm md:text-base text-center mb-4">
+          <p className="text-gray-600 font-medium text-sm md:text-base text-center mb-4">
             Click to view the certificate details.
           </p>
           {certificates.map((cert) => (

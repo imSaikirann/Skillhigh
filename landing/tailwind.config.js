@@ -12,6 +12,8 @@ export default {
         darkColor: "#F3F8F7",
         nav: "#F3F8F7",
         border: "#C3DED8",
+        textColor:"#151515",
+        headings:"#0D8267"
       },
       fontFamily: {
         inter: ["Red Hat Text", "serif"],

@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../auth/axiosConfig';
 import Icon from '../assets/icon.png'
+import Spinner from '../components/Spinner';
+
 export default function CheckoutPage() {
   const [showPlanModal, setShowPlanModal] = useState(false);  
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);  
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [loading,setLoading] = useState(true)
 
   const [userInfo, setUserInfo] = useState({
     name: '',
@@ -186,18 +189,26 @@ export default function CheckoutPage() {
         const response = await axios.get(`/api/v1/course/getCourse/${id}`);
       
         setSelectedCourse(response.data)
+        setLoading(false)
       } catch (err) {
         console.error(err);
+        setLoading(false)
       }
     };
 
     fetchCourse();
   }, [id]);
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center mt-10">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 font-inter">
-      <h1 className="text-3xl font-bold text-center text-gray-800">Checkout</h1>
-      <p className="text-center text-gray-600 mt-2">Select your plan and explore its features.</p>
+      <h1 className="text-4xl font-bold text-center md:text-left text-headings">Checkout</h1>
+      <p className="text-center md:text-left text-textColor font-medium mt-2">Select your plan and explore its features.</p>
       {/* <div className="text-center text-2xl text-main font-bold mt-2">Course Name : {selectedCourse.courseName && selectedCourse.courseName}</div> */}
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
         {Object.entries(plans).map(([planName, planDetails]) => (

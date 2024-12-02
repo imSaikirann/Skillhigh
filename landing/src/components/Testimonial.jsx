@@ -99,7 +99,7 @@ const TestimonialSlider = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-2 h-auto font-inter">
-      <h2 className="text-4xl font-bold text-center text-black mb-6">
+      <h2 className=" text-3xl sm:text-5xl font-bold text-center text-headings mb-6">
         Hear from Our Achievers
       </h2>
 

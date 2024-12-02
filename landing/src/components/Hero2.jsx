@@ -33,14 +33,18 @@ export default function Hero2() {
             }} className=" text-transparent bg-clip-text text-3xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4">
           Innovative & Effective E-learning Platform
           </h1>
-          <p className="text-black text-md md:text-lg lg:text-xl mt-3 mb-4 w-full">
+          <p className="text-textColor font-medium text-md md:text-lg lg:text-xl mt-3 mb-4 w-full">
           SkillHigh is the go-to platform for aspiring professionals. Our affordable virtual programs provide expert guidance and project-based training to make you job-ready and accelerate your career. Don't just prepare for your job-launch it with SkillHigh.
 
           </p>
           
           {/* Buttons */}
           <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
-            <button style={gradientStyle} className=" px-10 py-3 md:px-6 md:py-3 rounded-full text-white font-medium text-sm md:text-base">
+            <button  style={{
+      ...gradientStyle,
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)', 
+    }} className="px-4 py-3 md:px-8 md:py-4 rounded-full text-white font-medium text-sm md:text-base mt-3 
+    transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-md hover:shadow-lg">
             Learn more
             </button>
            
