@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { AppContext } from "../store/StoreContext";
 
@@ -12,7 +12,7 @@ export const Navbar = () => {
   const departmentDropdownRef = useRef(null);
   const courseDropdownRef = useRef(null);
   const { token, departments, fetchDepartments } = useContext(AppContext);
-const navigate = useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     fetchDepartments();
   }, []);
@@ -23,7 +23,7 @@ const navigate = useNavigate()
     setIsCourseDropdownOpen(false);
   };
 
-  const handleNavigate = (id) =>{
+  const handleNavigate = (id) => {
     navigate(`/courses/${id}`)
     closeMenu()
   }
@@ -52,7 +52,7 @@ const navigate = useNavigate()
   }, []);
 
   const handleDepartmentClick = (department) => {
-    setSelectedDepartment(department.departmentName); 
+    setSelectedDepartment(department.departmentName);
     setSelectedCourses(department.courses);
     setIsCourseDropdownOpen(true);
   };
@@ -97,11 +97,10 @@ const navigate = useNavigate()
                     <div
                       key={index}
                       onClick={() => handleDepartmentClick(department)}
-                      className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${
-                        selectedDepartment === department.departmentName
-                          ? "bg-main text-white" 
-                          : "hover:bg-gray-100 text-black" 
-                      }`}
+                      className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${selectedDepartment === department.departmentName
+                          ? "bg-main text-white"
+                          : "hover:bg-gray-100 text-black"
+                        }`}
                     >
                       {department.departmentName}
                       <ArrowIcon />
@@ -112,36 +111,35 @@ const navigate = useNavigate()
           </div>
 
           {/* Courses Dropdown */}
-        {isCourseDropdownOpen && selectedCourses.length > 0 && (
-  <div
-    ref={courseDropdownRef}
-    className="absolute top-16 sm:left-52 md:right-[800px] lg:left-[900px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
-  >
-    {selectedCourses.map((course, index) => (
-      <div
-        onClick={() => handleNavigate(course.id)}
-        key={index}
-        className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded ${
-          index === selectedCourses.length - 1 ? "border-b-0" : "border-b-2"
-        }`}
-      >
-        {course.courseName}
-      </div>
-    ))}
-  </div>
-)}
+          {isCourseDropdownOpen && selectedCourses.length > 0 && (
+            <div
+              ref={courseDropdownRef}
+              className="absolute top-16 xs:left-[500px] sm:left-[750px] md:left-[795px]  xl:left-[920px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+            >
+              {selectedCourses.map((course, index) => (
+                <div
+                  onClick={() => handleNavigate(course.id)}
+                  key={index}
+                  className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded ${index === selectedCourses.length - 1 ? "border-b-0" : "border-b-2"
+                    }`}
+                >
+                  {course.courseName}
+                </div>
+              ))}
+            </div>
+          )}
 
         </div>
 
         {/* Profile or Sign-In Button */}
         {token ? (
           <Link to="/profile">
-             <div  className=" text-main  rounded-full   text-3xl font-bold hidden md:block">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-</svg>
+            <div className=" text-main  rounded-full   text-3xl font-bold hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
 
-          </div>
+            </div>
           </Link>
         ) : (
           <Link to="/signin">
@@ -163,75 +161,75 @@ const navigate = useNavigate()
         </button>
 
         {isMobileMenuOpen && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
-    <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
-      {/* Close Button */}
-      <button
-        onClick={closeMenu}
-        className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300"
-        aria-label="Close menu"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          className="w-6 h-6 text-gray-800"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
+            <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
+              {/* Close Button */}
+              <button
+                onClick={closeMenu}
+                className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+                aria-label="Close menu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-gray-800"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
 
-      {/* Navigation Links */}
-      <nav className="mt-10 space-y-6">
-        <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
-          Home
-        </Link>
-        <Link to="/aboutus" onClick={closeMenu}  className="block text-lg font-semibold text-gray-700 hover:text-main">
-          About
-        </Link>
+              {/* Navigation Links */}
+              <nav className="mt-10 space-y-6">
+                <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+                  Home
+                </Link>
+                <Link to="/aboutus" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+                  About
+                </Link>
 
-        {/* Dropdown for Courses */}
-        <div className="relative">
-          <div
-           onClick={closeMenu}
-            className="flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 hover:text-main"
-          >
-            <Link to="/allcourses">Courses</Link>
-     
+                {/* Dropdown for Courses */}
+                <div className="relative">
+                  <div
+                    onClick={closeMenu}
+                    className="flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 hover:text-main"
+                  >
+                    <Link to="/allcourses">Courses</Link>
+
+                  </div>
+
+
+                </div>
+
+                {/* Courses List */}
+
+              </nav>
+
+              {/* Profile or Sign-In Button */}
+              <div className="mt-8">
+                {token ? (
+                  <Link to="/profile" onClick={closeMenu}>
+                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark transition">
+                      Profile
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to="/signin" onClick={closeMenu}>
+                    <button className="w-full text-main border-2 border-main px-4 py-2 rounded-full font-semibold hover:bg-main hover:text-white transition">
+                      Sign In
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
-
-         
-        </div>
-
-        {/* Courses List */}
-       
-      </nav>
-
-      {/* Profile or Sign-In Button */}
-      <div className="mt-8">
-        {token ? (
-          <Link to="/profile" onClick={closeMenu}>
-            <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark transition">
-              Profile
-            </button>
-          </Link>
-        ) : (
-          <Link to="/signin" onClick={closeMenu}>
-            <button className="w-full text-main border-2 border-main px-4 py-2 rounded-full font-semibold hover:bg-main hover:text-white transition">
-              Sign In
-            </button>
-          </Link>
         )}
-      </div>
-    </div>
-  </div>
-)}
 
       </div>
     </div>
