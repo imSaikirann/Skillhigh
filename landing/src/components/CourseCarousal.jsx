@@ -165,9 +165,13 @@ const CourseCard = ({ course, gradientStyle, handleSelectedCourse, items }) => (
     </div>
     <div className="flex flex-col flex-grow mt-4">
       <h2 className="text-lg font-bold text-main text-center mb-2">{course.courseName}</h2>
-      <p className="text-textColor font-medium text-sm text-justify mb-4">
-        {course.courseDescription.slice(0, 128)}...
-      </p>
+      <p
+  className="text-textColor font-medium text-sm text-justify mb-4 line-clamp-3"
+  style={{ hyphens: "auto", wordBreak: "break-word", wordSpacing: "0.05em" }}
+>
+  {course.courseDescription}...
+</p>
+
     </div>
     <button
       style={gradientStyle}

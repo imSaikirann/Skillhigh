@@ -1,11 +1,18 @@
 import React from 'react';
 import Wave from '../assets/wave.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate,useParams } from 'react-router-dom';
 export default function CoursePricing() {
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
     color: 'white',
     textAlign: 'center',
+  };
+
+  const navigate = useNavigate()
+  const {id} = useParams()
+
+  const handleCourseCheckout = (id) => {
+    navigate(`/course/checkout/${id}`);
   };
 
   const endlessLearningFeatures = [
@@ -81,7 +88,7 @@ export default function CoursePricing() {
               ))}
             </div>
           <Link >
-          <button style={gradientStyle} className="px-6 py-3 rounded-md font-medium mt-4 w-52">
+          <button style={gradientStyle} onClick={handleCourseCheckout} className="px-6 py-3 rounded-md font-medium mt-4 w-52">
               Enroll now
             </button>
           </Link>
@@ -100,7 +107,7 @@ export default function CoursePricing() {
                 </div>
               ))}
             </div>
-            <button style={gradientStyle} className="px-6 py-3 rounded-md font-medium mt-4 w-52">
+            <button style={gradientStyle} onClick={handleCourseCheckout} className="px-6 py-3 rounded-md font-medium mt-4 w-52">
               Enroll now
             </button>
           </div>

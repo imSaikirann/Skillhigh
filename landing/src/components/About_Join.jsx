@@ -59,7 +59,7 @@ export default function AboutJoin() {
             Join SkillHigh Today
           </h1>
           <p className="text-textColor font-medium text-md md:text-lg lg:text-xl mt-3 mb-4 max-w-2xl">
-            Install our top-rated dropshipping app to your e-commerce site and gain access to US suppliers, AliExpress vendors, and more.
+          Your journey to career success starts with the right skills and real-world experience.
           </p>
         </div>
 

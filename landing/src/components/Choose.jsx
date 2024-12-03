@@ -17,7 +17,7 @@ export default function Choose() {
                     <img src={Person} className='w-[80px] h-[80px] mb-4' alt="Explore Courses" />
                     <h2 className='font-bold text-textColor font-inter text-lg lg:text-xl mb-2'>Real-World Learning</h2>
                     <p className='text-sm  font-medium  lg:text-base'>
-                    SkillHigh provides practical, hands-on training with projects that align with current industry standards..
+                    SkillHigh provides practical, hands-on training with projects that align with current industry standards.
                     </p>
                 </div>
 

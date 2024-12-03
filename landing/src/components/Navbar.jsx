@@ -82,7 +82,7 @@ export const Navbar = () => {
             className="relative text-md font-normal cursor-pointer flex items-center gap-1 hover:text-gray-700"
           >
             <div
-              className="flex flex-row items-center justify-center"
+              className="flex flex-row items-center justify-center md-lg:hidden lg:flex"
               onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
             >
               <h1>Courses</h1>
@@ -91,7 +91,7 @@ export const Navbar = () => {
 
             {/* Department Dropdown */}
             {isDepartmentDropdownOpen && (
-              <div className="absolute top-full mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10">
+              <div className="absolute top-full md:right-[10px] lg:right-[0px]  mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10">
                 {departments &&
                   departments.map((department, index) => (
                     <div
@@ -114,7 +114,7 @@ export const Navbar = () => {
           {isCourseDropdownOpen && selectedCourses.length > 0 && (
             <div
               ref={courseDropdownRef}
-              className="absolute top-16 xs:left-[500px] sm:left-[750px] md:left-[795px]  xl:left-[920px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+              className="absolute top-16  lg:right-[200px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
             >
               {selectedCourses.map((course, index) => (
                 <div
