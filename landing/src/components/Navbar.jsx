@@ -29,8 +29,12 @@ export const Navbar = () => {
 
   // Handle navigation to a course
   const handleNavigate = (id) => {
-    navigate(`/courses/${id}`);
-    closeMenu();
+    if (id) {
+      navigate(`/courses/${id}`);
+      closeMenu();
+    } else {
+      console.error("Course ID is undefined or null");
+    }
   };
 
   // Close dropdowns when clicking outside
@@ -92,44 +96,50 @@ export const Navbar = () => {
             </div>
 
             {/* Dropdown Content */}
-{isDepartmentDropdownOpen && (
-  <div className="absolute top-full mt-2 flex gap-4">
+            {isDepartmentDropdownOpen && (
+  <div
+    className={`absolute top-full mt-2 flex gap-4 transition-all duration-300 ease-in-out ${
+      isDepartmentDropdownOpen
+        ? "opacity-100 translate-y-0"
+        : "opacity-0 translate-y-[-10px]"
+    }`}
+  >
     {/* Department Dropdown */}
-    <div
-      ref={departmentDropdownRef}
-      className="w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
-    >
-      {departments &&
-        departments.map((department, index) => (
-          <div
-            key={index}
-            onClick={() => handleDepartmentClick(department)}
-            className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${
-              selectedDepartment === department.departmentName
-                ? "bg-main text-white"
-                : "hover:bg-gray-100 text-black"
-            }`}
-          >
-            {department.departmentName}
-            <ArrowIcon />
-          </div>
-        ))}
+    <div className="w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10">
+      {departments?.map((department, index) => (
+        <div
+          key={index}
+          onClick={() => handleDepartmentClick(department)}
+          className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${
+            selectedDepartment === department.departmentName
+              ? "bg-main text-white"
+              : "hover:bg-gray-100 text-black"
+          }`}
+        >
+          {department.departmentName}
+          <ArrowIcon />
+        </div>
+      ))}
     </div>
 
     {/* Courses Dropdown */}
     {isCourseDropdownOpen && selectedCourses.length > 0 && (
       <div
         ref={courseDropdownRef}
-        className="absolute left-full top-0 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+        className={`absolute left-full top-0 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10 transition-all duration-300 ease-in-out ${
+          isCourseDropdownOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-[-10px]"
+        }`}
       >
         {selectedCourses.map((course, index) => (
-          <div
+          <button
             key={index}
             onClick={() => handleNavigate(course.id)}
             className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded`}
           >
             {course.courseName}
-          </div>
+          </button>
         ))}
       </div>
     )}
@@ -148,7 +158,7 @@ export const Navbar = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-10 h-10"
             >
               <path
                 strokeLinecap="round"
@@ -159,95 +169,16 @@ export const Navbar = () => {
           </Link>
         ) : (
           <Link to="/signin" className="hidden md:block">
-            <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100">
-              Sign In
-            </button>
+<button 
+  style={{ backgroundImage: 'linear-gradient(to right, #0D8267, #044233)' }} 
+  className="text-white font-medium border-2 border-transparent px-5 py-2.5 rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-90"
+>
+  Sign In
+</button>
+
+
+
           </Link>
-        )}
-
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2"
-          aria-label="Toggle mobile menu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
-          </svg>
-        </button>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
-            <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
-              {/* Close Button */}
-              <button
-                onClick={closeMenu}
-                className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300"
-                aria-label="Close menu"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  className="w-6 h-6 text-gray-800"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
-              {/* Navigation Links */}
-              <nav className="mt-10 space-y-6">
-                <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
-                  Home
-                </Link>
-                <Link
-                  to="/aboutus"
-                  onClick={closeMenu}
-                  className="block text-lg font-semibold text-gray-700 hover:text-main"
-                >
-                  About
-                </Link>
-                <Link
-                  to="/allcourses"
-                  onClick={closeMenu}
-                  className="block text-lg font-semibold text-gray-700 hover:text-main"
-                >
-                  Courses
-                </Link>
-              </nav>
-
-              {/* Profile or Sign-In */}
-              <div className="mt-8">
-                {token ? (
-                  <Link to="/profile" onClick={closeMenu}>
-                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
-                      Profile
-                    </button>
-                  </Link>
-                ) : (
-                  <Link to="/signin" onClick={closeMenu}>
-                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
-                      Sign In
-                    </button>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
         )}
       </div>
     </div>

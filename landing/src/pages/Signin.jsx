@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth, provider } from '../auth/firebase';
-import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import axios from '../auth/axiosConfig';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
@@ -17,10 +18,10 @@ export default function Signin() {
 
   const handleEmailPasswordSignin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
       const token = await user.getIdToken();
 
       const response = await axios.post('/api/v1/user/signin', {
@@ -31,18 +32,20 @@ export default function Signin() {
       if (response.data.success) {
         const { token: jwtToken } = response.data;
         localStorage.setItem('token', jwtToken);
-        window.location.href = '/profile'; 
+        window.location.href = '/profile';
       }
     } catch (error) {
       setErrorMessage(error.message || 'Error signing in. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignin = async () => {
+    setLoading(true);
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
       const token = await user.getIdToken();
 
       const response = await axios.post('/api/v1/user/signin', {
@@ -53,70 +56,85 @@ export default function Signin() {
       if (response.data.success) {
         const { token: jwtToken } = response.data;
         localStorage.setItem('token', jwtToken);
-        window.location.href = '/profile'; 
+        window.location.href = '/profile';
       }
     } catch (error) {
       setErrorMessage(error.message || 'Error signing in with Google.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setErrorMessage('Password reset email sent! Check your inbox.');
+    } catch (error) {
+      setErrorMessage(error.message || 'Error sending password reset email.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 font-inter">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center text-gray-800">
-          Sign In to Skill High
-        </h2>
+    <div className="flex items-center justify-center min-h-screen  bg-gray-100 font-inter p-1 rounded-md">
+      <div className="w-full max-w-lg p-8 space-y-8 bg-white rounded-xl shadow-lg transform transition-all duration-500 ease-in-out">
+        <h2 className=" text-2xl sm:text-3xl font-semibold text-center text-main mb-6">Sign In to Skill High</h2>
 
-        <form className="space-y-6" onSubmit={handleEmailPasswordSignin}>
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-              Email Address
-            </label>
+        <form className="space-y-6 " onSubmit={handleEmailPasswordSignin}>
+          <div className="space-y-4">
+            <label htmlFor="email" className="block text-md font-medium text-textColor">Email Address</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-50 transition duration-200"
               placeholder="Enter your email"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-600">
-              Password
-            </label>
+          <div className="space-y-4">
+            <label htmlFor="password" className="block text-md font-medium text-textColor">Password</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-50 transition duration-200"
               placeholder="Enter your password"
               required
             />
           </div>
 
-          {errorMessage && (
-            <p className="text-sm text-red-600">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="text-sm text-red-600 text-center">{errorMessage}</p>}
 
           <button
             style={gradientStyle}
             type="submit"
-            className="w-full py-2 text-white rounded-lg focus:outline-none focus:ring-2 mt-2"
+            className={`w-full py-3 text-white font-medium rounded-lg focus:outline-none focus:ring-2 mt-4 transition duration-200 ${loading ? 'bg-gray-400 cursor-not-allowed' : ''}`}
+            disabled={loading}
           >
-            Sign In
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
+
+          <div className="flex items-center justify-between mt-4">
+            <Link
+              to="#"
+              onClick={handleForgotPassword}
+              className="text-sm text-main  hover:underline"
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </form>
 
-        <div className="mt-4 text-center">
+        <div className="mt-6 text-center">
           <button
             onClick={handleGoogleSignin}
-            className="flex items-center justify-center w-full py-2 bg-white border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            className={`flex items-center justify-center w-full py-3 bg-white border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200 ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+            disabled={loading}
           >
-            <svg
+              <svg
               className="h-6 w-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="-0.5 0 48 48"
@@ -149,9 +167,9 @@ export default function Signin() {
           </button>
         </div>
 
-        <p className="mt-4 text-sm text-center text-gray-600">
+        <p className="mt-6 text-sm text-center text-gray-600">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-green-600 font-medium hover:underline">
+          <Link to="/signup" className="text-main font-medium hover:underline">
             Sign Up
           </Link>
         </p>

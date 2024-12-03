@@ -1,7 +1,7 @@
 import React from 'react';
 import Wave from '../assets/wave.png';
 import Person from '../assets/person.png';
-
+import { Link } from 'react-router-dom';
 export default function Hero2() {
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
@@ -40,7 +40,8 @@ export default function Hero2() {
           
           {/* Buttons */}
           <div className="flex justify-start md:justify-start gap-4 md:gap-6 mt-3">
-            <button  style={{
+          <Link to="/aboutus">
+          <button  style={{
       ...gradientStyle,
       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)', 
     }} className="px-4 py-3 md:px-8 md:py-4 rounded-full text-white font-medium text-sm md:text-base mt-3 
@@ -48,6 +49,7 @@ export default function Hero2() {
             Learn more
             </button>
            
+          </Link>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { AboutHero } from '../components/AboutHero'
 import About_Join from '../components/About_Join'
 import VisionMission from '../components/VisionMission'
@@ -7,6 +7,9 @@ import ContactUs from '../components/ContactUs'
 
 export default function 
 () {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
         <AboutHero/>
