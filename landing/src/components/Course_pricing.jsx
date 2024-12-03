@@ -9,8 +9,8 @@ export default function CoursePricing() {
   };
 
   const navigate = useNavigate()
-  const {id} = useParams()
-
+  const { id } = useParams()
+  console.log(id)
   const handleCourseCheckout = (id) => {
     navigate(`/course/checkout/${id}`);
   };

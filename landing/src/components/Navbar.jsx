@@ -8,26 +8,32 @@ export const Navbar = () => {
   const [isDepartmentDropdownOpen, setIsDepartmentDropdownOpen] = useState(false);
   const [isCourseDropdownOpen, setIsCourseDropdownOpen] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState(null); // State for selected department
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+
   const departmentDropdownRef = useRef(null);
   const courseDropdownRef = useRef(null);
   const { token, departments, fetchDepartments } = useContext(AppContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // Fetch departments when the component mounts
   useEffect(() => {
     fetchDepartments();
-  }, []);
+  }, [fetchDepartments]);
 
+  // Close all menus
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsDepartmentDropdownOpen(false);
     setIsCourseDropdownOpen(false);
   };
 
+  // Handle navigation to a course
   const handleNavigate = (id) => {
-    navigate(`/courses/${id}`)
-    closeMenu()
-  }
+    navigate(`/courses/${id}`);
+    closeMenu();
+  };
 
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -51,6 +57,7 @@ export const Navbar = () => {
     };
   }, []);
 
+  // Handle department selection
   const handleDepartmentClick = (department) => {
     setSelectedDepartment(department.departmentName);
     setSelectedCourses(department.courses);
@@ -58,92 +65,101 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="bg-white p-3 relative font-inter z-50 ">
+    <div className="bg-white p-3 relative font-inter z-50">
       <div className="bg-nav h-[65px] sm:h-[70px] rounded-full border-2 border-border flex items-center justify-between px-6 md:px-12 lg:px-16">
         {/* Logo */}
-        <div className="flex items-center space-x-3">
-          <Link to="/">
-            <img src={Logo} alt="Logo" className="h-auto w-[120px] md:w-[160px] md:h-auto" />
-          </Link>
-        </div>
+        <Link to="/">
+          <img src={Logo} alt="Logo" className="h-auto w-[120px] md:w-[160px]" />
+        </Link>
 
         {/* Navbar Links */}
-        <div className="hidden md:flex space-x-6">
-          <Link to="/">
-            <div className="text-md font-normal cursor-pointer hover:text-gray-700">Home</div>
+        <div className="hidden md:flex space-x-6 items-center">
+          <Link to="/" className="text-md font-normal cursor-pointer hover:text-gray-700">
+            Home
           </Link>
-          <Link to="/aboutus">
-            <div className="text-md font-normal cursor-pointer hover:text-gray-700">About</div>
+          <Link to="/aboutus" className="text-md font-normal cursor-pointer hover:text-gray-700">
+            About
           </Link>
 
           {/* Courses Dropdown */}
-          <div
-            ref={departmentDropdownRef}
-            className="relative text-md font-normal cursor-pointer flex items-center gap-1 hover:text-gray-700"
-          >
+          <div className="relative" ref={departmentDropdownRef}>
             <div
-              className="flex flex-row items-center justify-center md-lg:hidden lg:flex"
               onClick={() => setIsDepartmentDropdownOpen(!isDepartmentDropdownOpen)}
+              className="text-md font-normal cursor-pointer flex items-center gap-1 hover:text-gray-700"
             >
               <h1>Courses</h1>
               <DownArrowIcon />
             </div>
 
-            {/* Department Dropdown */}
-            {isDepartmentDropdownOpen && (
-              <div className="absolute top-full md:right-[10px] lg:right-[0px]  mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10">
-                {departments &&
-                  departments.map((department, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleDepartmentClick(department)}
-                      className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${selectedDepartment === department.departmentName
-                          ? "bg-main text-white"
-                          : "hover:bg-gray-100 text-black"
-                        }`}
-                    >
-                      {department.departmentName}
-                      <ArrowIcon />
-                    </div>
-                  ))}
-              </div>
-            )}
+            {/* Dropdown Content */}
+{isDepartmentDropdownOpen && (
+  <div className="absolute top-full mt-2 flex gap-4">
+    {/* Department Dropdown */}
+    <div
+      ref={departmentDropdownRef}
+      className="w-48 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+    >
+      {departments &&
+        departments.map((department, index) => (
+          <div
+            key={index}
+            onClick={() => handleDepartmentClick(department)}
+            className={`flex items-center justify-between px-4 py-2 text-sm rounded cursor-pointer ${
+              selectedDepartment === department.departmentName
+                ? "bg-main text-white"
+                : "hover:bg-gray-100 text-black"
+            }`}
+          >
+            {department.departmentName}
+            <ArrowIcon />
           </div>
+        ))}
+    </div>
 
-          {/* Courses Dropdown */}
-          {isCourseDropdownOpen && selectedCourses.length > 0 && (
-            <div
-              ref={courseDropdownRef}
-              className="absolute top-16  lg:right-[200px] mt-2 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
-            >
-              {selectedCourses.map((course, index) => (
-                <div
-                  onClick={() => handleNavigate(course.id)}
-                  key={index}
-                  className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded ${index === selectedCourses.length - 1 ? "border-b-0" : "border-b-2"
-                    }`}
-                >
-                  {course.courseName}
-                </div>
-              ))}
-            </div>
-          )}
+    {/* Courses Dropdown */}
+    {isCourseDropdownOpen && selectedCourses.length > 0 && (
+      <div
+        ref={courseDropdownRef}
+        className="absolute left-full top-0 w-48 sm:w-64 md:w-72 bg-white border border-gray-200 shadow-lg rounded-lg p-2 z-10"
+      >
+        {selectedCourses.map((course, index) => (
+          <div
+            key={index}
+            onClick={() => handleNavigate(course.id)}
+            className={`block cursor-pointer px-4 py-2 text-sm sm:text-base hover:bg-gray-100 rounded`}
+          >
+            {course.courseName}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
 
+          </div>
         </div>
 
         {/* Profile or Sign-In Button */}
         {token ? (
-          <Link to="/profile">
-            <div className=" text-main  rounded-full   text-3xl font-bold hidden md:block">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              </svg>
-
-            </div>
+          <Link to="/profile" className="hidden md:block text-main text-3xl font-bold">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
           </Link>
         ) : (
-          <Link to="/signin">
-            <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100 hidden md:block">
+          <Link to="/signin" className="hidden md:block">
+            <button className="text-black bg-nav border-2 border-black px-4 py-2 rounded-full hover:bg-gray-100">
               Sign In
             </button>
           </Link>
@@ -155,11 +171,19 @@ export const Navbar = () => {
           className="md:hidden p-2"
           aria-label="Toggle mobile menu"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
           </svg>
         </button>
 
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
             <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
@@ -190,38 +214,33 @@ export const Navbar = () => {
                 <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
                   Home
                 </Link>
-                <Link to="/aboutus" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+                <Link
+                  to="/aboutus"
+                  onClick={closeMenu}
+                  className="block text-lg font-semibold text-gray-700 hover:text-main"
+                >
                   About
                 </Link>
-
-                {/* Dropdown for Courses */}
-                <div className="relative">
-                  <div
-                    onClick={closeMenu}
-                    className="flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 hover:text-main"
-                  >
-                    <Link to="/allcourses">Courses</Link>
-
-                  </div>
-
-
-                </div>
-
-                {/* Courses List */}
-
+                <Link
+                  to="/allcourses"
+                  onClick={closeMenu}
+                  className="block text-lg font-semibold text-gray-700 hover:text-main"
+                >
+                  Courses
+                </Link>
               </nav>
 
-              {/* Profile or Sign-In Button */}
+              {/* Profile or Sign-In */}
               <div className="mt-8">
                 {token ? (
                   <Link to="/profile" onClick={closeMenu}>
-                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark transition">
+                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
                       Profile
                     </button>
                   </Link>
                 ) : (
                   <Link to="/signin" onClick={closeMenu}>
-                    <button className="w-full text-main border-2 border-main px-4 py-2 rounded-full font-semibold hover:bg-main hover:text-white transition">
+                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
                       Sign In
                     </button>
                   </Link>
@@ -230,40 +249,20 @@ export const Navbar = () => {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
 };
 
-// Arrow Icon Component
-const ArrowIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-4 h-4"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-    </svg>
-  );
-};
+// Dummy components for missing icons
+const DownArrowIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+  </svg>
+);
 
-// Down Arrow Icon Component
-const DownArrowIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-5 h-5"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-    </svg>
-  );
-};
+const ArrowIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 19.5l7.5-7.5-7.5-7.5" />
+  </svg>
+);
