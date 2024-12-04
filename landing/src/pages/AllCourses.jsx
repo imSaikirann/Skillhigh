@@ -51,9 +51,7 @@ export default function AllCourses() {
       </div>
     );
   }
-  if (error) {
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
-  }
+ 
 
   return (
     <div className="p-6 font-inter bg-gray-50 rounded-md min-h-screen">
