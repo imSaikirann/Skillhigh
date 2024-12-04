@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios
+import { useContext } from "react";
 import Spinner from "../components/Spinner";
+import { AppContext } from "../store/StoreContext";
 
 export default function AllCourses() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);  // Add loading state
-  const [error, setError] = useState(null);  // Add error state
+  const [debounceTimeout, setDebounceTimeout] = useState(null); // Store the timeout reference
   const navigate = useNavigate();
+  const { fetchAllCourses, courses, loading, error, setCourseId } = useContext(AppContext);
 
   const items = [
     { text: "Lifetime access", checked: <ArrowPathIcon /> },
@@ -20,32 +21,38 @@ export default function AllCourses() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Fetch courses only once
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get("/api/v1/course/getAllCourse");
-        setFilteredCourses(response.data);  // Assuming response data is the courses array
-        setLoading(false);
-      } catch (err) {
-        setError("Error fetching courses. Please try again later.");
-        setLoading(false);
-      }
-    };
+    if (courses.length === 0) {
+      fetchAllCourses();
+    } else {
+      setFilteredCourses(courses);
+    }
+  }, [courses, fetchAllCourses]);
 
-    fetchCourses();
-  }, []);  // Empty dependency array ensures it runs only once
-
-  const handleSearchChange = (event) => {
+  // Debounce function
+  const debounceSearch = (event) => {
     const searchValue = event.target.value.toLowerCase();
     setSearchTerm(searchValue);
 
-    const filtered = filteredCourses.filter((course) =>
-      course.courseName.toLowerCase().includes(searchValue)
-    );
-    setFilteredCourses(filtered);
+    // Clear previous timeout
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    // Set new timeout for debouncing
+    const newTimeout = setTimeout(() => {
+      const filtered = courses.filter((course) =>
+        course.courseName.toLowerCase().includes(searchValue)
+      );
+      setFilteredCourses(filtered);
+    }, 500); // Adjust the debounce time (500ms)
+
+    setDebounceTimeout(newTimeout);
   };
 
   const handleSelectedCourse = (courseId) => {
+    setCourseId(courseId);
     navigate(`/courses/${courseId}`);
   };
 
@@ -57,21 +64,13 @@ export default function AllCourses() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="text-center text-red-500 mt-10">
-        {error}
-      </div>
-    );
-  }
-
   return (
     <div className="p-6 font-inter bg-gray-50 rounded-md min-h-screen">
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-headings mb-2">Explore Our Courses</h1>
+            <h1 className=" text-3xl md:text-4xl font-bold text-headings mb-2">Explore Our Courses</h1>
             <p className="text-textColor font-medium">Find the course that suits your interests and skills!</p>
           </div>
           {/* Search Input */}
@@ -80,7 +79,7 @@ export default function AllCourses() {
               type="text"
               placeholder="Search courses..."
               value={searchTerm}
-              onChange={handleSearchChange}
+              onChange={debounceSearch}  // Use the debounceSearch function here
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
             />
             <svg
@@ -132,7 +131,7 @@ export default function AllCourses() {
 
               {/* Content */}
               <div className="flex flex-col p-4 flex-grow">
-                <h3 className="text-lg sm:text-xl font-semibold text-main mb-2">{course.courseName}</h3>
+                <h3 className=" text-lg sm:text-xl font-semibold text-main mb-2">{course.courseName}</h3>
                 <p className="text-sm text-textColor mb-4 line-clamp-3 font-medium">
                   {course.courseDescription.slice(0, 128)}...
                 </p>

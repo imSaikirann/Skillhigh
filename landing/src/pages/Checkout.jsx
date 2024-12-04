@@ -19,6 +19,7 @@ export default function CheckoutPage() {
   const [successMessage, setSuccessMessage] = useState('');
   const [checkoutError, setCheckoutError] = useState('');
   const { id } = useParams();
+  const [processing, setProcessing] = useState(false);
 
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
@@ -101,7 +102,8 @@ export default function CheckoutPage() {
       setCheckoutError('Please fill in all the required details.');
       return;
     }
-  
+
+    setProcessing(true)
     const isScriptLoaded = await loadRazorpayScript();
     if (!isScriptLoaded) {
       setCheckoutError('Failed to load Razorpay SDK. Please refresh the page.');
@@ -183,6 +185,10 @@ export default function CheckoutPage() {
     } catch (error) {
       console.error(error);
       setCheckoutError('Something went wrong during checkout.');
+      
+    }
+    finally {
+      setProcessing(false); 
     }
   };
 
@@ -298,19 +304,15 @@ export default function CheckoutPage() {
             </div>
 
             <div className="mt-6 flex flex-row-reverse justify-between">
-              <button
-                onClick={handleCheckout}
-                style={gradientStyle}
-                className="text-white px-6 py-2 rounded-md transition"
-              >
-                Proceed to Checkout
-              </button>
-              <button
-                onClick={handleCloseCheckoutModal}
-                className="text-gray-600 hover:text-gray-800 px-4 py-2"
-              >
-                Close
-              </button>
+            <button
+  onClick={handleCheckout}
+  style={gradientStyle}
+  className="text-white px-6 py-2 rounded-md transition flex items-center justify-center"
+  disabled={processing} // Disable button while processing
+>
+{processing ? 'Processing...' : 'Proceeds to Checkout'}
+
+</button>
             </div>
             {successMessage && (
               <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-800 rounded-md">

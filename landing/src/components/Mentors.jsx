@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "../auth/axiosConfig";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,7 +7,6 @@ import { Autoplay } from "swiper/modules";
 
 export default function Mentors() {
   const [mentors, setMentors] = useState([]);
-  const swiperRef = useRef(null);
 
   useEffect(() => {
     async function fetchMentors() {
@@ -15,10 +14,6 @@ export default function Mentors() {
         const res = await axios.get("/api/v1/mentors/mentors");
         console.log(res.data);
         setMentors(res.data);
-        if (swiperRef.current) {
-          swiperRef.current.swiper.update();
-          swiperRef.current.swiper.autoplay.start();
-        }
       } catch (error) {
         console.error("Failed to fetch mentors:", error);
       }
@@ -35,7 +30,6 @@ export default function Mentors() {
 
       {/* Swiper Component */}
       <Swiper
-       ref={swiperRef}
         slidesPerView={1}
         spaceBetween={30}
         loop={true}
