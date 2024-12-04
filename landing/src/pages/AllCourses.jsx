@@ -52,7 +52,7 @@ export default function AllCourses() {
     );
   }
   if (error) {
-    alert(error.message)
+    alert(error)
 
   }
 
