@@ -180,6 +180,90 @@ export const Navbar = () => {
 
           </Link>
         )}
+
+           {/* Mobile Menu Toggle */}
+           <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2"
+          aria-label="Toggle mobile menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-7 h-7 text-main"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
+          </svg>
+        </button>
+
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-end">
+            <div className="h-full w-3/4 max-w-xs bg-white shadow-lg p-6 relative z-50">
+              {/* Close Button */}
+              <button
+                onClick={closeMenu}
+                className="absolute top-4 right-4 p-2 rounded-full bg-gray-200 hover:bg-gray-300"
+                aria-label="Close menu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="w-7 h-7 text-main"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Navigation Links */}
+              <nav className="mt-10 space-y-6">
+                <Link to="/" onClick={closeMenu} className="block text-lg font-semibold text-gray-700 hover:text-main">
+                  Home
+                </Link>
+                <Link
+                  to="/aboutus"
+                  onClick={closeMenu}
+                  className="block text-lg font-semibold text-gray-700 hover:text-main"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/allcourses"
+                  onClick={closeMenu}
+                  className="block text-lg font-semibold text-gray-700 hover:text-main"
+                >
+                  Courses
+                </Link>
+              </nav>
+
+              {/* Profile or Sign-In */}
+              <div className="mt-8">
+                {token ? (
+                  <Link to="/profile" onClick={closeMenu}>
+                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
+                      Profile
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to="/signin" onClick={closeMenu}>
+                    <button className="w-full text-white bg-main px-4 py-2 rounded-full font-semibold hover:bg-main-dark">
+                      Sign In
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default function AllCourses() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const { fetchAllCourses, courses, loading, error } = useContext(AppContext);
+  const { fetchAllCourses, courses, loading, error,setCourseId } = useContext(AppContext);
 
   const items = [
     { text: "Lifetime access", checked: <ArrowPathIcon /> },
@@ -40,12 +40,13 @@ export default function AllCourses() {
   };
 
   const handleSelectedCourse = (courseId) => {
+    setCourseId(courseId)
     navigate(`/courses/${courseId}`);
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center mt-10">
+      <div className="flex justify-center items-center mt-10 h-screen">
         <Spinner />
       </div>
     );

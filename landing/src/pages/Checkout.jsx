@@ -65,6 +65,9 @@ export default function CheckoutPage() {
     },
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const handleSelectPlan = (planName) => {
     setSelectedPlan(planName);
     setShowPlanModal(true); 

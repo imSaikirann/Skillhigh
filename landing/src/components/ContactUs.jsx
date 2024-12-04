@@ -76,7 +76,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-around items-center p-6 font-inter">
+    <div className="flex flex-col lg:flex-row justify-around items-center p-3 md:p-6  font-inter">
       {/* Intro Text */}
       <div className="lg:w-1/3 mb-8 lg:mb-0 lg:text-left">
         <h1
@@ -102,7 +102,7 @@ export default function ContactUs() {
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div className="w-full sm:w-1/2">
-              <label className="block text-gray-700">Name</label>
+              <label className="block text-textColor font-medium">Name</label>
               <input
                 type="text"
                 name="name"
@@ -114,7 +114,7 @@ export default function ContactUs() {
             </div>
 
             <div className="w-full sm:w-1/2 mt-4 sm:mt-0">
-              <label className="block text-gray-700">Email</label>
+              <label className="block  text-textColor font-medium">Email</label>
               <input
                 type="email"
                 name="email"
@@ -127,7 +127,7 @@ export default function ContactUs() {
           </div>
 
           <div>
-            <label className="block text-gray-700">Phone Number</label>
+            <label className="block  text-textColor font-medium">Phone Number</label>
             <input
               type="tel"
               name="phone"
@@ -139,7 +139,7 @@ export default function ContactUs() {
           </div>
 
           <div>
-            <label className="block text-gray-700">Message</label>
+            <label className="block  text-textColor font-medium">Message</label>
             <textarea
               name="message"
               value={formData.message}

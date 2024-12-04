@@ -8,9 +8,10 @@ export const AppProvider = ({ children }) => {
   const [departments,setDepartments] = useState([])
   const [selectedDepartmentCourses, setSelectedDepartmentCourses] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") !== null);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
   const [courses, setCourses] = useState([]);
+  const [courseId,setCourseId] = useState(null)
  
   const fetchCourses = async () => {
     try {
@@ -27,14 +28,14 @@ export const AppProvider = ({ children }) => {
   const fetchAllCourses = async () => {
     if (courses.length > 0) return; 
     try {
-      setLoading(true);
+    
       const response = await axios.get("/api/v1/course/getAllCourse");
       setCourses(response.data);
+      setLoading(false);
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
-    }
+    } 
   };
   
   const fetchDepartments = async () => {
@@ -90,7 +91,8 @@ export const AppProvider = ({ children }) => {
     error,
     fetchAllCourses ,
     fetchDepartments,
-    departments
+    departments,
+    courseId,setCourseId
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

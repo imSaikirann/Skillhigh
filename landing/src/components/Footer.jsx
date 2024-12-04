@@ -45,7 +45,7 @@ export default function Footer() {
           {/* About Us Section */}
           <div>
             <h2 className="text-lg font-semibold mb-4">About Us</h2>
-            <p className="text-gray-700 text-md">
+            <p className="text-gray-700 text-md text-justify"  style={{ hyphens: "auto", wordBreak: "break-word", wordSpacing: "0.05em" }}>
               We are dedicated to providing high-quality content and services. Join us to enhance your skills and explore new opportunities.
             </p>
           </div>
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className='w-full sm:w-[350px]'>
+          <div className=' text-justify'  style={{ hyphens: "auto", wordBreak: "break-word", wordSpacing: "0.05em" }}>
             <h2 className="text-lg font-semibold mb-4">Contact</h2>
             <ul className="text-gray-700 space-y-2 justify-normal">
               <li>Email: <a href="mailto:admin@skillhigh.in" className="hover:text-main">admin@skillhigh.in</a></li>

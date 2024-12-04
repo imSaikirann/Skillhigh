@@ -50,7 +50,7 @@ const CoursesCarousel = () => {
   };
 
   return (
-    <div className="p-6 font-inter bg-gray-50 rounded-md min-h-screen flex flex-col items-center">
+    <div className="p-3 md:p-6 font-inter bg-gray-50 rounded-md min-h-screen flex flex-col items-center">
       <h1 className="text-lg md:text-3xl lg:text-5xl font-bold text-main mb-4">
         Explore Our Courses
       </h1>
