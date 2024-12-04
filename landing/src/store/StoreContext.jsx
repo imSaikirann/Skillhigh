@@ -26,7 +26,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const fetchAllCourses = async () => {
-    if (courses.length > 0) return; 
+  
     try {
     
       const response = await axios.get("/api/v1/course/getAllCourse");
