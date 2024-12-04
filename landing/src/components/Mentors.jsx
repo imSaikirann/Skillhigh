@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "../auth/axiosConfig";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay } from "swiper/modules";
 
 export default function Mentors() {
   const [mentors, setMentors] = useState([]);
 
   useEffect(() => {
     async function fetchMentors() {
-      const res = await axios.get('/api/v1/mentors/mentors');
+      const res = await axios.get("/api/v1/mentors/mentors");
       console.log(res.data);
       setMentors(res.data);
     }
@@ -20,20 +24,27 @@ export default function Mentors() {
         Meet Our Mentors
       </h1>
 
-      {/* Scrolling Wrapper */}
-      <div className="relative w-full overflow-hidden">
-        <div
-          className="flex animate-scroll space-x-3"
-          style={{
-            animation: "scroll 25s linear infinite",
-          }}
-        >
-          {/* Duplicating mentors for continuous loop */}
-          {[...mentors, ...mentors].map((mentor, index) => (
-            <div
-              key={index}
-              className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 lg:w-96 h-80 sm:h-96 rounded-2xl  overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-300"
-            >
+      {/* Swiper Component */}
+      <Swiper
+
+        slidesPerView={1}
+        spaceBetween={20}
+        loop={true} 
+        autoplay={{
+          delay: 2500, 
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 4 },
+        }}
+        className="w-full px-4 sm:px-8 lg:px-16"
+      >
+        {mentors.map((mentor, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative flex-shrink-0 w-full h-96 sm:h-96 rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:scale-105 transition-transform duration-300">
               {/* Image */}
               <img
                 src={mentor.photo}
@@ -49,30 +60,9 @@ export default function Mentors() {
                 <p className="text-xs sm:text-sm md:text-base">{mentor.company}</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Styling */}
-      <style jsx>
-        {`
-          @keyframes scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-          .animate-scroll {
-            display: flex;
-            white-space: nowrap;
-            will-change: transform;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-          }
-        `}
-      </style>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }
