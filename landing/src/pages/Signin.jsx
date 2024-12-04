@@ -16,6 +16,10 @@ export default function Signin() {
     textAlign: 'center',
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleEmailPasswordSignin = async (e) => {
     e.preventDefault();
     setLoading(true);

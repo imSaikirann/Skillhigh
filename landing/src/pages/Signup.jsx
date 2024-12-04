@@ -97,6 +97,9 @@ export default function Signup() {
       setErrorMessage(error.message);
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex items-center justify-center p-5 min-h-screen bg-gray-100 font-inter  rounded-md">
