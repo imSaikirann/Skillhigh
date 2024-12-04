@@ -51,7 +51,10 @@ export default function AllCourses() {
       </div>
     );
   }
- 
+  if (error) {
+    alert(error.message)
+
+  }
 
   return (
     <div className="p-6 font-inter bg-gray-50 rounded-md min-h-screen">
