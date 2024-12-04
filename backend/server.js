@@ -39,7 +39,8 @@ const allowedOrigins = [
     'http://localhost:5174', 
     'http://localhost:5173', 
     'https://admin.skillhigh.in',
-    'https://skillhigh.in'
+    'https://skillhigh.in',
+    'https://www.skillhigh.in'
 ];
 
 app.use(cors({

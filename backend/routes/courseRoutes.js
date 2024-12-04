@@ -58,25 +58,42 @@ router.post('/createCourse', upload.single('courseThumbnail'), async (req, res) 
 router.put('/updateCourse/:id', upload.single('courseThumbnail'), async (req, res) => {
     const { id } = req.params;
     const { courseName, courseDescription, courseCount, departmentId } = req.body;
-    const courseThumbnail = req.file ? req.file.location : null;
 
     try {
+        const updateData = {
+            courseName,
+            courseDescription,
+            courseCount: parseInt(courseCount),
+        };
+
+        if (departmentId) {
+            updateData.department = { connect: { id: departmentId } };
+        }
+
+        if (req.file) {
+            const course = await prisma.course.findUnique({ where: { id } }); 
+     
+
+            if (course && course.courseThumbnail) {
+                const fileKey = course.courseThumbnail.split('/').pop(); 
+                await deleteFileFromS3(process.env.S3_BUCKET_NAME, `images/${fileKey}`); 
+            }
+            
+            updateData.courseThumbnail = req.file.location;
+        }
+
         const course = await prisma.course.update({
             where: { id },
-            data: {
-                courseName,
-                courseDescription,
-                courseThumbnail,
-                courseCount: parseInt(courseCount),
-             
-                department: departmentId ? { connect: { id: departmentId } } : undefined 
-            }
+            data: updateData,
         });
+
         res.status(200).json({ message: "Course updated", course });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error while updating course", error });
     }
 });
+
 
 
 // Route to delete a course
@@ -85,7 +102,7 @@ router.delete('/deleteCourse/:id', async (req, res) => {
     
     try {
         const course = await prisma.course.findUnique({ where: { id } }); 
-        console.log(id)
+     
 
         if (course && course.courseThumbnail) {
             const fileKey = course.courseThumbnail.split('/').pop(); 
