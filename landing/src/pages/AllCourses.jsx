@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import axios from "axios"; // Import axios
 import Spinner from "../components/Spinner";
-import { AppContext } from "../store/StoreContext";
 
 export default function AllCourses() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);  // Add loading state
+  const [error, setError] = useState(null);  // Add error state
   const navigate = useNavigate();
-  const { fetchAllCourses, courses, loading, error,setCourseId } = useContext(AppContext);
 
   const items = [
     { text: "Lifetime access", checked: <ArrowPathIcon /> },
@@ -20,27 +20,32 @@ export default function AllCourses() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Fetch courses only once
   useEffect(() => {
-    if (courses.length === 0) {
-      fetchAllCourses();
-    } else {
-      setFilteredCourses(courses);
-    }
-  }, [courses, fetchAllCourses]);
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("/api/v1/course/getAllCourse");
+        setFilteredCourses(response.data);  // Assuming response data is the courses array
+        setLoading(false);
+      } catch (err) {
+        setError("Error fetching courses. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);  // Empty dependency array ensures it runs only once
 
   const handleSearchChange = (event) => {
     const searchValue = event.target.value.toLowerCase();
     setSearchTerm(searchValue);
 
-    const filtered = courses.filter((course) =>
+    const filtered = filteredCourses.filter((course) =>
       course.courseName.toLowerCase().includes(searchValue)
     );
     setFilteredCourses(filtered);
   };
 
   const handleSelectedCourse = (courseId) => {
-    setCourseId(courseId)
     navigate(`/courses/${courseId}`);
   };
 
@@ -51,9 +56,13 @@ export default function AllCourses() {
       </div>
     );
   }
-  if (error) {
-    alert(error)
 
+  if (error) {
+    return (
+      <div className="text-center text-red-500 mt-10">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -62,7 +71,7 @@ export default function AllCourses() {
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h1 className=" text-3xl md:text-4xl font-bold text-headings mb-2">Explore Our Courses</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-headings mb-2">Explore Our Courses</h1>
             <p className="text-textColor font-medium">Find the course that suits your interests and skills!</p>
           </div>
           {/* Search Input */}
@@ -110,7 +119,6 @@ export default function AllCourses() {
               className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg"
             >
               {/* Thumbnail */}
-              {/* Thumbnail */}
               <div className="relative flex justify-center items-center w-full h-56 bg-gray-100">
                 <img
                   src={course.courseThumbnail}
@@ -122,10 +130,9 @@ export default function AllCourses() {
                 </div>
               </div>
 
-
               {/* Content */}
               <div className="flex flex-col p-4 flex-grow">
-                <h3 className=" text-lg sm:text-xl font-semibold text-main mb-2">{course.courseName}</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-main mb-2">{course.courseName}</h3>
                 <p className="text-sm text-textColor mb-4 line-clamp-3 font-medium">
                   {course.courseDescription.slice(0, 128)}...
                 </p>
