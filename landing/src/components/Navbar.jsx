@@ -68,6 +68,11 @@ export const Navbar = () => {
     setIsCourseDropdownOpen(true);
   };
 
+  const gradientStyle = {
+    backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
+    color: 'white',
+    textAlign: 'center',
+  };
   return (
     <div className="bg-white p-3 relative font-inter z-50">
       <div className="bg-nav h-[65px] sm:h-[70px] rounded-full border-2 border-border flex items-center justify-between px-6 md:px-12 lg:px-16">
@@ -170,8 +175,8 @@ export const Navbar = () => {
         ) : (
           <Link to="/signin" className="hidden md:block">
 <button 
-  style={{ backgroundImage: 'linear-gradient(to right, #0D8267, #044233)' }} 
-  className="text-white font-medium border-2 border-transparent px-5 py-2.5 rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-90"
+ style={gradientStyle}
+  className="text-white font-medium  px-5 py-2.5 rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:bg-opacity-90"
 >
   Sign In
 </button>

@@ -1,80 +1,15 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import axios from '../auth/axiosConfig'
-
-// const testimonials = [
-//   {
-//     id: 1,
-//     name: "Yeshwanth - CBIT College of Engineering",
-//     feedback:
-//       "I really had an excellent working experience at the internship at SkillHigh, as I got to work on data-driven projects with expert professionals. The guidance and mentorship were good, and I do appreciate the team that created the nurturing environment where I learned.",
-//   },
-//   {
-//     id: 2,
-//     name: "Santhosh - Srinidhi Institute of Science of Technology",
-//     feedback:
-//       "I really appreciate this opportunity to be an intern at SkillHigh, where I work on impactful projects most actively. The team's mentorship and support led me through that journey, turning my internship into a very valuable experience.",
-//   },
-//   {
-//     id: 3,
-//     name: "Koundinya Goud - Manipal Institute of Technology",
-//     feedback:
-//       "It was a very enriching experience getting to intern at SkillHigh, learning through hands-on handling of real-world projects. The team really supported and guided me through the entire process, growing and learning ways I hadn't anticipated before. I am proud to have been part of such an inspiring team.",
-//   },
-//   {
-//     id: 4,
-//     name: "Harini kurella - Mallareddy Engineering college",
-//     feedback:
-//       "My experience at SkillHigh was growth-oriented and leaning. The talent around me guided me through all the projects. It was difficult yet fulfilling because the journey was made memorable by a dedicated team.",
-//   },
-//   {
-//     id: 5,
-//     name: "Nithin - Dr.NSAM FGC College",
-//     feedback:
-//       "SkillHigh presented an opportunity to work on real-world projects and professional guidance through industry professionals, but also a supportive environment and team guidance that has made my internship truly impactful and a shaping experience for my career.",
-//   },
-//   {
-//     id: 6,
-//     name: "Neha - VNR VJIET",
-//     feedback:
-//       "Working with SkillHigh was not just a work experience; it was a journey of professional and personal growth. What I took away during my internship—the mentorship of the team and the projects I engaged with—teaches me some invaluable lessons, which will guide me throughout my career.",
-//   },
-//   {
-//     id: 7,
-//     name: "Ankita Yadav - Amity University Raipur",
-//     feedback:
-//       "Interning at SkillHigh allowed me to work on real-world projects with the mentorship of skilled professionals. I will always thank the team's dedication to growth that not only made it an inspiring experience but also rewarding.",
-//   },
-//   {
-//     id: 8,
-//     name: "Varun Tankala - Sathyabama Institute of Science and Technology",
-//     feedback:
-//       "I am really thankful to the internship experience of SkillHigh where I deal with challenging projects and got great guidance by industry experts. It has been helpful because the teamwork supports and encourages each day with valuable steps in my career journey.",
-//   },
-//   {
-//     id: 9,
-//     name: "Kanchanapally Uday - Kakatiya University College of Engineering and Technology",
-//     feedback:
-//       "My internship experience with SkillHigh was highly formative, allowing me to contribute to impactful projects as part of a talented team. Truly invaluable mentorship accompanied me through it all, and I am thankful for the skills and insight I garnered.",
-//   },
-//   {
-//     id: 10,
-//     name: "Matcha Naveen - Aurora's Scientific and Technological Institute",
-//     feedback:
-//       "My internship experience at SkillHigh was incredibly enriching. Working on real-world projects and receiving guidance from knowledgeable mentors allowed me to develop my skills and confidence. I’m grateful to the entire team for making my journey so impactful.",
-//   },
-// ];
-
+import React, { useState, useEffect } from "react";
+import axios from "../auth/axiosConfig";
 
 const TestimonialSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [testimonials,setTestimonials] = useState([])
+  const [testimonials, setTestimonials] = useState([]);
+  const [isScrolling, setIsScrolling] = useState(true);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await axios.get("/api/v1/testimonal/testimonials"); 
-        console.log(response)
+        const response = await axios.get("/api/v1/testimonal/testimonials");
         setTestimonials(response.data.data);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
@@ -82,67 +17,103 @@ const TestimonialSlider = () => {
     };
     fetchTestimonials();
   }, []);
+
+  useEffect(() => {
+    if (isScrolling) {
+      const interval = setInterval(() => {
+        goToNext();
+      }, 5000); // Auto-scroll every 5 seconds
+
+      return () => clearInterval(interval); // Cleanup on unmount
+    }
+  }, [currentIndex, isScrolling]);
+
   const isLargeScreen = window.innerWidth >= 768;
   const cardsToShow = isLargeScreen ? 2 : 1;
 
+  // Adjust goToNext function
   const goToNext = () => {
-    setCurrentIndex((prevIndex) =>
-      (prevIndex + cardsToShow) % testimonials.length
-    );
+    setCurrentIndex((prevIndex) => {
+      // Calculate next index based on the number of cards to show
+      const nextIndex = prevIndex + cardsToShow;
+      return nextIndex < testimonials.length ? nextIndex : 0; // Loop back to the start if we've reached the end
+    });
   };
 
+  // Adjust goToPrevious function
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      (prevIndex - cardsToShow + testimonials.length) % testimonials.length
-    );
+    setCurrentIndex((prevIndex) => {
+      // Calculate previous index based on the number of cards to show
+      const prevIndexCalc = prevIndex - cardsToShow;
+      return prevIndexCalc >= 0 ? prevIndexCalc : testimonials.length - cardsToShow; // Loop back to the end if we go past the start
+    });
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-2 h-auto font-inter">
-      <h2 className=" text-3xl sm:text-5xl font-bold text-center text-headings mb-6">
-        Hear from Our Achievers
-      </h2>
+    <section className="bg-gray-50 py-16">
+      <div className="max-w-screen-xl mx-auto text-center px-4">
+        <h2 className="text-4xl sm:text-5xl font-bold text-headings mb-8">
+          Hear from Our Achievers
+        </h2>
 
-      <div className={`grid gap-6 ${isLargeScreen ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {/* Render testimonials based on screen size */}
-        {testimonials
-          .slice(currentIndex, currentIndex + cardsToShow)
-          .map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="relative bg-white shadow-lg rounded-lg p-6 text-center"
-            >
-              <div className="border-l-4 border-border pl-8 pr-8 py-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  {testimonial.name}- {testimonial.collageName}
-                </h3>
-                <p className="text-gray-600 italic">
-                  "{testimonial.review}"
-                </p>
+        <div
+          className={`grid gap-8 ${
+            isLargeScreen ? "grid-cols-2" : "grid-cols-1"
+          }`}
+        >
+          {testimonials
+            .slice(currentIndex, currentIndex + cardsToShow)
+            .map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="bg-white shadow-xl rounded-lg p-6 transition-transform duration-300 transform hover:scale-105"
+              >
+                <blockquote>
+                  <svg
+                    className="h-16 mx-auto mb-4 text-main"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 27"
+                    fill="none"
+                  >
+                    <path
+                      d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  <p className="text-gray-700 italic mb-6">
+                    "{testimonial.review}"
+                  </p>
+                  <figcaption className="flex items-center justify-center space-x-4 mt-6">
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-main">
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-sm  font-medium text-gray-500">
+                        {testimonial.collageName}
+                      </p>
+                    </div>
+                  </figcaption>
+                </blockquote>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
+
+        <div className="flex justify-between mt-6">
+          <button
+            onClick={goToPrevious}
+            className="bg-main text-white p-4 rounded-full hover:bg-gray-700 transition-colors duration-300"
+          >
+            <span className="text-3xl">←</span>
+          </button>
+          <button
+            onClick={goToNext}
+            className="bg-main text-white p-4 rounded-full hover:bg-gray-700 transition-colors duration-300"
+          >
+            <span className="text-3xl">→</span>
+          </button>
+        </div>
       </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex justify-between mt-4">
-  <button
-    onClick={goToPrevious}
-    className="bg-main text-white p-4 rounded-full focus:outline-none flex items-center space-x-2"
-  >
-    <span className="text-2xl">←</span>
-   
-  </button>
-  <button
-    onClick={goToNext}
-    className="bg-main text-white p-4 rounded-full focus:outline-none flex items-center space-x-2"
-  >
-   
-    <span className="text-2xl">→</span>
-  </button>
-</div>
-
-    </div>
+    </section>
   );
 };
 

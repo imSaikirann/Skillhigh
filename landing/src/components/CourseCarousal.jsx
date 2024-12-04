@@ -12,6 +12,7 @@ const CoursesCarousel = () => {
   const secondSwiperRef = useRef(null);
   const { fetchAllCourses, courses, loading, error } = useContext(AppContext);
 
+
   const items = [
     { text: "Lifetime access", checked: <ArrowPathIcon /> },
     { text: "All levels", checked: <AcademicIcon /> },
@@ -19,14 +20,30 @@ const CoursesCarousel = () => {
   ];
 
   useEffect(() => {
+    // Fetch courses if empty
     if (courses.length === 0) {
       fetchAllCourses();
     }
-  }, [courses, fetchAllCourses]);
+  }, [courses.length, fetchAllCourses]);
+
+  useEffect(() => {
+    // Ensure Swiper updates and autoplay start when courses are loaded
+    if (courses.length > 0) {
+      if (firstSwiperRef.current?.swiper) {
+        firstSwiperRef.current.swiper.update();
+        firstSwiperRef.current.swiper.autoplay.start();
+      }
+      if (secondSwiperRef.current?.swiper) {
+        secondSwiperRef.current.swiper.update();
+        secondSwiperRef.current.swiper.autoplay.start();
+      }
+    }
+  }, [courses]);
 
   const firstHalf = courses.slice(0, Math.ceil(courses.length / 2));
   const secondHalf = courses.slice(Math.ceil(courses.length / 2));
 
+ 
   const handleSelectedCourse = (courseId) => {
     navigate(`/courses/${courseId}`);
   };
@@ -45,6 +62,7 @@ const CoursesCarousel = () => {
 
   const scrollRight = (swiperRef) => {
     if (swiperRef.current?.swiper) {
+      
       swiperRef.current.swiper.slideNext();
     }
   };
@@ -75,16 +93,17 @@ const CoursesCarousel = () => {
               &#x25C0;
             </div>
             <Swiper
-              ref={firstSwiperRef}
-              spaceBetween={30}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              speed={2000}
-              modules={[Autoplay]}
+           
+             ref={firstSwiperRef}
+             spaceBetween={30}
+             slidesPerView={1}
+             loop={true}
+             autoplay={{
+               delay: 1500,
+               disableOnInteraction: false,
+             }}
+             speed={2000}
+             modules={[Autoplay]}
               breakpoints={{
                 480: { slidesPerView: 2 },
                 768: { slidesPerView: 2 },
@@ -120,7 +139,7 @@ const CoursesCarousel = () => {
               slidesPerView={1}
               loop={true}
               autoplay={{
-                delay: 3000,
+                delay: 1500,
                 disableOnInteraction: false,
               }}
               speed={2000}

@@ -1,18 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import axios from "../auth/axiosConfig";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 
 export default function Mentors() {
   const [mentors, setMentors] = useState([]);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     async function fetchMentors() {
-      const res = await axios.get("/api/v1/mentors/mentors");
-      console.log(res.data);
-      setMentors(res.data);
+      try {
+        const res = await axios.get("/api/v1/mentors/mentors");
+        console.log(res.data);
+        setMentors(res.data);
+        if (swiperRef.current) {
+          swiperRef.current.swiper.update();
+          swiperRef.current.swiper.autoplay.start();
+        }
+      } catch (error) {
+        console.error("Failed to fetch mentors:", error);
+      }
     }
     fetchMentors();
   }, []);
@@ -26,15 +35,17 @@ export default function Mentors() {
 
       {/* Swiper Component */}
       <Swiper
-
+       ref={swiperRef}
         slidesPerView={1}
-        spaceBetween={20}
-        loop={true} 
+        spaceBetween={30}
+        loop={true}
         autoplay={{
-          delay: 2500, 
+          delay: 2500,
           disableOnInteraction: false,
+          pauseOnMouseEnter: false, 
         }}
         modules={[Autoplay]}
+        onAutoplayStart={() => console.log("Autoplay started")}
         breakpoints={{
           640: { slidesPerView: 1 },
           768: { slidesPerView: 2 },
@@ -48,7 +59,7 @@ export default function Mentors() {
               {/* Image */}
               <img
                 src={mentor.photo}
-                alt={`${mentor.name}`}
+                alt={mentor.name}
                 className="w-full h-full object-cover"
               />
               {/* Overlay */}

@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
       setCourses(response.data);
       setLoading(false);
     } catch (err) {
-      setError(err.message);
+     console.log(err)
       setLoading(false);
     } 
   };
