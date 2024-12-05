@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../auth/axiosConfig';
 import Icon from '../assets/icon.png'
 import Spinner from '../components/Spinner';
+import { AppContext } from '../store/StoreContext';
 
 export default function CheckoutPage() {
-  const [showPlanModal, setShowPlanModal] = useState(false);  
-  const [showCheckoutModal, setShowCheckoutModal] = useState(false);  
+  const [showPlanModal, setShowPlanModal] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+
 
   const [userInfo, setUserInfo] = useState({
     name: '',
@@ -20,7 +22,7 @@ export default function CheckoutPage() {
   const [checkoutError, setCheckoutError] = useState('');
   const { id } = useParams();
   const [processing, setProcessing] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const gradientStyle = {
     backgroundImage: 'linear-gradient(to right, #0D8267, #044233)',
     color: 'white',
@@ -71,20 +73,20 @@ export default function CheckoutPage() {
   }, []);
   const handleSelectPlan = (planName) => {
     setSelectedPlan(planName);
-    setShowPlanModal(true); 
+    setShowPlanModal(true);
   };
 
   const handleClosePlanModal = () => {
-    setShowPlanModal(false); 
+    setShowPlanModal(false);
   };
 
   const handleOpenCheckoutModal = () => {
-    setShowCheckoutModal(true); 
-    setShowPlanModal(false);    
+    setShowCheckoutModal(true);
+    setShowPlanModal(false);
   };
 
   const handleCloseCheckoutModal = () => {
-    setShowCheckoutModal(false); 
+    setShowCheckoutModal(false);
   };
 
   const loadRazorpayScript = () => {
@@ -96,12 +98,43 @@ export default function CheckoutPage() {
       document.body.appendChild(script);
     });
   };
+  const handleInputChange = (field, value) => {
+    setUserInfo((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined })); // Clear the error for this field
+    }
+  };
+  const validateForm = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
+  
+    // Check if name is empty
+    if (!userInfo.name.trim()) {
+      newErrors.name = 'Name is required.';
+    }
+  
+    // Check if email is empty or invalid
+    if (!userInfo.email.trim()) {
+      newErrors.email = 'Email is required.';
+    } else if (!emailRegex.test(userInfo.email)) {
+      newErrors.email = 'Valid email is required.';
+    }
+  
+    // Check if phone number is empty or invalid
+    if (!userInfo.phone.trim()) {
+      newErrors.phone = 'Phone number is required.';
+    } else if (!phoneRegex.test(userInfo.phone)) {
+      newErrors.phone = 'Valid phone number is required.';
+    }
+  
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Returns true if no errors
+  };
+  
 
   const handleCheckout = async () => {
-    if (!userInfo.name || !userInfo.email || !userInfo.phone) {
-      setCheckoutError('Please fill in all the required details.');
-      return;
-    }
+    if (!validateForm()) return;
 
     setProcessing(true)
     const isScriptLoaded = await loadRazorpayScript();
@@ -109,7 +142,7 @@ export default function CheckoutPage() {
       setCheckoutError('Failed to load Razorpay SDK. Please refresh the page.');
       return;
     }
-  
+
     try {
       // Prepare payload for order creation
       const payload = {
@@ -118,25 +151,25 @@ export default function CheckoutPage() {
         phone: userInfo.phone,
         email: userInfo.email,
       };
-  
+
       // Make API call to create Razorpay order
       const response = await axios.post('/api/v1/payments/createOrder', payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-  
+
       const { orderId, amount, currency } = response.data;
-  
+
       // Razorpay options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_LIVE_ID, 
+        key: import.meta.env.VITE_RAZORPAY_LIVE_ID,
         amount,
         currency,
         order_id: orderId,
         name: 'course',
         description: `Purchase of ${selectedPlan} plan`,
-        image:  Icon, 
+        image: Icon,
         prefill: {
           name: userInfo.name,
           email: userInfo.email,
@@ -146,13 +179,13 @@ export default function CheckoutPage() {
           color: '#0D8267',
         },
         handler: async (response) => {
-      
+
           setSuccessMessage(
             'Payment successful! Your course purchase is confirmed. Check your Profile for further details.'
           );
           setCheckoutError('');
           console.log('Payment Successful:', response);
-  
+
           // Optional: Verify payment server-side
           try {
             await axios.post('/api/v1/payments/verifyPayment', {
@@ -174,10 +207,10 @@ export default function CheckoutPage() {
           }
         },
       };
-  
+
       const rzp = new window.Razorpay(options);
       rzp.open();
-  
+
       // Payment failure handler
       rzp.on('payment.failed', (response) => {
         setCheckoutError(`Payment failed: ${response.error.description}`);
@@ -185,10 +218,10 @@ export default function CheckoutPage() {
     } catch (error) {
       console.error(error);
       setCheckoutError('Something went wrong during checkout.');
-      
+
     }
     finally {
-      setProcessing(false); 
+      setProcessing(false);
     }
   };
 
@@ -196,7 +229,7 @@ export default function CheckoutPage() {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`/api/v1/course/getCourse/${id}`);
-      
+
         setSelectedCourse(response.data)
         setLoading(false)
       } catch (err) {
@@ -207,9 +240,10 @@ export default function CheckoutPage() {
 
     fetchCourse();
   }, [id]);
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center mt-10">
+      <div className="flex justify-center items-center h-screen mt-10">
         <Spinner />
       </div>
     );
@@ -257,14 +291,14 @@ export default function CheckoutPage() {
             </ul>
             <div className="mt-6 flex  flex-row-reverse justify-between">
               <button
-                onClick={handleOpenCheckoutModal} // Open Checkout Modal
+                onClick={handleOpenCheckoutModal} 
                 style={gradientStyle}
                 className="text-white px-6 py-2 rounded-md transition"
               >
                 Proceed to Checkout
               </button>
               <button
-                onClick={handleClosePlanModal} // Close Plan Modal
+                onClick={handleClosePlanModal} 
                 className="text-gray-600 hover:text-gray-800 px-4 py-2"
               >
                 Close
@@ -274,55 +308,88 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      {/* Checkout Form Modal */}
-      {showCheckoutModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
-          <div className="bg-white p-6 rounded-md shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-bold text-gray-800">Enter Your Details</h2>
-            <div className="mt-4 space-y-4">
+     {/* Checkout Form Modal */}
+     {showCheckoutModal && (
+  <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-60">
+    <div className="bg-white p-8 rounded-lg shadow-2xl max-w-lg w-full">
+      {successMessage ? (
+        <div className="text-center">
+          <div className="p-5 bg-green-100 border border-green-400 text-green-800 rounded-lg">
+            <h2 className="text-3xl font-bold mb-3">Success!</h2>
+            <p className="text-lg mb-3">{successMessage}</p>
+            <p className="text-gray-600">
+              You have successfully purchased the courses. Please check your Profile.
+            </p>
+          </div>
+          <div className="mt-6">
+            <button
+              onClick={() => setShowCheckoutModal(false)}
+              className="bg-main text-white px-5 py-2 rounded-lg hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2 transition-all"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl font-semibold text-gray-800 text-center">Enter Your Details</h2>
+          <div className="mt-6 space-y-5">
+            <div>
               <input
                 type="text"
                 placeholder="Name"
-                className="border rounded-md w-full px-4 py-2"
+                className="border border-gray-300 rounded-lg w-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
                 value={userInfo.name}
-                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+                onChange={(e) => handleInputChange('name', e.target.value)}
               />
+              {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name}</p>}
+            </div>
+
+            <div>
               <input
                 type="email"
                 placeholder="Email"
-                className="border rounded-md w-full px-4 py-2"
+                className="border border-gray-300 rounded-lg w-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
                 value={userInfo.email}
-                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                onChange={(e) => handleInputChange('email', e.target.value)}
               />
+              {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
+            </div>
+
+            <div>
               <input
                 type="text"
                 placeholder="Phone Number"
-                className="border rounded-md w-full px-4 py-2"
+                className="border border-gray-300 rounded-lg w-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
                 value={userInfo.phone}
-                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
               />
+              {errors.phone && <p className="text-sm text-red-600 mt-1">{errors.phone}</p>}
             </div>
-
-            <div className="mt-6 flex flex-row-reverse justify-between">
-            <button
-  onClick={handleCheckout}
-  style={gradientStyle}
-  className="text-white px-6 py-2 rounded-md transition flex items-center justify-center"
-  disabled={processing} // Disable button while processing
->
-{processing ? 'Processing...' : 'Proceeds to Checkout'}
-
-</button>
-            </div>
-            {successMessage && (
-              <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-800 rounded-md">
-                <p className="font-bold">Thank you!</p>
-                <p>{successMessage}</p>
-              </div>
-            )}
           </div>
-        </div>
+
+          <div className="mt-8 flex flex-row-reverse items-center justify-between">
+            <button
+              style={gradientStyle}
+              onClick={handleCheckout}
+              className="text-white px-6 py-3 rounded-lg transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={processing}
+            >
+              {processing ? (
+                <span className="loader mr-2"></span>
+              ) : (
+                <span>Proceed to Checkout</span>
+              )}
+            </button>
+
+            {checkoutError && <p className="text-sm text-red-600">{checkoutError}</p>}
+          </div>
+        </>
       )}
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

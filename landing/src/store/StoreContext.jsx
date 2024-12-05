@@ -12,6 +12,10 @@ export const AppProvider = ({ children }) => {
   const [error, setError] = useState(null); 
   const [courses, setCourses] = useState([]);
   const [courseId,setCourseId] = useState(null)
+  const [checkoutData,setCheckoutData] = useState(null)
+  const [userData, setUserData] = useState({});
+
+  
  
   const fetchCourses = async () => {
     try {
@@ -51,19 +55,7 @@ export const AppProvider = ({ children }) => {
   };
  
 
-  // Fetch courses by department ID
-  const fetchCoursesByDepartmentId = async (departmentId) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`/api/v1/department/departments/${departmentId}`);
-      setSelectedDepartmentCourses(response.data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+ 
   // Sync token changes from localStorage
   useEffect(() => {
     const handleStorageChange = () => {
@@ -81,10 +73,41 @@ export const AppProvider = ({ children }) => {
     fetchCourses();
   }, []);
 
+
+ 
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No token found in localStorage');
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get('/api/v1/profile/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          setUserData(response.data);
+        
+        } else {
+          console.error('Failed to fetch user data');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+
   const contextValue = {
     courses,
     selectedDepartmentCourses,
-    fetchCoursesByDepartmentId,
     token,
     setToken,
     loading,
@@ -92,7 +115,11 @@ export const AppProvider = ({ children }) => {
     fetchAllCourses ,
     fetchDepartments,
     departments,
-    courseId,setCourseId
+    courseId,setCourseId,
+    checkoutData,setCheckoutData,
+    userData, 
+    setUserData,
+    fetchUserData
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

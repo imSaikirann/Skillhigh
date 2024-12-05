@@ -8,7 +8,7 @@ const UserProfile = () => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { setToken } = useContext(AppContext);
+  const { setToken,setCheckoutData } = useContext(AppContext);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,6 +28,7 @@ const UserProfile = () => {
 
         if (response.status === 200) {
           setUserData(response.data);
+        
         } else {
           console.error('Failed to fetch user data');
         }
@@ -134,7 +135,7 @@ const UserProfile = () => {
               You haven't enrolled in any courses yet!
             </p>
             <Link to="/allcourses">
-              <button className="px-6 py-3 bg-main text-white font-medium rounded-lg shadow hover:bg-green-500 transition flex items-center">
+              <button className="px-6 py-3 bg-main text-white font-medium rounded-lg shadow  transition flex items-center">
                 Explore Courses
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

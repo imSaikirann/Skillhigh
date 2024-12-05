@@ -93,6 +93,7 @@ export default function Signup() {
         window.location.reload();
       }
     } catch (error) {
+      console.log(error)
       console.error('Error during email signup:', error.message);
       setErrorMessage(error.message);
     }
