@@ -27,7 +27,7 @@ router.post('/signup', async (req, res) => {
     });
 
     // Generate JWT
-    const jwtToken = jwt.sign(
+    const jwtToken = jwt.sign( 
       { userId: user.id, email: user.email },
       process.env.JWT_USER_SECRET,
       { expiresIn: '7h' }
@@ -38,7 +38,8 @@ router.post('/signup', async (req, res) => {
       user,
       token: jwtToken,
     });
-  } catch (error) {
+  } catch (error) { 
+    console.log(error)
     console.error('Error during signup:', error.message);
     res.status(500).json({ success: false, message: 'Signup failed' });
   }
