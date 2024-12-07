@@ -17,6 +17,8 @@ const profileRoutes = require('./routes/userProfile')
 const purchaseRoutes = require('./routes/purchaseRoutes')
 const courseModuleRoutes = require('./routes/courseModules')
 const paymentRoutes = require('./routes/paymentRoutes')
+const pricingRoutes = require('./routes/pricingRoutes')
+
 
 
 
@@ -83,6 +85,8 @@ app.use('/api/v1/profile', profileRoutes)
 app.use('/api/v1/purchaseCourse', purchaseRoutes)
 app.use('/api/v1/CourseModules', courseModuleRoutes)
 app.use('/api/v1/payments',paymentRoutes )
+app.use('/api/v1/pricings',pricingRoutes )
+
 
 
 

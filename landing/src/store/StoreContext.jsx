@@ -14,6 +14,7 @@ export const AppProvider = ({ children }) => {
   const [courseId,setCourseId] = useState(null)
   const [checkoutData,setCheckoutData] = useState(null)
   const [userData, setUserData] = useState({});
+  const [pricingList, setPricingList] = useState([]);
 
   
  
@@ -68,42 +69,30 @@ export const AppProvider = ({ children }) => {
     };
   }, []);
 
-  // Initial fetch for courses
+  
   useEffect(() => {
     fetchCourses();
   }, []);
 
 
  
-    const fetchUserData = async () => {
+  
+    const fetchPricingData = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          console.error('No token found in localStorage');
-          setLoading(false);
-          return;
-        }
-
-        const response = await axios.get('/api/v1/profile/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.status === 200) {
-          setUserData(response.data);
-        
-        } else {
-          console.error('Failed to fetch user data');
-        }
+        const response = await axios.get('/api/v1/pricings/pricing');
+        setPricingList(response.data);
+        console.log(response.data)
       } catch (error) {
-        console.error('Error fetching user data:', error);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching pricing data:', error);
       }
     };
 
 
+    useEffect(() => {
+      fetchPricingData()
+    }, []);
+
+ 
 
   const contextValue = {
     courses,
@@ -119,7 +108,8 @@ export const AppProvider = ({ children }) => {
     checkoutData,setCheckoutData,
     userData, 
     setUserData,
-    fetchUserData
+   
+    pricingList
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

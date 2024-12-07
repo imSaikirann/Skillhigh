@@ -191,3 +191,30 @@ model dashboardUsers{
   password  String?
   createdAt DateTime @default(now())
 }
+
+// Prisma Schema: schema.prisma
+
+model Pricing {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  price      Float
+  createdAt  DateTime        @default(now())
+  features   PricingFeature[]
+}
+
+model Feature {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  name       String          @unique
+  createdAt  DateTime        @default(now())
+  plans      PricingFeature[]
+}
+
+model PricingFeature {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  pricingId  String          @db.ObjectId
+  featureId  String          @db.ObjectId
+  isIncluded Boolean         @default(true)
+  createdAt  DateTime        @default(now())
+  pricing    Pricing         @relation(fields: [pricingId], references: [id])
+  feature    Feature         @relation(fields: [featureId], references: [id])
+}
