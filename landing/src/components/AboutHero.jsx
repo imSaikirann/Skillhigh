@@ -32,7 +32,7 @@ export const AboutHero = () => {
 
         </p>
 
-        <Link to="/d">
+        <Link to="/profile">
               <button style={gradientStyle} className=" px-4 py-3 md:px-8 md:py-3 rounded-full text-white font-medium text-sm md:text-base mt-4">
               Take the First Step
               </button>
