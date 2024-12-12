@@ -69,7 +69,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-main dark:bg-green-500 text-white py-2 rounded-md font-semibold hover:bg-green-600 dark:hover:bg-green-600 focus:outline-none transition-colors duration-200"
           >
-           <Link to="/play">
+           <Link to="/home">
            Login
            </Link>
           </button>

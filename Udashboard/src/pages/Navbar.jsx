@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md font-poppins">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16 border-b-2 dark:border-gray-800">
+        <div className="flex justify-between items-center h-20 border-b-2 dark:border-gray-800">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img src={Logo} className="h-auto w-[150px]" alt="Logo" />
@@ -98,7 +98,7 @@ const Navbar = () => {
           <div className={`fixed inset-0 z-50 bg-white dark:bg-gray-900 shadow-lg`}>
             <div className="flex justify-between items-center px-4 py-4 border-b dark:border-gray-800">
               <Link to="/" className="flex items-center">
-                <img src={Logo} className="h-auto w-[120px]" alt="Logo" />
+                <img src={Logo} className="h-auto w-[180px]" alt="Logo" />
               </Link>
               <button
                 onClick={toggleSidebar}

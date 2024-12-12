@@ -1,3 +1,4 @@
+import Home from './pages/Home'
 import Login from './pages/Login'
 import Navbar from './pages/Navbar'
 import {Play }from "./pages/Play"
@@ -11,6 +12,8 @@ function App() {
      <Routes>
         <Route path='/' element={<Login />}></Route>
         <Route path='/play' element={<Play />}></Route>
+        <Route path='/home' element={<Home/>}></Route>
+
 
       </Routes>
     </BrowserRouter>
