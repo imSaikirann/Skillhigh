@@ -44,7 +44,7 @@ export const Play = () => {
           {/* Video Player */}
           <div className="aspect-w-16 aspect-h-9 bg-black rounded-t-xl overflow-hidden">
             <video
-              src="https://d1th9tanfe1kzp.cloudfront.net/3%20Minute%20Timer.mp4"
+              src="https://d1th9tanfe1kzp.cloudfront.net/15+Minute+Timer.mp4"
               controls
               controlsList="nodownload"
               className="w-full h-full"
