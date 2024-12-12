@@ -12,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-darkColor font-poppins p-4 ">
+    <div className="min-h-screen flex items-center justify-center bg-darkColor dark:bg-gray-900 font-poppins p-4 ">
       <div className="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
      <div>
     

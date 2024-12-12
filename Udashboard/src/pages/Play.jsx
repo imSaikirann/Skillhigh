@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayIcon } from '@heroicons/react/24/solid';
-
+ 
 export const Play = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen bg-white text-black font-poppins ">
@@ -21,13 +21,13 @@ export const Play = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6 md:p-10 flex items-center bg-white justify-center">
-        <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div className="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
           {/* Video Player */}
-          <div className="aspect-w-16 aspect-h-9 bg-black rounded-t-xl overflow-hidden">
+          <div className="aspect-w-14 aspect-h-9 bg-black rounded-t-xl overflow-hidden">
             <video
-              src="https://skillhighboxs.s3.ap-south-1.amazonaws.com/videos/1730631834826-t1.mp4" // Replace with your actual video URL
+              src="https://d1th9tanfe1kzp.cloudfront.net/3 Minute Timer.mp4" 
               controls
-              controlsList="nodownload" // Disables download option
+              controlsList="nodownload" 
               className="w-full h-full"
             />
           </div>
