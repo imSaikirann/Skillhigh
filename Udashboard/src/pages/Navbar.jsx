@@ -33,7 +33,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-md font-poppins">
+    <nav className="bg-white dark:bg-darkBg shadow-md font-poppins">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20 border-b-2 dark:border-gray-800">
           {/* Logo */}
@@ -95,7 +95,7 @@ const Navbar = () => {
 
         {/* Sidebar */}
         {sidebarOpen && (
-          <div className={`fixed inset-0 z-50 bg-white dark:bg-gray-900 shadow-lg`}>
+          <div className={`fixed inset-0 z-50 bg-white dark:bg-darkBg shadow-lg`}>
             <div className="flex justify-between items-center px-4 py-4 border-b dark:border-gray-800">
               <Link to="/" className="flex items-center">
                 <img src={Logo} className="h-auto w-[180px]" alt="Logo" />

@@ -29,8 +29,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-poppins p-4">
-      <div className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBg text-gray-800 dark:text-gray-200 font-poppins p-4">
+      <div className="bg-white dark:bg-darkBg border dark:border-gray-800 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
         <div className="text-center mb-6">
           <h2 className="text-3xl font-bold text-main dark:text-main">SkillHigh</h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">Empower your skills. Login to your account.</p>

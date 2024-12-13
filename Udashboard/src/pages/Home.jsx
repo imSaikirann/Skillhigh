@@ -24,13 +24,13 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-6 font-poppins">
+    <div className="min-h-screen bg-gray-100 dark:bg-darkBg text-gray-800 dark:text-gray-200 p-6 font-poppins">
       {/* Welcome Message */}
       <header className="mb-10 text-left">
         <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-main">
           Welcome, Sai Kiran
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
+        <p className="text-lg text-darkBg dark:text-darkText">
           Explore our curated courses and take the next step in your journey!
         </p>
       </header>
@@ -40,7 +40,7 @@ export default function Home() {
         {courses.map((course) => (
           <div
             key={course.id}
-            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+            className="bg-white dark:bg-darkBg border dark:border-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
           >
             <img
               src={course.image}

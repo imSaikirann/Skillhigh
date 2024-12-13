@@ -6,7 +6,7 @@ export const Play = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
 
   return (
-    <div className="flex flex-row-reverse h-screen bg-white dark:bg-gray-900 dark:text-white font-poppins">
+    <div className="flex flex-row-reverse h-screen bg-white dark:bg-darkBg dark:text-white font-poppins">
       {/* Sidebar Toggle Button */}
       <button
         style={gradientStyle}
@@ -22,7 +22,7 @@ export const Play = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:relative top-0 left-0 h-screen w-64 md:w-1/4 dark:bg-gray-900 text-white transform transition-transform duration-300 shadow-lg z-10 p-6 flex flex-col gap-4 border-b md:border-b-0 md:border-r-2 overflow-y-auto ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed md:relative top-0 left-0 h-screen w-64 md:w-1/4 dark:bg-darkBg text-white transform transition-transform duration-300 shadow-lg z-10 p-6 flex flex-col gap-4 border-b md:border-b-0 md:border-r-2 overflow-y-auto ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
           } md:translate-x-0`}
       >
         <h2 className="text-xl font-bold mb-6 border-b text-main dark:text-main pb-2">Course Content</h2>
@@ -39,7 +39,7 @@ export const Play = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 md:p-10 bg-white dark:bg-gray-900 flex items-center justify-center">
+      <main className="flex-1 p-6 md:p-10 bg-white dark:bg-darkBg flex items-center justify-center">
         <div className="w-full max-w-5xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
           {/* Video Player */}
           <div className="aspect-w-16 aspect-h-9 bg-black rounded-t-xl overflow-hidden">
