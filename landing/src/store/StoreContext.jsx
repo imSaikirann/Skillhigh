@@ -54,6 +54,10 @@ export const AppProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+ useEffect(() => {
+  fetchDepartments()
+}, []);
  
 
  
