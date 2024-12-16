@@ -43,23 +43,25 @@ export const AppProvider = ({ children }) => {
     } 
   };
   
+  useEffect(() => {
+   
+    fetchDepartments(); 
+  }, []); 
+  
   const fetchDepartments = async () => {
     try {
-    
+      setLoading(true);
       const response = await axios.get(`/api/v1/department/getDepartments`);
-      setDepartments(response.data.departments)
+      if (JSON.stringify(departments) !== JSON.stringify(response.data.departments)) {
+        setDepartments(response.data.departments); 
+      }
     } catch (err) {
       setError(err.message);
+      console.error("Error fetching departments:", err);
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
-
- useEffect(() => {
-  fetchDepartments()
-}, []);
- 
-
  
   // Sync token changes from localStorage
   useEffect(() => {
@@ -106,7 +108,7 @@ export const AppProvider = ({ children }) => {
     loading,
     error,
     fetchAllCourses ,
-    fetchDepartments,
+ fetchDepartments,
     departments,
     courseId,setCourseId,
     checkoutData,setCheckoutData,
