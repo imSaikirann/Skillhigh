@@ -31,9 +31,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const fetchAllCourses = async () => {
-  
     try {
-    
       const response = await axios.get("/api/v1/course/getAllCourse");
       setCourses(response.data);
       setLoading(false);
@@ -44,9 +42,8 @@ export const AppProvider = ({ children }) => {
   };
   
   useEffect(() => {
-   
     fetchDepartments(); 
-  }, []); 
+  },[]); 
   
   const fetchDepartments = async () => {
     try {

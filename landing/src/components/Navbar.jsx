@@ -18,7 +18,7 @@ export const Navbar = () => {
   // Fetch departments when the component mounts
   useEffect(() => {
     fetchDepartments();
-  }, [fetchDepartments]);
+  }, []);
 
   // Close all menus
   const closeMenu = () => {
