@@ -6,7 +6,9 @@ export default function Careers() {
     {
       title: "Campus Ambassador",
       responsibilities: [
-       "SkillHigh is seeking proactive and enthusiastic individuals for a part-time internship as Campus Ambassadors. Responsibilities include representing SkillHigh on your campus, promoting events, workshops, and programs, organizing campaigns to drive student participation, collaborating with student groups and faculty, and encouraging registrations and engagement in SkillHigh initiatives while providing feedback for improvement. Ideal candidates should possess strong communication and leadership skills, be active in campus activities and social media, and demonstrate a proactive and organized approach. Benefits include a certificate, letter of recommendation, performance-based rewards, incentives, and professional networking opportunities."
+       "SkillHigh is seeking proactive and enthusiastic individuals for a part-time internship as Campus Ambassadors." ,
+       "Responsibilities include representing SkillHigh on your campus, promoting events, workshops, and programs, organizing campaigns to drive student participation, collaborating with student groups and faculty, and encouraging registrations and engagement in SkillHigh initiatives while providing feedback for improvement. ",
+       "Ideal candidates should possess strong communication and leadership skills, be active in campus activities and social media, and demonstrate a proactive and organized approach. Benefits include a certificate, letter of recommendation, performance-based rewards, incentives, and professional networking opportunities."
       ],
       formLink: "https://forms.gle/2BikP5Z1KgdFWc7v8", 
     },
@@ -22,7 +24,7 @@ export default function Careers() {
         "Provide career guidance to students, ensuring they receive valuable insights for shaping their futures.",
         "Meet requirements of minimum 60% in 10th, 12th, and graduation, combined with proven experience, exceptional communication skills, resilience, and a dynamic work ethic.",
       ],
-      formLink: "https://forms.gle/BusinessDevelopmentManagerForm", // Replace with the actual form link
+      formLink: "https://forms.gle/WEWcNqqvtv4YUfEb9", 
     },
     {
       title: "Business Development Associate",
