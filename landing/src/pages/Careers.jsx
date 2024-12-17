@@ -2,14 +2,14 @@ import React from 'react';
 
 export default function Careers() {
   const jobs = [
-
+  
     {
-        title: "Campus Delegate",
-        responsibilities: [
-          "Email :admin@skillhigh.in",
-          "Phone Number:9182661204"
-        ],
-      },
+      title: "Campus Ambassador",
+      responsibilities: [
+       "SkillHigh is seeking proactive and enthusiastic individuals for a part-time internship as Campus Ambassadors. Responsibilities include representing SkillHigh on your campus, promoting events, workshops, and programs, organizing campaigns to drive student participation, collaborating with student groups and faculty, and encouraging registrations and engagement in SkillHigh initiatives while providing feedback for improvement. Ideal candidates should possess strong communication and leadership skills, be active in campus activities and social media, and demonstrate a proactive and organized approach. Benefits include a certificate, letter of recommendation, performance-based rewards, incentives, and professional networking opportunities."
+      ],
+      formLink: "https://forms.gle/2BikP5Z1KgdFWc7v8", 
+    },
     {
       title: "Business Development Manager",
       responsibilities: [
@@ -22,6 +22,7 @@ export default function Careers() {
         "Provide career guidance to students, ensuring they receive valuable insights for shaping their futures.",
         "Meet requirements of minimum 60% in 10th, 12th, and graduation, combined with proven experience, exceptional communication skills, resilience, and a dynamic work ethic.",
       ],
+      formLink: "https://forms.gle/BusinessDevelopmentManagerForm", // Replace with the actual form link
     },
     {
       title: "Business Development Associate",
@@ -35,8 +36,8 @@ export default function Careers() {
         "Assist students in shaping their careers through effective counseling and guidance.",
         "Meet requirements of minimum 60% in 10th, 12th, and graduation, exceptional communication skills, resilience, goal orientation, and the ability to thrive in a dynamic environment.",
       ],
+      formLink: "https://forms.gle/j4znEfuKg6hNsKyt6", 
     },
-  
   ];
 
   return (
@@ -55,9 +56,14 @@ export default function Careers() {
               ))}
             </ul>
             <div className="text-right mt-6">
-              <button className="bg-main text-white px-6 py-2 rounded-md focus:ring focus:ring-green-800">
+              <a
+                href={job.formLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-main text-white px-6 py-2 rounded-md focus:ring focus:ring-green-800"
+              >
                 Apply Now
-              </button>
+              </a>
             </div>
           </div>
         ))}
